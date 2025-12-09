@@ -11,7 +11,7 @@
 }
 
 .viewer-banner img {
-    width: 100%;
+    /*width: 100%;*/
     height: auto;
     display: block;
     border-radius: 0.25rem;
@@ -118,7 +118,7 @@
     display: block;
     margin: 1rem auto;
     max-width: 640px; /* keep a consistent visual width across images */
-    width: 100%;
+    /*width: 100%;*/
     height: auto;
     border: 1px solid #d8dde6;
     border-radius: 0.25rem;
@@ -127,16 +127,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-/* Full-width banner images (use alt="banner" in markdown) */
-.markdown-body img[alt='banner'] {
-    max-width: 100%;
-    width: 100%;
-    margin: 0 auto 1rem;
-    border: 0;
-    padding: 0;
-    background-color: transparent;
-    box-shadow: none;
-}
 
 /* Code & preformatted */
 .markdown-body code {
