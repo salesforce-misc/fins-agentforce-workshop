@@ -89,7 +89,7 @@ Click the **New** drop-down and select **Create New Action**.
 
 <img src="/resource/INS/images/question3_2.png"
      alt="Open This Topic's Actions and create a new action"
-     width="640" />
+     width="320" />
 
 In the pop-up modal, select:
 
@@ -338,7 +338,7 @@ Next, click the circular **+** icon below the **Start** element and add a **Get 
 
 <img src="/resource/INS/images/address3_2.png"
      alt="Get Renters Insurance Policies flow element"
-     width="320" />
+     width="500" />
 
 Open the Toolbox again by clicking the **Window Pane** icon and click **New Resource** to create a new formula with this definition:
 
@@ -588,7 +588,7 @@ Click **Save**.
 
 <img src="/resource/INS/images/billing3_4.png"
      alt="Define Low Risk Customer filter"
-     width="640" />
+     width="920" />
 
 Next, apply this filter to both actions in your billing topic.  
 Open the **Topics** pane and navigate into your billing topic (name may vary).  
