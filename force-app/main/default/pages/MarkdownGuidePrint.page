@@ -127,6 +127,12 @@
                 padding: 0;
             }
 
+            pre code.language-text {
+                white-space: pre-wrap;
+                word-break: break-word;
+                overflow-wrap: break-word;
+            }
+
             blockquote {
                 margin: 0.75rem 0;
                 padding: 0.5rem 0.75rem;
