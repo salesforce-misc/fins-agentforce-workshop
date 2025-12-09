@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Markdown Static Resource Viewer</masterLabel>
+    <description>
+        Displays markdown documents stored as individual static resource zips (each containing doc.md and an images/ folder),
+        using a client-side markdown renderer with sanitized HTML output.
+    </description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage">
+            <property
+                name="resourceNames"
+                type="String"
+                label="Static Resource Names"
+                default="BWAM,INS"
+                description="Comma-separated list of static resource names, each representing a markdown document zip (with doc.md and an images/ folder)."
+            />
+            <property
+                name="defaultResourceName"
+                type="String"
+                label="Default Resource Name"
+                description="Static resource name to show by default. If omitted or not in the list, the first resourceName will be used."
+            />
+            <property
+                name="showDocumentPicker"
+                type="Boolean"
+                label="Show Document Picker"
+                description="When true, shows a combobox for users to pick which markdown document to view."
+            />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
+
+

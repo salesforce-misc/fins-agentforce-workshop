@@ -1,0 +1,61 @@
+<template>
+    <div class="markdown-viewer">
+        <div class="viewer-banner">
+            <img src={bannerUrl} alt="Agentforce for Financial Services - Agentforce and Prompt Engineering Hands-On Workshop" />
+            <p style="font-size: 14px;">In this workshop, you’ll master Agentforce & Prompt Engineering through hands-on exercises, improving processes & client interactions to address Retail Banking, Wealth Management & Insurance use cases. Learn to create custom prompts and integrate Agents efficiently. Gain insights into AI technology, enhancing your skills for today’s dynamic industry landscape.
+                <br/>
+                <br/>
+                Through hands-on exercises, you will be able to set up and configure Agents and Prompts to solve for real-world scenarios & get inspired with understanding how generative AI can help their own organizations.</p>
+        </div>
+
+        <template if:true={showPicker}>
+            <div class="viewer-header">
+                <lightning-radio-group
+                    name="markdownDocSelector"
+                    label="Workshop Guide"
+                    options={resourceRadioOptions}
+                    value={currentResourceName}
+                    type="radio"
+                    onchange={handleResourceChange}
+                >
+                </lightning-radio-group>
+
+                <div class="viewer-toggle">
+                    <lightning-input
+                        type="toggle"
+                        name="showSetupSteps"
+                        label="Show Setup Steps"
+                        message-toggle-active="Show"
+                        message-toggle-inactive="Hide"
+                        checked={showSetupSteps}
+                        onchange={handleShowSetupChange}
+                    >
+                    </lightning-input>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={isLoading}>
+            <div class="loading-state">
+                <lightning-spinner alternative-text="Loading markdown document" size="small"></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:true={error}>
+            <div class="error-state slds-text-color_error">
+                {error}
+            </div>
+        </template>
+
+        <div class="viewer-body">
+            <template if:true={showSetupSteps}>
+                <div class="markdown-body setup-body" lwc:dom="manual"></div>
+                <hr class="viewer-divider" />
+            </template>
+
+            <div class="markdown-body main-body" lwc:dom="manual"></div>
+        </div>
+    </div> 
+</template>
+
+
