@@ -127,6 +127,14 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
+/* Images whose alt text contains 'banner' should be treated as banners: no frame or shadow */
+.markdown-body img[alt*='banner'] {
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    background-color: transparent;
+}
+
 
 /* Code & preformatted */
 .markdown-body code {

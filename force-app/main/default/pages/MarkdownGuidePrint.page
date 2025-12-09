@@ -1,0 +1,333 @@
+<apex:page showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Workshop Guide - Print View</title>
+        <style>
+            :root {
+                color-scheme: light;
+            }
+
+            body {
+                margin: 1rem;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                font-size: 14px;
+                line-height: 1.5;
+                color: #080707;
+            }
+
+            .print-header {
+                margin-bottom: 1rem;
+                border-bottom: 1px solid #d8dde6;
+                padding-bottom: 0.5rem;
+            }
+
+            .print-header h1 {
+                font-size: 1.6rem;
+                margin: 0;
+            }
+
+            .setup-section {
+                margin-bottom: 1rem;
+            }
+
+            .viewer-banner {
+                margin-bottom: 0.75rem;
+            }
+
+            .viewer-banner img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+                border-radius: 0.25rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .viewer-banner p {
+                font-size: 14px;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-weight: 600;
+                margin-top: 1.25rem;
+                margin-bottom: 0.5rem;
+                color: #181818;
+            }
+
+            h1 { font-size: 1.7rem; }
+            h2 { font-size: 1.5rem; }
+            h3, h4, h5, h6 { font-size: 1rem; }
+
+            p {
+                margin: 0 0 0.5rem;
+            }
+
+            ul, ol {
+                margin: 0.25rem 0 0.75rem 1.25rem;
+                padding-left: 1rem;
+            }
+
+            ul { list-style-type: disc; }
+            ol { list-style-type: decimal; }
+
+            li {
+                margin: 0.125rem 0;
+            }
+
+            a {
+                color: #0070d2;
+                text-decoration: underline;
+            }
+
+            img {
+                display: block;
+                margin: 1rem auto;
+                max-width: 95%;
+                height: auto;
+                box-sizing: border-box;
+            }
+
+            /* Default framed images (non-banner).
+               Use box-sizing so border/padding stay within the 95% width. */
+            img:not([alt*='banner']) {
+                border: 1px solid #d8dde6;
+                border-radius: 0.25rem;
+                padding: 0.5rem;
+                background-color: #ffffff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            }
+
+            /* Images whose alt text contains 'banner' should be treated as banners: no frame or shadow */
+            img[alt*='banner'] {
+                border: 0;
+                box-shadow: none;
+                padding: 0;
+                background-color: transparent;
+            }
+
+            code {
+                font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+                font-size: 0.8rem;
+                background-color: #f3f2f2;
+                padding: 0.1rem 0.25rem;
+                border-radius: 0.25rem;
+            }
+
+            pre {
+                font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+                font-size: 0.8rem;
+                background-color: #f3f2f2;
+                padding: 0.75rem;
+                border-radius: 0.25rem;
+                overflow: auto;
+            }
+
+            pre code {
+                background-color: transparent;
+                padding: 0;
+            }
+
+            blockquote {
+                margin: 0.75rem 0;
+                padding: 0.5rem 0.75rem;
+                border-left: 4px solid #d8dde6;
+                color: #3e3e3c;
+                background-color: #f3f2f2;
+            }
+
+            hr {
+                border: 0;
+                border-top: 1px solid #d8dde6;
+                margin: 1rem 0;
+            }
+
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                margin: 0.75rem 0 1rem;
+                width: 100%;
+            }
+
+            th {
+                padding: 5pt;
+                border-width: 1pt;
+                border-style: solid;
+                border-color: rgb(204, 204, 204);
+                background-color: rgb(109, 52, 183);
+                color: #ffffff;
+                font-weight: 600;
+                text-align: left;
+            }
+
+            th:has(> img) {
+                background-color: #ffffff;
+                color: inherit;
+                border: 0;
+                padding: 0;
+                vertical-align: top;
+            }
+
+            td {
+                padding: 5pt;
+                border-width: 1pt;
+                border-style: solid;
+                border-color: rgb(204, 204, 204);
+                vertical-align: top;
+            }
+
+            @page {
+                margin: 10mm 8mm;
+            }
+
+            @media print {
+                body {
+                    margin: 0;
+                }
+            }
+        </style>
+
+        <apex:includeScript value="{!URLFOR($Resource.markdownLib, 'marked.min.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.markdownLib, 'dompurify.min.js')}" />
+
+        <script>
+            function getQueryParam(name) {
+                var match = new RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+                return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+            }
+
+            function rewriteImagePaths(markdown, resourceName) {
+                if (!markdown || !resourceName) {
+                    return markdown;
+                }
+                var imageRegex = /\]\(\s*(\.\/)?images\//g;
+                var replacementPrefix = '](/resource/' + resourceName + '/images/';
+                return markdown.replace(imageRegex, replacementPrefix);
+            }
+
+            function renderMarkdown(markdown) {
+                if (!markdown) {
+                    return '';
+                }
+                var markedGlobal = window.marked;
+                if (typeof markedGlobal === 'function') {
+                    return markedGlobal(markdown);
+                }
+                if (markedGlobal && typeof markedGlobal.parse === 'function') {
+                    return markedGlobal.parse(markdown);
+                }
+                throw new Error('Markdown library (marked) is not available or has an unexpected shape.');
+            }
+
+            function sanitizeHtml(html) {
+                if (!html) {
+                    return '';
+                }
+                if (window.DOMPurify) {
+                    return window.DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
+                }
+                return html;
+            }
+
+            function fetchMarkdown(resourceName) {
+                var cacheBuster = Date.now();
+                var url = '/resource/' + resourceName + '/doc.md?cb=' + cacheBuster;
+                return fetch(url).then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('Failed to load markdown from ' + url + ' (status ' + response.status + ')');
+                    }
+                    return response.text();
+                });
+            }
+
+            function loadDocuments() {
+                var resourceName = getQueryParam('resource') || 'BWAM';
+                var showSetup = getQueryParam('showSetup') === '1';
+
+                var displayName;
+                if (resourceName === 'BWAM') {
+                    displayName = 'Banking & Wealth';
+                } else if (resourceName === 'INS') {
+                    displayName = 'Insurance';
+                } else {
+                    displayName = resourceName;
+                }
+
+                var title = 'Workshop Guide - ' + displayName;
+                document.title = title;
+                var headerTitle = document.getElementById('printTitle');
+                if (headerTitle) {
+                    headerTitle.textContent = title;
+                }
+
+                var mainPromise = fetchMarkdown(resourceName)
+                    .then(function (markdown) {
+                        var processed = rewriteImagePaths(markdown, resourceName);
+                        var html = renderMarkdown(processed);
+                        return sanitizeHtml(html);
+                    })
+                    .then(function (safeHtml) {
+                        var mainEl = document.getElementById('mainContent');
+                        if (mainEl) {
+                            mainEl.innerHTML = safeHtml;
+                        }
+                    });
+
+                var setupPromise = Promise.resolve();
+                if (showSetup) {
+                    setupPromise = fetchMarkdown('SETUP')
+                        .then(function (markdown) {
+                            var processed = rewriteImagePaths(markdown, 'SETUP');
+                            var html = renderMarkdown(processed);
+                            return sanitizeHtml(html);
+                        })
+                        .then(function (safeHtml) {
+                            var setupEl = document.getElementById('setupContent');
+                            if (setupEl) {
+                                setupEl.innerHTML = safeHtml;
+                                setupEl.parentElement.style.display = 'block';
+                            }
+                        })
+                        .catch(function () {
+                            // SETUP is optional; ignore failures.
+                        });
+                }
+
+                // Wait for both documents to load, but do not automatically
+                // trigger the browser's print dialog. Users can invoke print
+                // manually from the browser when ready.
+                Promise.all([mainPromise, setupPromise]).then(function () {
+                    // no-op
+                });
+            }
+
+            window.addEventListener('load', function () {
+                loadDocuments();
+            });
+        </script>
+    </head>
+    <body>
+        <div class="viewer-banner">
+            <img src="{!$Resource.AF4FINSBanner}" alt="banner" />
+            <p>In this workshop, you’ll master Agentforce &amp; Prompt Engineering through hands-on exercises, improving processes &amp; client interactions to address Retail Banking, Wealth Management &amp; Insurance use cases. Learn to create custom prompts and integrate Agents efficiently. Gain insights into AI technology, enhancing your skills for today’s dynamic industry landscape.
+                <br/>
+                <br/>
+                Through hands-on exercises, you will be able to set up and configure Agents and Prompts to solve for real-world scenarios &amp; get inspired with understanding how generative AI can help their own organizations.</p>
+        </div>
+
+        <header class="print-header">
+            <h1 id="printTitle">Workshop Guide</h1>
+        </header>
+
+        <section id="setupSection" class="setup-section" style="display:none;">
+            <div id="setupContent"></div>
+            <hr />
+        </section>
+
+        <section id="mainSection">
+            <div id="mainContent"></div>
+        </section>
+    </body>
+</html>
+</apex:page>
+
+

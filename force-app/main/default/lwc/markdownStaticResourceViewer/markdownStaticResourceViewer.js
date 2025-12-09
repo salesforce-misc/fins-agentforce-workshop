@@ -325,6 +325,224 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
             this.renderHtmlToDom();
         }
     }
+
+    /**
+     * Returns a human-friendly label for the currently selected resource,
+     * matching the labels used in the radio group where possible.
+     */
+    get currentResourceLabel() {
+        const labelMap = {
+            BWAM: 'Banking & Wealth',
+            INS: 'Insurance'
+        };
+
+        if (!this.currentResourceName) {
+            return '';
+        }
+
+        return labelMap[this.currentResourceName] || this.currentResourceName;
+    }
+
+    /**
+     * Build a minimal, print-friendly HTML document string that contains the
+     * already-rendered markdown HTML for the current guide (and optional setup
+     * steps). This is written directly into a new browser window or tab.
+     */
+    getPrintableHtml() {
+        const hasSetup = this.showSetupSteps && this._setupHtml;
+        const hasMain = this._renderedHtml;
+
+        if (!hasSetup && !hasMain) {
+            return '';
+        }
+
+        const titleParts = ['Workshop Guide'];
+        if (this.currentResourceLabel) {
+            titleParts.push(this.currentResourceLabel);
+        }
+        const title = titleParts.join(' - ');
+
+        const styles = `
+            :root {
+                color-scheme: light;
+            }
+
+            body {
+                margin: 1.25rem;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                font-size: 14px;
+                line-height: 1.5;
+                color: #080707;
+            }
+
+            .print-header {
+                margin-bottom: 1rem;
+                border-bottom: 1px solid #d8dde6;
+                padding-bottom: 0.5rem;
+            }
+
+            .print-header h1 {
+                font-size: 1.6rem;
+                margin: 0;
+            }
+
+            .setup-section {
+                margin-bottom: 1rem;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-weight: 600;
+                margin-top: 1.25rem;
+                margin-bottom: 0.5rem;
+                color: #181818;
+            }
+
+            h1 { font-size: 1.7rem; }
+            h2 { font-size: 1.5rem; }
+            h3, h4, h5, h6 { font-size: 1rem; }
+
+            p {
+                margin: 0 0 0.5rem;
+            }
+
+            ul, ol {
+                margin: 0.25rem 0 0.75rem 1.25rem;
+                padding-left: 1rem;
+            }
+
+            ul { list-style-type: disc; }
+            ol { list-style-type: decimal; }
+
+            li {
+                margin: 0.125rem 0;
+            }
+
+            a {
+                color: #0070d2;
+                text-decoration: underline;
+            }
+
+            img {
+                display: block;
+                margin: 1rem auto;
+                max-width: 100%;
+                height: auto;
+            }
+
+            code {
+                font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+                font-size: 0.8rem;
+                background-color: #f3f2f2;
+                padding: 0.1rem 0.25rem;
+                border-radius: 0.25rem;
+            }
+
+            pre {
+                font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+                font-size: 0.8rem;
+                background-color: #f3f2f2;
+                padding: 0.75rem;
+                border-radius: 0.25rem;
+                overflow: auto;
+            }
+
+            pre code {
+                background-color: transparent;
+                padding: 0;
+            }
+
+            blockquote {
+                margin: 0.75rem 0;
+                padding: 0.5rem 0.75rem;
+                border-left: 4px solid #d8dde6;
+                color: #3e3e3c;
+                background-color: #f3f2f2;
+            }
+
+            hr {
+                border: 0;
+                border-top: 1px solid #d8dde6;
+                margin: 1rem 0;
+            }
+
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                margin: 0.75rem 0 1rem;
+                width: 100%;
+            }
+
+            th {
+                padding: 5pt;
+                border-width: 1pt;
+                border-style: solid;
+                border-color: rgb(204, 204, 204);
+                background-color: rgb(109, 52, 183);
+                color: #ffffff;
+                font-weight: 600;
+                text-align: left;
+            }
+
+            td {
+                padding: 5pt;
+                border-width: 1pt;
+                border-style: solid;
+                border-color: rgb(204, 204, 204);
+                vertical-align: top;
+            }
+
+            @page {
+                margin: 16mm;
+            }
+
+            @media print {
+                body {
+                    margin: 0;
+                }
+            }
+        `;
+
+        const setupSection = hasSetup
+            ? `<section class="setup-section">${this._setupHtml}</section><hr />`
+            : '';
+        const mainSection = hasMain
+            ? `<section class="main-section">${this._renderedHtml}</section>`
+            : '';
+
+        return `
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>${title}</title>
+    <style>${styles}</style>
+</head>
+<body>
+    <header class="print-header">
+        <h1>${title}</h1>
+    </header>
+    ${setupSection}
+    ${mainSection}
+</body>
+</html>
+        `;
+    }
+
+    /**
+     * Open a Visualforce page that renders the current guide content in a
+     * print-friendly layout. The VF page re-fetches the markdown using the same
+     * static resources, keyed by the current resource name and setup toggle.
+     */
+    handlePrintClick() {
+        if (!this.currentResourceName) {
+            return;
+        }
+
+        const showSetup = this.showSetupSteps ? '1' : '0';
+        const resourceParam = encodeURIComponent(this.currentResourceName);
+        const url = `/apex/MarkdownGuidePrint?resource=${resourceParam}&showSetup=${showSetup}`;
+        window.open(url, '_blank');
+    }
 }
 
 
