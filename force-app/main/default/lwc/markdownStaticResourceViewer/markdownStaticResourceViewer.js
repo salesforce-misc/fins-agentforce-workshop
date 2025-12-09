@@ -206,10 +206,18 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
             return markdown;
         }
 
-        // Replace relative image references like ](images/...) or ](./images/...)
-        const imageRegex = /\]\(\s*(\.\/)?images\//g;
-        const replacementPrefix = `](/resource/${resourceName}/images/`;
-        return markdown.replace(imageRegex, replacementPrefix);
+        // Replace relative markdown image references like ](images/...) or ](./images/...)
+        const markdownImageRegex = /\]\(\s*(\.\/)?images\//g;
+        const markdownReplacementPrefix = `](/resource/${resourceName}/images/`;
+
+        let result = markdown.replace(markdownImageRegex, markdownReplacementPrefix);
+
+        // Also rewrite raw HTML <img src="images/..."> or <img src="./images/...">
+        const htmlImgRegex = /<img([^>]*?)src=(["'])\s*(\.\/)?images\//gi;
+        const htmlReplacement = `<img$1src=$2/resource/${resourceName}/images/`;
+        result = result.replace(htmlImgRegex, htmlReplacement);
+
+        return result;
     }
 
     // This returns raw HTML; caller must sanitize before injecting into DOM

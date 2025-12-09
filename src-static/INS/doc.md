@@ -32,7 +32,7 @@ At the end of the flow:
 1. Click the **+** icon right above the end node.
 2. In the search bar, find and select **Get Active Insurance Policy Details**.
 
-<img src="/resource/INS/images/question2_1.png"
+<img src="images/question2_1.png"
      alt="Flow canvas with Get Active Insurance Policy Details element"
      width="320" />
 
@@ -43,7 +43,7 @@ For configuring the Flow Action in the new right pane:
 3. Toggle to include the **listOfPolicyIds** parameter, and in the parameter input, search for the **policyIds** variable to add it.
 4. Check the **Manually assign variables** checkbox at the bottom to bring up the output parameter, then search for the **PolicyJson** variable and select it.
 
-<img src="/resource/INS/images/question2_2.png"
+<img src="images/question2_2.png"
      alt="Configure flow action inputs and outputs"
      width="640" />
 
@@ -76,7 +76,7 @@ Click **New Variable** at the top of the pane and define a new custom variable w
 
 Click **Save**. You will use this variable to store all of the active policy details you retrieve about the customer so that context is available throughout the conversation.
 
-<img src="/resource/INS/images/question3_3.png"
+<img src="images/question3_3.png"
      alt="Create PolicyJson context variable"
      width="640" />
 
@@ -87,7 +87,7 @@ Select the **This Topic's Actions** tab at the top. You will add the updated flo
 
 Click the **New** drop-down and select **Create New Action**.
 
-<img src="/resource/INS/images/question3_2.png"
+<img src="images/question3_2.png"
      alt="Open This Topic's Actions and create a new action"
      width="320" />
 
@@ -104,10 +104,10 @@ Configure the Agent Action with these parameters:
 - For the **InsuredAccountID** input variable, check **Require Input**.
 - For the **PolicyJson** output variable, check **Show in conversation**.
 
-<img src="/resource/INS/images/question3_4.png"
+<img src="images/question3_4.png"
      alt="Configure Agent Action inputs and outputs"
      width="640" />
-<img src="/resource/INS/images/question3_5.png"
+<img src="images/question3_5.png"
      alt="Map PolicyJson output"
      width="640" />
 
@@ -129,7 +129,7 @@ In this scenario, you are **Kiran Singh**, a customer with multiple auto policie
 
 In the **MessagingSession EndUserAccountId** variable, search for and select **Kiran Singh** to simulate a conversation as that customer. Click **Apply** afterwards.
 
-<img src="/resource/INS/images/question4_2.png"
+<img src="images/question4_2.png"
      alt="Set conversation preview context"
      width="500" />
 
@@ -146,7 +146,7 @@ Feel free to experiment and ask the agent any other questions about your policie
 4. Can you tell me the status of my claims?
 5. How much have I paid in fees for this year?
 
-<img src="/resource/INS/images/question4_3.png"
+<img src="images/question4_3.png"
      alt="Example conversation with policy questions"
      width="500" />
 
@@ -200,7 +200,7 @@ This action is based on an existing pre-built flow and prompt template and gives
 In Agent Builder, click the new **Driver Management** topic and navigate to the **This Topic’s Actions** tab.  
 Click the **New** drop-down and select **Create New Action**.
 
-<img src="/resource/INS/images/driver2_1.png"
+<img src="images/driver2_1.png"
      alt="Open Driver Management topic actions"
      width="640" />
 
@@ -210,7 +210,7 @@ In the new modal:
 2. For **Reference Action**, search for and select **INS - Add Driver to Policy**.
 3. Leave the default values as-is and click **Next**.
 
-<img src="/resource/INS/images/driver2_2.png"
+<img src="images/driver2_2.png"
      alt="Select INS - Add Driver to Policy flow"
      width="640" />
 
@@ -229,7 +229,7 @@ Complete the Agent Action configuration by:
    - `policyId`
 3. For the output `caseNumber` variable, check **Show in conversation**.
 
-<img src="/resource/INS/images/driver2_3.png"
+<img src="images/driver2_3.png"
      alt="Configure add-driver Agent Action inputs/outputs"
      width="640" />
 
@@ -286,7 +286,7 @@ In the list of agents, expand **Agentforce for Insurance** by clicking **>**, th
 On the left side of the screen, click the **Address Change** topic.  
 Take a minute to review the topic’s **Classification Description**, **Scope**, and **Instructions** to understand what you’re telling the agent to do.
 
-<img src="/resource/INS/images/address2_1.png"
+<img src="images/address2_1.png"
      alt="Address Change topic configuration"
      width="400" />
 
@@ -297,7 +297,7 @@ Switch to the **This Topic’s Actions** tab and look at the actions that this t
 2. **FINS - Update Account Address**: Takes the JSON-formatted, standardized address from the Parse Address action and updates the customer’s billing address on their Account record.
 3. **INS - Cancel Insurance Policy**: Begins the process to cancel an insurance policy. You can use this in case you need to cancel a renter's insurance policy.
 
-<img src="/resource/INS/images/address2_2.png"
+<img src="images/address2_2.png"
      alt="Address Change topic actions"
      width="400" />
 
@@ -323,7 +323,7 @@ In the pop-up modal, create a new input variable with this definition:
 4. **Object** = `Account`
 5. Check **Available for Input**
 
-<img src="/resource/INS/images/address2_3.png"
+<img src="images/address2_3.png"
      alt="Create Account input variable"
      width="640" />
 
@@ -336,7 +336,7 @@ Next, click the circular **+** icon below the **Start** element and add a **Get 
    - `NameInsured ID Equals Account > Account ID` (select **Account**, then search and select **Id (Account ID)**; this resolves to **Account > Account ID**)
 4. Leave the remaining configurations as-is.
 
-<img src="/resource/INS/images/address3_2.png"
+<img src="images/address3_2.png"
      alt="Get Renters Insurance Policies flow element"
      width="500" />
 
@@ -357,7 +357,7 @@ Replace the `<BASE_DOMAIN>` placeholder with the base domain of your Salesforce 
 Here is an example:  
 `https://<BASE_DOMAIN>.lightning.force.com/lightning/setup/SetupNetworks/home`
 
-<img src="/resource/INS/images/address4_1.png"
+<img src="images/address4_1.png"
      alt="Formula for new renter insurance quote link"
      width="640" />
 
@@ -453,7 +453,7 @@ Click **Next** and finish the action definition by:
 3. For the **Prompt Response** output variable, check **Show in conversation**.
 4. Click **Finish**.
 
-<img src="/resource/INS/images/address6_1.png"
+<img src="images/address6_1.png"
      alt="Add prompt template as an action"
      width="640" />
 
@@ -572,7 +572,7 @@ Change to the **This Topic's Actions** tab. You’ll see the **INS - Get Account
 - Assign the **accountID** input variable to **MessagingSession EndUserAccountId**.
 - Assign the **customerCreditScore** output variable to the **customerCreditScore** custom variable you reviewed earlier.
 
-| <img src="/resource/INS/images/billing3_1.png" alt="Map MessagingSession and customerCreditScore" width="100%" /> | <img src="/resource/INS/images/billing3_2.png" alt="Map customerCreditScore output" width="100%" /> |
+| <img src="images/billing3_1.png" alt="Map MessagingSession and customerCreditScore" width="100%" /> | <img src="images/billing3_2.png" alt="Map customerCreditScore output" width="100%" /> |
 | --- | --- |
 
 Now that you have the customer's credit score, define a filter condition using it.  
@@ -586,7 +586,7 @@ Open the **Context** pane and navigate to the **Filters** tab. Click **New** and
 
 Click **Save**.
 
-<img src="/resource/INS/images/billing3_4.png"
+<img src="images/billing3_4.png"
      alt="Define Low Risk Customer filter"
      width="920" />
 
@@ -597,7 +597,7 @@ Go to the **This Topic's Actions** tab and select the **INS - Update Policy Paym
 At the top right of the action pane, click the filter icon, then search for and select the **Low Risk Customer** filter.  
 Close the action and repeat these steps for the **INS - Update Billing Frequency** action.
 
-<img src="/resource/INS/images/billing3_3.png"
+<img src="images/billing3_3.png"
      alt="Apply Low Risk Customer filter to billing actions"
      width="320" />
 

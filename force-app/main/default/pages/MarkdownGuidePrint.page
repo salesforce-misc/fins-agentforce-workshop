@@ -205,9 +205,17 @@
                 if (!markdown || !resourceName) {
                     return markdown;
                 }
+                // Replace markdown image references like ](images/...) or ](./images/...)
                 var imageRegex = /\]\(\s*(\.\/)?images\//g;
                 var replacementPrefix = '](/resource/' + resourceName + '/images/';
-                return markdown.replace(imageRegex, replacementPrefix);
+                var result = markdown.replace(imageRegex, replacementPrefix);
+
+                // Also rewrite raw HTML <img src="images/..."> or <img src="./images/...">
+                var htmlImgRegex = /<img([^>]*?)src=(["'])\s*(\.\/)?images\//gi;
+                var htmlReplacement = '<img$1src=$2/resource/' + resourceName + '/images/';
+                result = result.replace(htmlImgRegex, htmlReplacement);
+
+                return result;
             }
 
             function renderMarkdown(markdown) {

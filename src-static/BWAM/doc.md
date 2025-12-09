@@ -38,7 +38,7 @@ Click **New Variable** at the top of the pane and use these values to define the
 
 You will use this new variable to store all of the active policy details you retrieve about the customer so you can keep this context throughout the conversation.
 
-<img src="/resource/BWAM/images/aquestion2_1.png"
+<img src="images/aquestion2_1.png"
      alt="Create action and context variable"
      width="640" />
 
@@ -53,7 +53,7 @@ Select the **This Topic's Actions** tab at the top. You will add the updated Flo
 
 Click the **New** drop-down and select **Create New Action**.
 
-<img src="/resource/BWAM/images/question3_2.png"
+<img src="images/question3_2.png"
      alt="Create new topic action"
      width="320" />
 
@@ -75,7 +75,7 @@ Configure the Agent Action with these parameters:
   - **Instructions**: `JSON output of the customer's financial accounts`
   - **Show in conversation**: checked
 
-| <img src="/resource/BWAM/images/aquestion2_3.png" alt="Configure action inputs" width="100%" /> | <img src="/resource/BWAM/images/aquestion2_4.png" alt="Configure action outputs" width="100%" /> |
+| <img src="images/aquestion2_3.png" alt="Configure action inputs" width="100%" /> | <img src="images/aquestion2_4.png" alt="Configure action outputs" width="100%" /> |
 | --------------------------------------------------- | ---------------------------------------------------- |
 
 Click **Finish**.
@@ -124,7 +124,7 @@ In this scenario, you are **Kiran Singh**, a customer with 5 financial accounts 
 
 In the **MessagingSession EndUserAccountId** variable, search for and select **Kiran Singh** to simulate a conversation as that customer.
 
-<img src="/resource/BWAM/images/question4_2.png"
+<img src="images/question4_2.png"
      alt="Set conversation preview context"
      width="500" />
 
@@ -149,7 +149,7 @@ You can also test the ability to manage beneficiaries with these instructions:
 
 The conversation can look similar to this:
 
-<img src="/resource/BWAM/images/aquestion4_1.png"
+<img src="images/aquestion4_1.png"
      alt="Example conversation - Agent Builder"
      width="500" />
 
@@ -159,10 +159,10 @@ In Setup, search for **All Sites** and click the URL link beside the **Retail** 
 Click the **Messaging** icon in the lower right corner to start a new chat session with the agent (it may take a few seconds to connect).  
 You can use the same questions and instructions from above.
 
-| <img src="/resource/BWAM/images/aquestion4_2.png" alt="Example conversation - portal 1" width="100%" /> | <img src="/resource/BWAM/images/aquestion4_3.png" alt="Example conversation - portal 2" width="100%" /> | <img src="/resource/BWAM/images/aquestion4_4.png" alt="Example conversation - portal 3" width="100%" /> |
+| <img src="images/aquestion4_2.png" alt="Example conversation - portal 1" width="100%" /> | <img src="images/aquestion4_3.png" alt="Example conversation - portal 2" width="100%" /> | <img src="images/aquestion4_4.png" alt="Example conversation - portal 3" width="100%" /> |
 | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |
 
-<img src="/resource/BWAM/images/bwam8.png"
+<img src="images/bwam8.png"
      alt="banner"
      width="960" />
 
@@ -273,7 +273,7 @@ To use your custom Agent action, you need to assign it to the **Agentforce Banki
 10. For **Agent Action Instructions**, keep the existing text **AS-IS**.
 11. Toggle off **Show loading text for this action**.
 
-<img src="/resource/BWAM/images/bwam14.png"
+<img src="images/bwam14.png"
      alt="Configure nearest branch agent action"
      width="640" />
 
@@ -284,7 +284,7 @@ For the input and output configuration:
 2. For the **promptResponse** output, select **Show in conversation**.
 3. Verify that the configuration matches the screenshot and click **Finish**.
 
-<img src="/resource/BWAM/images/bwam13.png"
+<img src="images/bwam13.png"
      alt="Agent action input/output configuration"
      width="640" />
 
@@ -309,7 +309,7 @@ In the Conversation Preview, test the updated agent with the following prompts:
 
 An example conversation is shown below:
 
-<img src="/resource/BWAM/images/bwam15.png"
+<img src="images/bwam15.png"
      alt="Example Agentforce address-change conversation"
      width="640" />
 
