@@ -1,238 +1,241 @@
 .markdown-viewer {
-    font-family: var(--lwc-fontFamily, 'Salesforce Sans', -apple-system, BlinkMacSystemFont,
-            'Segoe UI', sans-serif);
-    background-color: white;
-    padding: 1rem;
-    border-radius: 1rem;
+  font-family: var(
+    --lwc-fontFamily,
+    "Salesforce Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif
+  );
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1rem;
 }
 
 .viewer-banner {
-    margin-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
 }
 
 .viewer-banner img {
-    /*width: 100%;*/
-    height: auto;
-    display: block;
-    border-radius: 0.25rem;
-    margin-bottom: 0.75rem;
+  /*width: 100%;*/
+  height: auto;
+  display: block;
+  border-radius: 0.25rem;
+  margin-bottom: 0.75rem;
 }
 
 .viewer-header {
-    margin-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
 }
 
 .viewer-toggle {
-    margin-top: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .viewer-toggle__label {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .viewer-body {
-    padding: 0.75rem 0;
+  padding: 0.75rem 0;
 }
 
 .markdown-body {
-    font-size: 0.875rem;
-    line-height: 1.5;
-    color: var(--lwc-colorTextDefault, #080707);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--lwc-colorTextDefault, #080707);
 }
 
 /* Headings */
 .markdown-body h1 {
-    font-weight: 600;
-    line-height: 1.3;
-    margin-top: 1.25rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.7rem;
-    color: #181818
+  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.7rem;
+  color: #181818;
 }
 .markdown-body h2 {
-    font-weight: 600;
-    line-height: 1.25;
-    margin-top: 1.25rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.5rem;
-    color: #181818
+  font-weight: 600;
+  line-height: 1.25;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: #181818;
 }
 .markdown-body h3,
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-    font-weight: 600;
-    line-height: 1.25;
-    margin-top: 1.25rem;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-    color: #181818
+  font-weight: 600;
+  line-height: 1.25;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #181818;
 }
-
-
 
 /* Paragraph & basic text */
 .markdown-body p {
-    margin: 0 0 0.5rem;
+  margin: 0 0 0.5rem;
 }
 
 .markdown-body strong {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .markdown-body em {
-    font-style: italic;
+  font-style: italic;
 }
 
 /* Lists */
 .markdown-body ul,
 .markdown-body ol {
-    margin: 0.25rem 0 0.75rem 1.25rem;
-    padding-left: 1rem;
+  margin: 0.25rem 0 0.75rem 1.25rem;
+  padding-left: 1rem;
 }
 
 /* Ensure list markers are visible and semantically correct */
 .markdown-body ul {
-    list-style-type: disc;
+  list-style-type: disc;
 }
 
 .markdown-body ol {
-    list-style-type: decimal;
+  list-style-type: decimal;
 }
 
 .markdown-body li {
-    margin: 0.125rem 0;
+  margin: 0.125rem 0;
 }
 
 /* Links */
 .markdown-body a {
-    color: var(--lwc-colorTextLink, #0070d2);
-    text-decoration: underline;
+  color: var(--lwc-colorTextLink, #0070d2);
+  text-decoration: underline;
 }
 
 /* Images */
 .markdown-body img {
-    display: block;
-    margin: 1rem auto;
-    max-width: 640px; /* keep a consistent visual width across images */
-    /*width: 100%;*/
-    height: auto;
-    border: 1px solid #d8dde6;
-    border-radius: 0.25rem;
-    padding: 0.5rem;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  display: block;
+  margin: 1rem auto;
+  max-width: 640px; /* keep a consistent visual width across images */
+  /*width: 100%;*/
+  height: auto;
+  border: 1px solid #d8dde6;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 /* Images whose alt text contains 'banner' should be treated as banners: no frame or shadow */
-.markdown-body img[alt*='banner'] {
-    border: 0;
-    box-shadow: none;
-    padding: 0;
-    background-color: transparent;
+.markdown-body img[alt*="banner"] {
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  background-color: transparent;
 }
-
 
 /* Code & preformatted */
 .markdown-body code {
-    font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-        monospace;
-    font-size: 0.8rem;
-    background-color: #f3f2f2;
-    padding: 0.1rem 0.25rem;
-    border-radius: 0.25rem;
+  font-family:
+    SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.8rem;
+  background-color: #f3f2f2;
+  padding: 0.1rem 0.25rem;
+  border-radius: 0.25rem;
 }
 
 .markdown-body pre {
-    font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-        monospace;
-    font-size: 0.8rem;
-    background-color: #f3f2f2;
-    padding: 0.75rem;
-    border-radius: 0.25rem;
-    overflow: auto;
+  font-family:
+    SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.8rem;
+  background-color: #f3f2f2;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  overflow: auto;
 }
 
 .markdown-body pre code {
-    background-color: transparent;
-    padding: 0;
+  background-color: transparent;
+  padding: 0;
 }
 
 /* Wrap only ```text``` fenced code blocks (others remain scrollable) */
 .markdown-body pre code.language-text {
-    white-space: pre-wrap;
-    word-break: break-word;
-    overflow-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Blockquotes */
 .markdown-body blockquote {
-    margin: 0.75rem 0;
-    padding: 0.5rem 0.75rem;
-    border-left: 4px solid #d8dde6;
-    color: #3e3e3c;
-    background-color: #f3f2f2;
+  margin: 0.75rem 0;
+  padding: 0.5rem 0.75rem;
+  border-left: 4px solid #d8dde6;
+  color: #3e3e3c;
+  background-color: #f3f2f2;
 }
 
 /* Horizontal rule */
 .markdown-body hr {
-    border: 0;
-    border-top: 1px solid #d8dde6;
-    margin: 1rem 0;
+  border: 0;
+  border-top: 1px solid #d8dde6;
+  margin: 1rem 0;
 }
 
 .viewer-divider {
-    margin: 1rem 0 1.5rem;
+  margin: 1rem 0 1.5rem;
 }
 
 /* Tables */
 .markdown-body table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin: 0.75rem 0 1rem;
-    width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0.75rem 0 1rem;
+  width: 100%;
 }
 
 .markdown-body th {
-    padding: 5pt;
-    border-width: 1pt;
-    border-style: solid;
-    border-color: rgb(204, 204, 204);
-    background-color: rgb(109, 52, 183);
-    color: #ffffff;
-    font-weight: 600;
-    text-align: left;
+  padding: 5pt;
+  border-width: 1pt;
+  border-style: solid;
+  border-color: rgb(204, 204, 204);
+  background-color: rgb(109, 52, 183);
+  color: #ffffff;
+  font-weight: 600;
+  text-align: left;
 }
 
 /* Table headers that only contain images should use a white background */
 .markdown-body th:has(> img) {
-    background-color: #ffffff;
-    color: inherit;
-    border: 0;
-    padding: 0;
-    vertical-align: top;
+  background-color: #ffffff;
+  color: inherit;
+  border: 0;
+  padding: 0;
+  vertical-align: top;
 }
 
 .markdown-body th:has(> img) > img {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .markdown-body td {
-    padding: 5pt;
-    border-width: 1pt;
-    border-style: solid;
-    border-color: rgb(204, 204, 204);
-    vertical-align: top;
+  padding: 5pt;
+  border-width: 1pt;
+  border-style: solid;
+  border-color: rgb(204, 204, 204);
+  vertical-align: top;
 }
 
 .markdown-body tr {
-    display: table-row;
-    vertical-align: inherit;
-    unicode-bidi: isolate;
-    border-color: inherit;
+  display: table-row;
+  vertical-align: inherit;
+  unicode-bidi: isolate;
+  border-color: inherit;
 }
-
-
