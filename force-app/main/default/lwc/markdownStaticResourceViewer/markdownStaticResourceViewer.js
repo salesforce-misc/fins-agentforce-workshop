@@ -72,7 +72,8 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
     // Map specific static resources to friendly labels for this workshop.
     const labelMap = {
       BWAM: "Banking & Wealth",
-      INS: "Insurance"
+      INS: "Insurance",
+      GENERAL: "General"
     };
 
     return this.resourceList.map((name) => ({
@@ -89,7 +90,7 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
     const rawNames =
       this.resourceNames && this.resourceNames.trim()
         ? this.resourceNames
-        : "BWAM,INS";
+        : "BWAM,INS,GENERAL";
 
     this.resourceList = this.parseResourceNames(rawNames);
 
