@@ -4,6 +4,14 @@ This guide will prepare your environment for the workshop by enabling Einstein c
 
 ---
 
+### 2. Enable Data 360
+
+Click the **Setup** icon in the top right and select **Data Cloud Setup**. A new tab will open. Scroll to the bottom of the page and click **Get Started**. This will start the provisioning of Data 360 in your environment and takes approximately 40 minutes to complete. 
+
+![Org setup step 1](images/intcon1.png)
+
+---
+
 ### 1. Open Setup
 
 Click the **Setup** icon in the top right and select **Setup**. A new tab will open.
@@ -12,14 +20,7 @@ Click the **Setup** icon in the top right and select **Setup**. A new tab will o
 
 ---
 
-### 2. Turn On Einstein
-
-On the new tab, in the Quick Find box at the top left, enter **Einstein Setup** to find and select the Einstein Setup page or go [here](/lightning/setup/EinsteinGPTSetup/home).  
-On that page, click the toggle to **Turn on Einstein**.
-
----
-
-### 3. Enable Agentforce
+### 2. Enable Agentforce
 
 Refresh the browser and, in the Quick Find box, search for and select **Agentforce Agents** or go [here](/lightning/setup/EinsteinCopilot/home).  
 At the top of the page, toggle on **Agentforce**.
@@ -28,16 +29,7 @@ At the top of the page, toggle on **Agentforce**.
 
 ---
 
-### 4. Enable Einstein Bots
-
-In the Quick Find box, search for and select **Einstein Bots** or go [here](/lightning/setup/EinsteinBots/home).  
-Toggle on **Einstein Bots**.
-
-![Org setup step 3](images/orgSetup4.png)
-
----
-
-### 5. Enable Messaging
+### 3. Enable Messaging
 
 In the Quick Find box, search for and select **Messaging Settings** or go [here](/lightning/setup/LiveMessageSetup/home).  
 Toggle on **Messaging**.
@@ -46,7 +38,7 @@ Toggle on **Messaging**.
 
 ---
 
-### 6. Create an Embedded Service Deployment (Web)
+### 4. Create an Embedded Service Deployment (Web)
 
 In the Quick Find box, search for and select **Embedded Service Deployments** or go [here](/lightning/setup/EmbeddedServiceDeployments/home).
 
@@ -67,7 +59,7 @@ Click **Publish** after the deployment is saved. It will need up to 10 minutes t
 
 ---
 
-### 7. Add Embedded Messaging to an Experience Cloud Site
+### 5. Add Embedded Messaging to an Experience Cloud Site
 
 In the Quick Find box, search for and select **All Sites** or go [here](/lightning/setup/SetupNetworks/home).  
 This takes you to the Experience Cloud setup page where you can publish your agent to a customer-facing website.
