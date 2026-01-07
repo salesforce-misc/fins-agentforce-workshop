@@ -2,7 +2,7 @@
 
 In this workshop, you will configure an Agentforce-powered insurance agent that can answer complex policy questions, surface relevant claims and payment history, and guide customers through billing updates in real time. You’ll update existing flows, wire them into agent actions, and use context variables so the agent always has the right customer data at its fingertips.
 
-## Answer Insurance Policy Questions
+## 1. Answer Insurance Policy Questions
 
 This is the first and foundational exercise that we will use to enable all of our other exercises. We will give our Agent the proper context about the customer so that the agent has all the information about the customer's policies, claims, and payments on hand.
 
@@ -20,7 +20,7 @@ Click **Next** to get started!
 
 ---
 
-### Update Flow to Retrieve Claims and Payments
+### 1.1 Update Flow to Retrieve Claims and Payments
 
 In the **Quick Find** bar in Setup, search for and select **Flows** to open the list of flows.  
 In the list, find **INS - Get Active Insurance Policies for Account** and click it to open the flow in a new tab.
@@ -57,7 +57,7 @@ You can now close this tab.
 
 ---
 
-### Create Action and Context Variable
+### 1.2 Create Action and Context Variable
 
 Back in Setup, search for and select **Agentforce Agents** to open the list of Agents.  
 Expand the **Insurance Agent** by clicking **>** beside it, then select **Version 1** to open this agent in the Agent Builder (the main tool for building our Agent).
@@ -119,7 +119,7 @@ You’ve now finished configuring the Action.
 
 ---
 
-### Test Our Agent
+### 1.3 Test Our Agent
 
 Let's start testing and interrogating the agent with all sorts of questions about our policies!
 
@@ -152,7 +152,7 @@ Feel free to experiment and ask the agent any other questions about your policie
 
 ---
 
-## Add a Driver Exercise
+## 2. Add a Driver Exercise
 
 In this exercise, you will enhance the insurance agent so it can manage drivers on an auto insurance policy.  
 This topic will allow the agent to add a driver to an insurance policy and capture the necessary details.
@@ -170,7 +170,7 @@ Click **Next** to get started!
 
 ---
 
-### Part 1: Create Auto Policy Driver Management Topic
+### 2.1 Create Auto Policy Driver Management Topic
 
 Click the **Setup Cog** icon and select **Setup**.  
 In **Quick Find**, search for **Agentforce** and select **Agentforce Agents**.  
@@ -192,7 +192,7 @@ On the actions step, search for and check off the **INS - Get Drivers on Policy*
 
 ---
 
-### Create New Agent Action
+### 2.2 Create New Agent Action
 
 You will now create a new Agent Action to include in this topic.  
 This action is based on an existing pre-built flow and prompt template and gives the agent the ability to add a new driver.
@@ -238,7 +238,7 @@ Your agent can now add a driver to an auto policy.
 
 ---
 
-### Add a Driver from the Insurance Portal
+### 2.3 Add a Driver from the Insurance Portal
 
 Uploading a file isn’t supported in the Conversation Preview, so you will test this new topic directly from the insurance portal.
 
@@ -256,7 +256,7 @@ Try prompts like:
 
 ---
 
-## Address Change
+## 3. Address Change
 
 An address change in insurance can lead to many complicated follow-ups, from updating auto premiums to cancelling policies, often requiring human intervention.  
 In this exercise, you’ll explore how an agent can help a customer change their address, validate additional information, and hand over to a real person if necessary.
@@ -275,7 +275,7 @@ Click **Next** to get started!
 
 ---
 
-### Review Address Change Topic
+### 3.1 Review Address Change Topic
 
 First, review the initial setup of the **Address Change** topic and the two custom actions that are already pre-built.
 
@@ -305,7 +305,7 @@ Leave this tab open; you will come back to Agent Builder later.
 
 ---
 
-### Build RAG Dynamic Grounding Flow
+### 3.2 Build RAG Dynamic Grounding Flow
 
 You will now build a dynamically grounded prompt to compose a more sophisticated follow-up with the customer after updating their billing address.  
 Before that, create a new flow to ground the prompt.
@@ -382,7 +382,7 @@ Finally, click **Activate** in the top right when available.
 
 ---
 
-### Build Prompt with Flow
+### 3.3 Build Prompt with Flow
 
 Now that you have a flow for dynamically grounding the prompt, you will create the prompt template itself.
 
@@ -407,23 +407,13 @@ You are an insurance agent and a customer, {!$Input:Account.Name}, has just upda
 
 You must treat equally any individuals or persons from different socioeconomic statuses, sexual orientations, religions, races, physical appearances, nationalities, gender identities, disabilities, and ages. When you do not have sufficient information, you must choose the unknown option, rather than making assumptions based on any stereotypes.
 
-
-
 """
-
 If the customer has a renter's insurance policy with us, ask them if they would like to cancel their existing rental insurance policy
-
 At the beginning of the message, congratulate the customer on their new home and let them know we're here to provide them ease of mind with their new property and move. Let the customer know that we can help them quote a new home insurance policy with the link referenced below
-
 Do not reference their existing renter's insurance policy ID field
-
 Do not address the customer like you would an email, respond as if it is part of an ongoing chat conversation with the customer
-
 Do not say hello or address the customer as dear, do not sign off in the response
-
 """
-
-
 
 New address: {!$Input:Account.BillingStreet}, {!$Input:Account.BillingCity} {!$Input:Account.BillingState}, {!$Input:Account.BillingPostalCode}, {!$Input:Account.BillingCountry}
 
@@ -434,7 +424,7 @@ Click **Save** and **Activate** the Prompt Template.
 
 ---
 
-### Add Prompt as Action to Agent
+### 3.4 Add Prompt as Action to Agent
 
 Now you’ll wire the new prompt template into the agent as an action.
 
@@ -476,7 +466,7 @@ Click **Save**, then click **Activate** in the top right.
 
 ---
 
-### Test the Agent
+### 3.5 Test the Agent
 
 Time for the big reveal—let’s interact with the agent’s address change capabilities.
 
@@ -496,25 +486,7 @@ You can test the address change experience with prompts like:
 
 ---
 
-### Test the Agent (Billing Topic)
-
-Now test the billing topic behavior directly in the Conversation Preview.
-
-In the preview pane on the right, click the **Eye** icon at the top.  
-For the **MessagingSession EndUserAccountId** variable, search for and select **Kiran Singh**, then click **Apply**.
-
-In the chat box, converse with the agent using these messages:
-
-1. What are my policies
-2. I want to update the payment method for my RAV4 policy
-3. paypal
-
-If the customer’s credit score is above 500, the agent should proceed with updating the billing information using the new tools and instructions.  
-If the credit score is 500 or below, the agent should now escalate the request to a live human agent instead of performing the update.
-
----
-
-## Billing Management
+## 4. Billing Management
 
 With the policy management topic, you’ve retrieved customer details, including information about payments.  
 Now you’ll give the agent tools to help customers manage their payments as well.
@@ -533,7 +505,7 @@ Click **Next** to get started!
 
 ---
 
-### Create Billing Topic
+### 4.1 Create Billing Topic
 
 You will first create a new topic in the Insurance Agent to handle billing tasks.
 
@@ -558,7 +530,7 @@ Click **Finish**.
 
 ---
 
-### Define Filters for Actions
+### 4.2 Define Filters for Actions
 
 You don’t want to let the customer update their payment method or billing frequency if they have a credit score under 500, so you will define strict filters to enforce this.
 
@@ -601,14 +573,30 @@ Close the action and repeat these steps for the **INS - Update Billing Frequency
      alt="Apply Low Risk Customer filter to billing actions"
      width="320" />
 
+---
 
+### 4.3 Test the Agent
 
+Let's test our agent. In the preview pane on the right, click the Eye icon at the top and for the MessagingSession EndUserAccountId variable, search and select Kiran Singh. Click Apply
 
+In the chat box, converse with the agent using these messages:
 
+1. What are my policies
+2. I want to update the payment method for my RAV4 policy
+3. paypal
 
+The response back from the Agent wasn't what we were hoping for. We can see reasoning in the middle pane about why our Agent decided to choose this action. Let's click the Suggest Improvement button to get suggestions on how we can improve our agent and answer the questions from the builder. You can provide feedback like the screenshot below:
 
+<img src="images/billing5_2.png"
+     alt="Apply Low Risk Customer filter to billing actions"
+     width="320" />
 
+Based on the feedback. We can add a new instruction into our Topic, something like this:
 
+```text
+Before updating billing frequency or payment method, verify that the customer's credit score is over 500. If the credit score is 500 or below, escalate the request to a live human agent
+```
 
+Back on the Topic pane on the left and in our billing Topic, click Add Instruction at the bottom and copy/paste the above instruction in and click Save
 
-
+Click the Refresh (circular arrow) at the top left the Conversation Preview panel at the top and let's try it again! Did the agent behave as we would expect?
