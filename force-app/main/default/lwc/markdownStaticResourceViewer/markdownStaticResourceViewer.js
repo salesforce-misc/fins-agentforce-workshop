@@ -72,6 +72,7 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
     // Map specific static resources to friendly labels for this workshop.
     const labelMap = {
       BWAM: "Banking & Wealth",
+      BWAM_AGENTSCRIPT: "Banking & Wealth - Agent Script",
       INS: "Insurance",
       GENERAL: "General"
     };
