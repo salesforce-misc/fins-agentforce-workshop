@@ -1,4 +1,4 @@
-## Relationship Assistant Agent
+## 1 Relationship Assistant Agent
 
 In this exercise, we will explore some of the standard Agentforce tools in Financial Services Cloud and how to build an assistive agent for bank tellers, wealth insurance advisors or producers to be more productive. The Agent we'll build today will assist employees with managing their relationships with clients.
 
@@ -14,7 +14,7 @@ We will explore:
 
 Click Next to get started!
 
-## 1.1 Build and Deploy an Agent
+### 1.1 Build and Deploy an Agent
 
 In this exercise we will first explore the standard Agentforce assets that come with Financial Services Cloud and how we can leverage them to accelerate building our Relationship Assistant Agent.
 
@@ -27,9 +27,7 @@ This page has 2 tabs - Topics and Actions
 
 Let's now use some of these assets to build an agent. In **Quick Find**, search for and select **Agentforce Agents**. At the top right, click the **+ New Agent** button to get taken to the Agent Creator. We can see that there are a lot of agent templates we can use to get started. For this exercise, we will use the **Banking Relationship Assistance** template. Click it and then click **Next** in the top right.
 
-<img src="images/general1.png"
-     alt="Create employee agent"
-     width="1080" />
+![](images/general1.png)
 
 On the next screen, by default, there is the **Post-Meeting Assistance** Topic associated with the agent that gives our agent a bunch of assistive tools for helping employees track and manage their customer interactions in FSC. Click Next again to get to the **Customize your Agent** section. We'll make a few adjustments here (because relationship management spans across financial products):
 
@@ -47,7 +45,7 @@ This will take us into the Agent Builder where we can further configure and buil
      alt="Create employee agent"
      width="1080" />
 
-## 1.2 Build Multimodal Prompt to Analyze Income Statements
+### 1.2 Build Multimodal Prompt to Analyze Income Statements
 
 While assisting with managing interactions is very helpful, we want to give our agent the ability to analyze income statements of our customers.
 
@@ -164,7 +162,65 @@ After another 1-2 minutes, our set of tests should be finished running! Refresh 
 
 It is also best to keep in mind that not getting a follow-up question from the agent can be a good thing and that agents are inherently semantic. Test results will not always consistently pass the same use cases, even if we changed nothing. Even so, this can be a great tool to monitor your agent's performance and catch any red flags before an end user does!
 
+---
+## 2. Analyze Annual Reports
+
+Accessing structured data is easy - analyzing and interrogating unstructured data can now be just as easy! In this module, we'll load files into the vector database in Data 360 and test it out with a basic configuration. We'll then step it up with an advanced configuration. Then finally include web search to answer questions about a familiar corporate customer, Berkshire Hathaway.
+
+Click the Setup Cog icon at the top right and select Setup. Search for Agentforce Data Library and open the page. Click the New Library button (if its grayed out, you might have to wait for Data 360 to finish provisioning). In the modal enter:
+
+- Name = Annual Reports
+- API Name = Annual_Reports
+- Description = Repository of the financial annual reports of corporate partners
+
+### 2.1 Create a Data Library
+
+We'll download the past 3 years for Berkshire Hathaway to create our Data Library: 
+1. [2024 Annual Report](https://www.berkshirehathaway.com/2024ar/2024ar.pdf)
+2. [2023 Annual Report](https://www.berkshirehathaway.com/2023ar/2023ar.pdf)
+3. [2022 Annual Report](https://www.berkshirehathaway.com/2022ar/2022ar.pdf)
+
+In Setup, search and select Agentforce Data Library. Click the New Library button on the right and name the new Data Library 'Annual Reports'. Click Save. 
+
+![](images/vector3.png)
+
+In our new data library, set the Data Type to be 'Files' and click the Upload Files button that shows up below. Upload all 3 annual report PDF files that we downloaded earlier. Click Save. Our data library is now ingesting the files into Data 360 and generating embeddings, chunks and a search retriever for our content. This could take a few minutes. 
+
+![](images/vector2.png)
+
+In Setup, search and select Prompt Builder. Create a new Flex Prompt Template and name it 'Analyze Annual Reports'. Under Define Sources add 2 variables:
+
+| Name | API Name | Source Type | Object |
+| ---- | ---- | ---- | ---- |
+| Account | Account | Object | Account |
+| Question | Question | Free Text |  |
+
+![](images/vector1.png)
+
+For the Prompt Template, copy-paste the below text. Replace the placeholder with the Resource Search -> ADL_Annual_Reports -> File_ADL_Annual_Reports. 
+
+```text
+You are a financial analyst that is analyzing the annual reports of Berkshire Hathaway to formulate a succinct, incisive answer to this question: {!$Input:Question}
+
+After reviewing the annual reports from the last 3 years, these are the relevant sections: <RETRIEVER PLACEHOLDER>
+```
+
+Click the File_ADL_Annual_Reports to open its configuration on the left. Copy-paste the below text for the Search Text. For Output Fields, select Chunk and set Number of Results to 20. Click Save. 
+
+```text
+For {!$Input:Account.Name}, answer this question: {!$Input:Question}
+```
+
+![](images/vector4.png)
+![](images/vector5.png)
+![](images/vector6.png)
+![](images/vector7.png)
+![](images/vector8.png)
+![](images/vector9.png)
+![](images/vector10.png)
+![](images/vector11.png)
+![](images/vector12.png)
+
 <p style="text-align: center;"><strong style="color: purple; font-size: 30px; font-weight: bold;">Congratulations!</strong>
 
 <p style="text-align: center;"><strong style="color: purple; font-size: 18; font-weight: bold;">You've completed the Financial Services Agentforce Workshop!
-

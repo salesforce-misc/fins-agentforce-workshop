@@ -43,8 +43,7 @@ Toggle on **Messaging**.
 In the Quick Find box, search for and select **Embedded Service Deployments** or go [here](/lightning/setup/EmbeddedServiceDeployments/home).
 
 1. Click **New Deployment** on the top right.
-2. In the pop-up, select **Messaging for In-App and Web** and click **Next**.  
-   If you cannot select **Messaging for In-App and Web**, close the pop-up by clicking the **X** at the top right of it. You may have opened the pop-up multiple times.
+2. In the pop-up, select **Enhanced Chat**. If you cannot select it, close the pop-up by clicking the **X** at the top right. You may have opened the pop-up multiple times.
 3. Select **Web** and click **Next**.
 4. Fill the form using the table below and click **Save**. It can take a minute to save.
 
