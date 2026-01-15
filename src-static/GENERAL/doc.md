@@ -212,6 +212,9 @@ For {!$Input:Account.Name}, answer this question: {!$Input:Question}
 ```
 
 ![](images/vector4.png)
+
+We'
+
 ![](images/vector5.png)
 ![](images/vector6.png)
 ![](images/vector7.png)
