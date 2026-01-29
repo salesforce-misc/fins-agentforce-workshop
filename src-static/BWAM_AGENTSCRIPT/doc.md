@@ -19,9 +19,6 @@ In this workshop, you will build a specialized AI agent using deterministic logi
 2. Click **New Agent** to create a new agent.
 3. In the **What agent do you want to build?** dialogue, enter `Create a portfolio advisor agent for a wealth management customer`.
     <img src="images/as_bwam_1.png" alt="Agent creation dialog with natural language prompt" width="640" />
-4. Click the **skip ahead** link.
-5. Click the **Script </>** button and toggle to **Canvas** mode.
-    <img src="images/as_bwam_2.png" alt="Toggle button for Script and Canvas mode" width="200" />
 
 #### Configure agent details
 

@@ -148,8 +148,8 @@ In the next **Test Data** section, we can upload test cases in CSV format or use
 Build 5 test cases for the Post-Meeting Assistance Topic about creating an interaction, creating a task, drafting an email to the customer, creating an interaction attendee and creating an interaction summary. Create 1 test case for the Income Statement Analysis Topic that will analyze the income statement of the customer
 ```
 <p float="left">
-  <img src="images/general12.png" width="640" />
-  <img src="images/general13v2.png" width="640" /> 
+  <img src="images/general12.png" width="320" />
+  <img src="images/general13v2.png" width="320" /> 
 </p>
 
 Click **Next**. The Evaluations section lets us choose which criteria we want to evaluate when we run our test. Let's check off all evaluation criteria and click **Generate Test Cases**
@@ -163,9 +163,11 @@ After another 1-2 minutes, our set of tests should be finished running! Refresh 
 It is also best to keep in mind that not getting a follow-up question from the agent can be a good thing and that agents are inherently semantic. Test results will not always consistently pass the same use cases, even if we changed nothing. Even so, this can be a great tool to monitor your agent's performance and catch any red flags before an end user does!
 
 ---
-## 2. Analyze Annual Reports
+## 2. Intelligent Context and Document AI
 
-Accessing structured data is easy - analyzing and interrogating unstructured data can now be just as easy! In this module, we'll load files into the vector database in Data 360 and test it out with a basic configuration. We'll then step it up with an advanced configuration. Then finally include web search to answer questions about a familiar corporate customer, Berkshire Hathaway.
+Accessing structured data is easy - analyzing and interrogating unstructured data can now be just as easy! In this module, we'll load files into Data 360's vector database and test it out with a basic configuration. We'll then step it up with an advanced configuration. Then finally answer questions about a familiar corporate customer, Berkshire Hathaway with Intelligent Context. 
+
+We'll also take a look at Document AI and how LLMs are disrupting intelligent document processing technologies. Through Document AI, we will take an insurance quote PDF and automatically convert it into structured data in Data 360, including automatically defining the data schema. 
 
 Click the Setup Cog icon at the top right and select Setup. Search for Agentforce Data Library and open the page. Click the New Library button (if its grayed out, you might have to wait for Data 360 to finish provisioning). In the modal enter:
 
@@ -175,54 +177,64 @@ Click the Setup Cog icon at the top right and select Setup. Search for Agentforc
 
 ### 2.1 Create a Data Library
 
-We'll download the past 3 years for Berkshire Hathaway to create our Data Library: 
-1. [2024 Annual Report](https://www.berkshirehathaway.com/2024ar/2024ar.pdf)
-2. [2023 Annual Report](https://www.berkshirehathaway.com/2023ar/2023ar.pdf)
-3. [2022 Annual Report](https://www.berkshirehathaway.com/2022ar/2022ar.pdf)
+We'll download the most recent [2024 Annual Report](https://www.berkshirehathaway.com/2024ar/2024ar.pdf) of Berkshire Hathaway to create our Data Library. We only use 1 file to minimize wait times on processing, feel free to include more files if you'd like. Here are links to Berkshire Hathaway's [2023](https://www.berkshirehathaway.com/2023ar/2023ar.pdf) and [2022](https://www.berkshirehathaway.com/2022ar/2022ar.pdf) annual reports 
 
 In Setup, search and select Agentforce Data Library. Click the New Library button on the right and name the new Data Library 'Annual Reports'. Click Save. 
 
 ![](images/vector3.png)
 
-In our new data library, set the Data Type to be 'Files' and click the Upload Files button that shows up below. Upload all 3 annual report PDF files that we downloaded earlier. Click Save. Our data library is now ingesting the files into Data 360 and generating embeddings, chunks and a search retriever for our content. This could take a few minutes. 
+In our new data library, set the Data Type to be 'Files' and click the Upload Files button that shows up below. Upload all 3 annual report PDF files that we downloaded earlier. Click Save. Our data library is now ingesting the files into Data 360 and generating embeddings, chunks and a search retriever for our content. 
+
+**PAUSE**: _Creating a new data library can take time. Let's move on to another section and revisit Intelligent Context after its finished being created. Keep this browser tab open though._
 
 ![](images/vector2.png)
 
-In Setup, search and select Prompt Builder. Create a new Flex Prompt Template and name it 'Analyze Annual Reports'. Under Define Sources add 2 variables:
+### 2.2 Configure Document AI
 
-| Name | API Name | Source Type | Object |
-| ---- | ---- | ---- | ---- |
-| Account | Account | Object | Account |
-| Question | Question | Free Text |  |
+While waiting for our data library to be created, we'll create a Document AI configuration to perform intelligent document processing (converting unstructured content into structured data). To do this, we'll use an insurance auto quote PDF. Download this PDF at sfdc.co/bmwQuote
+
+Using the App Launcher, open the **Data Cloud** App. In the app, find and open the **Process Content** tab (you'll likely have to use the **More** dropdown to find this tab). 
 
 ![](images/vector1.png)
 
-For the Prompt Template, copy-paste the below text. Replace the placeholder with the Resource Search -> ADL_Annual_Reports -> File_ADL_Annual_Reports. 
+Click **New**, select **Without a Source Object** and click **Next**. In the new tab, click **Upload Files** and upload the ```BMW_Quote.pdf``` file. This can take a minute or two, once uploaded successfully, click **Done**. The preview for our PDF should show up shortly. 
 
-```text
-You are a financial analyst that is analyzing the annual reports of Berkshire Hathaway to formulate a succinct, incisive answer to this question: {!$Input:Question}
+In the top left, let's change our LLM in the dropdown from Gemini to OpenAI GPT-4o. In the right pane, select **Using Auto-Extraction**. Click **Next**. 
 
-After reviewing the annual reports from the last 3 years, these are the relevant sections: <RETRIEVER PLACEHOLDER>
-```
+![](images/vector4.png)
+
+Review the output structured data schema that was automatically generated based on our input PDF. The **Fields** tab has the main fields that are extracted from the document (eg. customer name). The **Tables** tab has child table(s) (eg. coverage details). 
+
+We want to include an additional footnotes field. Click **+ Add Field** under the **Fields** tab and use this configuration: 
+    - Name = Footnotes
+    - API Name= Footnotes
+    - Field Type = string
+    - Prompt Instructions = ```Paragraph at the bottom of the quote```
+
+Click Save and then **Test** at the top right to try our configuration. You should see the fields with correctly mapped sample values. Go to the **Tables** tab and click **Preview** beside coverage_details to see the extracted table values as well. 
+
+<p float="left">
+  <img src="images/vector5.png" width="320" />
+  <img src="images/vector6.png" width="320" /> 
+</p>
+
+Click **Save** and name this configuration ```Quote Extraction```. Click **Save** again.  
+
+### 2.3 Intelligent Context
+
+In the **Process Content** tab of Data Cloud, click the **Intelligent Context** in the left pane. Close a pop-up if it appears. Click **New Configuration** at the top right. Name the new search configuration **Annual Reports** and click **Save**. 
+
+In the new tab, click Upload Files and upload the annual report PDF for Berkshire Hathaway we downloaded earlier. Uploading and processing the PDFs can take a minute or two. After the PDFs are uploaded, click **Set up my configuration using smart defaults** in the Agentforce pane on the right. This will briefly analyze your documents and automatically configure Intelligent Context for you. This can take a few minutes. After completion, we can see a preview of the generated chunks from our files and the search configuration that was chosen. 
+
+![](images/vector7.png)
+
+Open the **Edit Configuration** tab in the left pane and we can review the configurations chosen by Agentforce. Expand **Select an Embedding Model** and update this dropdown to **Salesforce Embedding V2 Small**. For **Set Chunking Rules**, move the sliders for **Max Tokens** to approximately 2500 and **Overlap Tokens** to approximately 250. Click **Apply Changes**. This will take a few minutes to update again. 
 
 Click the File_ADL_Annual_Reports to open its configuration on the left. Copy-paste the below text for the Search Text. For Output Fields, select Chunk and set Number of Results to 20. Click Save. 
 
 ```text
 For {!$Input:Account.Name}, answer this question: {!$Input:Question}
 ```
-
-![](images/vector4.png)
-
-We'
-
-![](images/vector5.png)
-![](images/vector6.png)
-![](images/vector7.png)
-![](images/vector8.png)
-![](images/vector9.png)
-![](images/vector10.png)
-![](images/vector11.png)
-![](images/vector12.png)
 
 <p style="text-align: center;"><strong style="color: purple; font-size: 30px; font-weight: bold;">Congratulations!</strong>
 
