@@ -65,7 +65,7 @@ Follow these steps to create the Apex action:
      - **Instructions**: `JSON output of the customer's financial accounts`
      - **Show in conversation**: checked
 
-| <img src="images/aquestion2_3.png" alt="Configure action inputs" width="640" /> | <img src="images/aquestion2_4.png" alt="Configure action outputs" width="640" /> |
+| <img src="images/aquestion2_3.png" alt="Configure action inputs" width="100%" /> | <img src="images/aquestion2_4.png" alt="Configure action outputs" width="100%" /> |
 | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 
 8. Click **Finish**.

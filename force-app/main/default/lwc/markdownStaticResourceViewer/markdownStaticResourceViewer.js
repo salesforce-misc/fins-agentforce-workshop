@@ -12,6 +12,31 @@ const LIBS = {
 // "Show Setup Steps" toggle is enabled.
 const SETUP_RESOURCE_NAME = "SETUP";
 
+const DEFAULT_RESOURCE_NAMES = [
+  "BWAM",
+  "BWAMAGENTSCRIPT",
+  "INS",
+  "GENERAL",
+  "INSAGENTSCRIPT"
+];
+const DEFAULT_RESOURCE_STRING = DEFAULT_RESOURCE_NAMES.join(",");
+const LEGACY_DEFAULT_RESOURCE_STRING = "BWAM,BWAMAGENTSCRIPT,INS";
+const LEGACY_DEFAULT_CANONICAL = canonicalizeResourceListString(
+  LEGACY_DEFAULT_RESOURCE_STRING
+);
+
+function canonicalizeResourceListString(value) {
+  if (!value) {
+    return "";
+  }
+
+  return value
+    .split(",")
+    .map((name) => name.trim().toUpperCase())
+    .filter((name) => !!name)
+    .join(",");
+}
+
 export default class MarkdownStaticResourceViewer extends LightningElement {
   /**
    * Comma-separated list of static resource names, each representing
@@ -90,12 +115,18 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
 
     // Use a sensible default when no resource names are provided via @api.
     // This ensures the workshop docs (BWAM and INS) are available out of the box.
-    const rawNames =
+    const providedNames =
       this.resourceNames && this.resourceNames.trim()
         ? this.resourceNames
-        : "BWAM,BWAMAGENTSCRIPT,INS,GENERAL,INSAGENTSCRIPT";
+        : DEFAULT_RESOURCE_STRING;
 
-    this.resourceList = this.parseResourceNames(rawNames);
+    const canonicalProvided = canonicalizeResourceListString(providedNames);
+    const normalizedNames =
+      !canonicalProvided || canonicalProvided === LEGACY_DEFAULT_CANONICAL
+        ? DEFAULT_RESOURCE_STRING
+        : providedNames;
+
+    this.resourceList = this.parseResourceNames(normalizedNames);
 
     if (!this.resourceList.length) {
       this.error =
@@ -130,10 +161,24 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
       return [];
     }
 
+    const seen = new Set();
+
     return names
       .split(",")
       .map((name) => name.trim())
-      .filter((name) => !!name);
+      .filter((name) => {
+        if (!name) {
+          return false;
+        }
+
+        const normalized = name.toUpperCase();
+        if (seen.has(normalized)) {
+          return false;
+        }
+
+        seen.add(normalized);
+        return true;
+      });
   }
 
   async ensureLibrariesLoaded() {
