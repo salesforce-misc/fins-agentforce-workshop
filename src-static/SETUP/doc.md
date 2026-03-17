@@ -4,7 +4,7 @@ This guide will prepare your environment for the workshop by enabling Einstein c
 
 ---
 
-### 2. Enable Data 360
+### 1. Enable Data 360
 
 Click the **Setup** icon in the top right and select **Data Cloud Setup**. A new tab will open. Scroll to the bottom of the page and click **Get Started**. This will start the provisioning of Data 360 in your environment and takes approximately 40 minutes to complete. 
 
@@ -12,7 +12,7 @@ Click the **Setup** icon in the top right and select **Data Cloud Setup**. A new
 
 ---
 
-### 1. Open Setup
+### 2. Open Setup
 
 Click the **Setup** icon in the top right and select **Setup**. A new tab will open.
 
@@ -20,7 +20,7 @@ Click the **Setup** icon in the top right and select **Setup**. A new tab will o
 
 ---
 
-### 2. Enable Agentforce
+### 3. Enable Agentforce
 
 Refresh the browser and, in the Quick Find box, search for and select **Agentforce Agents** or go [here](/lightning/setup/EinsteinCopilot/home).  
 At the top of the page, toggle on **Agentforce**.
@@ -29,7 +29,7 @@ At the top of the page, toggle on **Agentforce**.
 
 ---
 
-### 3. Enable Messaging
+### 4. Enable Messaging
 
 In the Quick Find box, search for and select **Messaging Settings** or go [here](/lightning/setup/LiveMessageSetup/home).  
 Toggle on **Messaging**.
@@ -38,7 +38,7 @@ Toggle on **Messaging**.
 
 ---
 
-### 4. Create an Embedded Service Deployment (Web)
+### 5. Create an Embedded Service Deployment (Web)
 
 In the Quick Find box, search for and select **Embedded Service Deployments** or go [here](/lightning/setup/EmbeddedServiceDeployments/home).
 
@@ -58,7 +58,7 @@ Click **Publish** after the deployment is saved. It will need up to 10 minutes t
 
 ---
 
-### 5. Add Embedded Messaging to an Experience Cloud Site
+### 6. Add Embedded Messaging to an Experience Cloud Site
 
 In the Quick Find box, search for and select **All Sites** or go [here](/lightning/setup/SetupNetworks/home).  
 This takes you to the Experience Cloud setup page where you can publish your agent to a customer-facing website.
@@ -71,5 +71,3 @@ This takes you to the Experience Cloud setup page where you can publish your age
 6. Click **Got It** and you’re done!
 
 ![banner](images/orgSetup7.png)
-
----

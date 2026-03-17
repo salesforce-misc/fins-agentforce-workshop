@@ -18,7 +18,7 @@
                 name="resourceNames"
                 type="String"
                 label="Static Resource Names"
-                default="BWAM,INS,GENERAL"
+                default="BWAM,BWAMAGENTSCRIPT,INS,GENERAL,INSAGENTSCRIPT"
                 description="Comma-separated list of static resource names, each representing a markdown document zip (with doc.md and an images/ folder)."
             />
             <property

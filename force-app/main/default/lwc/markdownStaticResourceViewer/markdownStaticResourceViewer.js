@@ -16,7 +16,7 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
   /**
    * Comma-separated list of static resource names, each representing
    * a markdown+images zip that contains doc.md and an images/ folder.
-   * Example: "BWAM,INS,SETUP"
+   * Example: "BWAM,BWAM_AGENTSCRIPT,INS,GENERAL,INS_AGENTSCRIPT,SETUP"
    */
   @api resourceNames;
 
@@ -40,13 +40,14 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
 
   resourceList = [];
   htmlCacheByResource = {};
-
+  showDocumentPicker = true;
   // Static banner shown above the document picker to match workshop branding
   bannerUrl = bannerImage;
 
   // Cached rendered HTML fragments
   _renderedHtml;
   _setupHtml;
+
 
   connectedCallback() {
     this.initialiseResources();
@@ -72,9 +73,10 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
     // Map specific static resources to friendly labels for this workshop.
     const labelMap = {
       BWAM: "Banking & Wealth",
-      BWAM_AGENTSCRIPT: "Banking & Wealth - Agent Script",
+      BWAMAGENTSCRIPT: "Banking & Wealth Agent Script",
       INS: "Insurance",
-      GENERAL: "General"
+      GENERAL: "General",
+      INSAGENTSCRIPT: "Insurance Agent Script"
     };
 
     return this.resourceList.map((name) => ({
@@ -91,7 +93,7 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
     const rawNames =
       this.resourceNames && this.resourceNames.trim()
         ? this.resourceNames
-        : "BWAM,INS,GENERAL";
+        : "BWAM,BWAMAGENTSCRIPT,INS,GENERAL,INSAGENTSCRIPT";
 
     this.resourceList = this.parseResourceNames(rawNames);
 
@@ -358,7 +360,10 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
   get currentResourceLabel() {
     const labelMap = {
       BWAM: "Banking & Wealth",
-      INS: "Insurance"
+      BWAMAGENTSCRIPT: "Banking & Wealth - Agent Script",
+      INS: "Insurance",
+      GENERAL: "General",
+      INSAGENTSCRIPT: "Insurance - Agent Script"
     };
 
     if (!this.currentResourceName) {

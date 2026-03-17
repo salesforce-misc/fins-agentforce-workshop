@@ -222,6 +222,8 @@ Click **Save** and name this configuration ```Quote Extraction```. Click **Save*
 
 ### 2.3 Intelligent Context
 
+If your Data Library hasn't been completed yet, revisit this module after it has. 
+
 In the **Process Content** tab of Data Cloud, click the **Intelligent Context** in the left pane. Close a pop-up if it appears. Click **New Configuration** at the top right. Name the new search configuration **Annual Reports** and click **Save**. 
 
 In the new tab, click Upload Files and upload the annual report PDF for Berkshire Hathaway we downloaded earlier. Uploading and processing the PDFs can take a minute or two. After the PDFs are uploaded, click **Set up my configuration using smart defaults** in the Agentforce pane on the right. This will briefly analyze your documents and automatically configure Intelligent Context for you. This can take a few minutes. After completion, we can see a preview of the generated chunks from our files and the search configuration that was chosen. 
