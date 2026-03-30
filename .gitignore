@@ -46,3 +46,12 @@ $RECYCLE.BIN/
 **/__pycache__/
 **/.venv/
 **/venv/
+
+.playwright-mcp/
+
+.cursor/
+.husky/
+
+# VS Code: ignore local-only files; keep shared settings in git
+.vscode/*
+!.vscode/settings.json
