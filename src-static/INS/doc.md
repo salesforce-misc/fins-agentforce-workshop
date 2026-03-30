@@ -438,8 +438,7 @@ In **Reference Action**, select the prompt you created: **INS - Property Insuran
 Click **Next** and finish the action definition by:
 
 1. Unchecking **Show loading text for this action**.
-2. For the **Account** input variable, enter these instructions:  
-   `Account record used to determine the call to action`
+2. For the **Account** input variable, enter these instructions: `Account record used to determine the call to action`
 3. For the **Prompt Response** output variable, check **Show in conversation**.
 4. Click **Finish**.
 

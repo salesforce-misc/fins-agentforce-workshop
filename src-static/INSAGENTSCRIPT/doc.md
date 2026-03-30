@@ -63,7 +63,7 @@ In this workshop, you will build a specialized AI agent using deterministic logi
 
 #### Add a custom policy and quote action
 
-1. Under **Actions Available for Reasoning**, click **Select action** and choose **Create an action**.
+1. Under **Actions Available for Reasoning**, click **Select action** and choose **Create a custom action**.
 
     <img src="images/policy2-1.png" alt="Selecting the option to create a new action" width="300" />
 
@@ -72,15 +72,23 @@ In this workshop, you will build a specialized AI agent using deterministic logi
     - **Reference Action Type**: `Flow`
     - **Reference Action**: `INS - Get Active Insurance Policies for Account`
 
-        <img src="images/policy2-2.png" alt="Configuring the Apex action reference" width="640" />
+        <img src="images/policy2-2.png" alt="Configuring the flow action reference" width="640" />
 
-4. In the **Explorer** pane, click Policy Questions to go back to our Topic. Put your cursor after our new `Get Customer Policies` action and press Enter to start a new line. Click **Select action** and choose **Create a custom action**.
-5. For the Action Name, enter `Analyze Quote`. For Description, enter `Analyze the PDF quote file related to the customer's account record` and click **Create and Open**.
-6. Configure with the following values:
+3. In the **Explorer** pane, click Policy Questions to go back to our Topic. Expand the action and set: 
+    - `With input: ` **InsuredAccountId** = `VerifiedCustomerId`
+    - `Set output: ` `PolicyJson` = **PolicyJson**
+
+6. In the **Explorer** pane, click Policy Questions to go back to our Topic. Put your cursor after our new `Get Customer Policies` action and press Enter to start a new line. Click **Select action** and choose **Create a custom action**.
+7. For the Action Name, enter `Analyze Quote`. For Description, enter `Analyze the PDF quote file related to the customer's account record` and click **Create and Open**.
+8. Configure with the following values:
     - **Reference Action Type**: `Flow`
     - **Reference Action**: `INS - Analyze Customer Quote`
 
         <img src="images/policy2-3.png" alt="Configuring the Apex action reference" width="640" />
+
+9. In the **Explorer** pane, click Policy Questions to go back to our Topic. Expand the **Analyze Quote** action and set: 
+    - `With input: ` **accountId** = `VerifiedCustomerId`
+    - `Set output: ` `QuoteJson` = **quoteJson**
 
 ---
 
@@ -92,9 +100,6 @@ In this workshop, you will build a specialized AI agent using deterministic logi
 2. In the **Instructions** section, type `/` and select **Conditional Statement**.
 3. Populate the `If` statement as `PolicyJson` == `""`
 4. Within the `If` statement, type `/` and select **Run Action**. 
-3. Click **Select action** and select `Get Customer Policies`. Expand the action a nd set: 
-    - `With input: ` **accountId** = `VerifiedCustomerId`
-    - `Set output: ` `PolicyJson` = **PolicyJson**
 
 <img src="images/policy3.png" alt="Using the slash command to add a Run Action step" width="640" />
 
@@ -163,40 +168,39 @@ Click **Next** to get started!
 
 1. Click the **App Launcher** (waffle icon) and select the **Agentforce Studio** application.
 2. In the list of agents, click the **Insurance Agent** that we recently created.
-
-Once in the builder, hover over **Topics** on the left, click the **+** beside it and select **Create new topic**. Use these values: 
+3. Once in the builder, hover over **Topics** on the left, click the **+** beside it and select **Create new topic**. Use these values: 
  - **Topic Name**: `Driver Management`
  - **Description**: `Manage drivers on Auto policies, including retrieving existing auto insurance policies, listing all existing drivers and adding a new driver after collecting their first name, last name, email, phone number, driver's license number, license issue date and license expiry date`
 
-Click **Create and Open**
+4. Click **Create and Open**
+
+5. In the Topic, open the drop-down **Select action** and click **Add from Asset Library**. Search for and select the **INS - Get Drivers on Policy** action, then click **Add to Agent**. We can't help with drivers on a policy until we've retrieved policy information. Under the **Instructions** section, type `/` and select **If/Else (Conditional)**. Set the conidtion to be **PolicyJson** == "". Within the if statement, type `/` and select **Transition**. For the transition, select the **Policy_Questions** topic. On a new line, copy-paste these instructions: 
 
 ```text
-As an insurance carrier, I want to manage drivers on Auto policies. This include retrieving existing auto insurance policies associated with an account, listing all existing drivers and adding a new driver after collecting their first name, last name, email, phone number, driver's license number, license issue date and license expiry date.
-
-If an image of a drivers license is provided, analyze it to extract the new driver's first name, last name, driver's license number, license issue date and license expiry date for use when adding the new driver to the policy
+Retrieve existing auto insurance policies associated with an account, listing all existing drivers and adding a new driver after collecting their first name, last name, email, phone number, driver's license number, license issue date and license expiry date.
 ```
 
-In the Topic, open the drop-down **Select action** and click **Add from Asset Library**. Search for and select the **INS - Get Drivers on Policy** action, then click **Add to Agent**.
-
+<img src="images/driver1.png"
+     alt="Select INS - Add Driver to Policy flow"
+     width="640" />
 ---
+
+6. In the **Agentforce pane on the right, give Agentforce this instruction: `In the Topic Selector, add the action to transition to the Driver Management topic`
+7. Click **Accept Change**
 
 ### 2.2 Create New Agent Action
 
 You will now create a new Agent Action to include in this topic.  
 This action is based on an existing pre-built flow and prompt template and gives the agent the ability to add a new driver.
 
-In the **Explorer** on the left, hover over **Actions** sub-section within the **Driver Management** topic and click **+**. In the drop-down, click **Create new action**. Use these values: 
- - **Topic Name**: `Add Driver to Policy`
+In the **Explorer** on the left, hover over **Actions** sub-section within the **Driver Management** topic and click **+**. In the drop-down, click **Create a custom action**. Use these values: 
+ - **Action Name**: `Add Driver to Policy`
  - **Description**: `Add a new driver to the customer's active auto insurance policy`
 
 Click **Create and Open**. In the action, use these configurations: 
 
  - **Reference Action Type**, select **Flow**.
  - For **Reference Action**, search for and select **INS - Add Driver to Policy**.
-
-<img src="images/driver2_2.png"
-     alt="Select INS - Add Driver to Policy flow"
-     width="640" />
 
 The Agent Action Instructions, Input Instructions, and Output Instructions are already populated using the documented descriptions from the flow.  
 Complete the Agent Action configuration by:
@@ -213,27 +217,24 @@ Complete the Agent Action configuration by:
    - `policyId`
 3. For the output `caseNumber` variable, check **Show in conversation**.
 
-<img src="images/driver2_3.png"
+<img src="images/driver2.png"
      alt="Configure add-driver Agent Action inputs/outputs"
      width="640" />
 
 ---
 
-### 2.3 Add a Driver from the Insurance Portal
+### 2.3 Test by Adding a Driver
 
 Uploading a file isn’t supported in the Conversation Preview, so you will test this new topic directly from the insurance portal.
 
-From Setup, enter **All Sites** in Quick Find.
+1. In the **Preview** pane, click **Set Initial Context Values**.
+2. Paste the ID for the `VerifiedCustomerId` variable under the **Override Value** field and click **Refresh Session**.
 
-Click the URL link beside the **Insurance** site (in the URL column), or open:  
-`/insurance/s/`
-
-Click the floating **Messaging** icon in the bottom right corner to start interacting with the new agent.  
 Try prompts like:
 
-1. Who are the drivers on the Honda Civic's policy?
-2. Let's add a driver to this policy
-3. The driver is John Doe and his email is `john@example.com` and phone number is `555-555-5555`. His driver's license number is `J3498544`, issued on Jan 4, 2020 and expires on Jan 5, 2030.
+a. Who are the drivers on the Honda Civic's policy?
+b. Let's add a driver to this policy
+c. The driver is John Doe and his email is `john@example.com` and phone number is `555-555-5555`. His driver's license number is `J3498544`, issued on Jan 4, 2020 and expires on Jan 5, 2030.
 
 ---
 
@@ -252,8 +253,6 @@ We will explore:
 - **Flows** to dynamically ground our prompt
 - **Prompt Templates** to form more sophisticated responses with dynamic RAG
 
-Click **Next** to get started!
-
 ---
 
 ### 3.1 Create the Address Change Topic
@@ -261,24 +260,24 @@ Click **Next** to get started!
 1. Click the **App Launcher** (waffle icon) and select the **Agentforce Studio** application.
 2. In the list of agents, click the **Insurance Agent** that we recently created.
 
-Once in the builder, hover over **Topics** on the left, click the **+** beside it and select **Create new topic**. Use these values: 
+3. Once in the builder, hover over **Topics** on the left, click the **+** beside it and select **Create new topic**. Use these values: 
  - **Topic Name**: `Address Change`
  - **Description**: `Help policyholders manage changes to their account address and any subsequent impacts to their insurance products.`
 
-Click **Create and Open**
+4. Click **Create and Open**
 
-<img src="images/address2_1.png"
-     alt="Address Change topic configuration"
-     width="400" />
-
-In the Topic, open the drop-down **Select action** and click **Add from Asset Library**. Search for and select the **FINS - Update Account Address** action. This takes a standardized address strging and updates the customer’s billing address on their Account record.
+5. In the Topic, open the drop-down **Select action** and click **Add from Asset Library**. Search for and select:
+ -  **FINS - Update Account Address**: This takes a standardized address strging and updates the customer’s billing address on their Account record.
  - **INS - Cancel Insurance Policy**: Begins the process to cancel an insurance policy. You can use this in case you need to cancel a renter's insurance policy.
  
- Click **Add to Agent**.
+6. Click **Add to Agent**.
 
-<img src="images/address2_2.png"
+<img src="images/address1.png"
      alt="Address Change topic actions"
      width="400" />
+
+7. In the **Agentforce pane on the right, give Agentforce this instruction: `In the Topic Selector, add the action to transition to the Address Change topic`
+8. Click **Accept Change**
 
 ---
 
@@ -411,8 +410,8 @@ Go back to the Agent Builder for the **Insurance Agent**. In the **Explorer** on
 
 Click **Create and Open**. In the action, use these configurations: 
 
- - **Reference Action Type**, select **Prompt Template**
- - For **Reference Action**, search for and select **INS - Property Insurance Call to Action**
+ - **Reference Action Type** = **Prompt Template**
+ - **Reference Action** = **INS - Property Insurance Call to Action**
  - For the **Account** input variable, enter these instructions: `Account record used to determine the call to action`
  - For the **Prompt Response** output variable, check **Show in conversation**
 
@@ -446,19 +445,18 @@ Click **Save** in the top right.
 
 Time for the big reveal—let’s interact with the agent’s address change capabilities.
 
-Go to the external insurance portal:  
-`/insurance/s/`
+1. In the **Preview** pane, click **Set Initial Context Values**.
+2. Paste the ID for the `VerifiedCustomerId` variable under the **Override Value** field and click **Refresh Session**.
 
-Once the portal has fully opened, click the floating **Messaging** icon in the lower right corner to start interacting with the agent.  
 You can test the address change experience with prompts like:
 
-1. What are my policies?
-2. I want to change my address.
-3. Use your own home address (for example: *120 N LaSalle St, Chicago, Illinois, 60602, United States*).
-4. Yes
-5. Yes
-6. last week Friday
-7. next week Thursday
+a. What are my policies?
+b. I want to change my address.
+c. Use your own home address (for example: *120 N LaSalle St, Chicago, Illinois, 60602, United States*).
+d. Yes
+e. Yes
+f. last week Friday
+g. next week Thursday
 
 ---
 
@@ -486,73 +484,60 @@ Click **Next** to get started!
 1. Click the **App Launcher** (waffle icon) and select the **Agentforce Studio** application.
 2. In the list of agents, click the **Insurance Agent** that we recently created.
 
-Once in the builder, hover over **Topics** on the left, click the **+** beside it and select **Create new topic**. Use these values: 
+3. Once in the builder, hover over **Topics** on the left, click the **+** beside it and select **Create new topic**. Use these values: 
  - **Topic Name**: `Billing Management`
  - **Description**: `Help policyholders manage their billing and payments information for active insurance policies, such as payment frequency and payment method`
 
-Click **Create and Open**
+4. Click **Create and Open**
+
+5. In the Topic, open the drop-down **Select action** and click **Add from Asset Library**. Search for and select:
+a. **INS - Update Billing Frequency**
+b. **INS - Update Payment Method**
+c. **INS - Get Account Details**
+
+6. Click **Add to Agent**.
+7. Under instructions, type `/` and select **Run Action** and select the **INS - Get Account Details** action
+8. Add these instructions into the Instructions section: 
 
 ```text
 Using the PolicyJson and customerCreditScore variables, help the customer update their payment/billing frequency for a policy or update their payment method for a policy. The allowed payment frequencies include Semi-Monthly, Monthly, Quarterly, Semi-Annual and Annually. The allowed payment methods are Credit Card, Bank Transfer, PayPal and Check by Mail.
 ```
 
-In the list of Actions, search for and check off these pre-built actions:
+9. In the **Agentforce pane on the right, give Agentforce this instruction: `In the Topic selector, add the action to transition to the Billing Management topic`
+10. Click **Accept Change**
 
-1. `INS - Update Billing Frequency`
-2. `INS - Update Policy Payment Method`
-
-Click **Finish**.
+<img src="images/billing1.png" width="640" />
 
 ---
 
 ### 4.2 Define Filters for Actions
 
-You don’t want to let the customer update their payment method or billing frequency if they have a credit score under 500, so you will define strict filters to enforce this.
+You don’t want to let the customer update their payment method or billing frequency if they have a credit score under 500, so you will define strict filters to enforce this. First, persist the customer's credit score from their Account record.  
 
-First, persist the customer's credit score from their Account record.  
-In the **Context** pane on the left, you'll see a custom variable **customerCreditScore** already defined for persisting the customer's credit score during the conversation.  
-You’re already retrieving the credit score using the **INS - Get Account Details** action but not storing it yet.
-se
-Go back to **Topics** and open the **Insurance Policy Questions** topic.  
-Change to the **This Topic's Actions** tab. You’ll see the **INS - Get Account Details** action being called there. Click to open this action.
+1. Expand Variables in the Explorer pane and select **Variables**. 
+2. Expand **New** in the top right and select **Create Custom Variable**. 
+3. Enter the following values: 
+- **Name**: `customerCreditScore`
+- **API Name**: `customerCreditScore`
+- **Data Type**: `Number`
+4. Click **Create**
+5. Open the **Billing Management** topic. Expand the **INS - Get Account Details** action and set these inputs/outputs: 
+    - Input **accountID** = **VerifiedCustomerId**
+    - Output **customerCreditScore** = **customerCreditScore**
 
-- Assign the **accountID** input variable to **MessagingSession EndUserAccountId**.
-- Assign the **customerCreditScore** output variable to the **customerCreditScore** custom variable you reviewed earlier.
+6. Next, hover over the **INS - Update Billing Frequency** action and click the **Add filter** in the **Add to block** modal. Set the condition to be: 
+    - `Available when:` **customerCreditScore** > 500 (click `==` for the drop down and select greater than)
 
-| <img src="images/billing3_1.png" alt="Map MessagingSession and customerCreditScore" width="100%" /> | <img src="images/billing3_2.png" alt="Map customerCreditScore output" width="100%" /> |
-| --- | --- |
+7. Repeat this step again for the **INS - Update Payment Method** action.
 
-Now that you have the customer's credit score, define a filter condition using it.  
-Open the **Context** pane and navigate to the **Filters** tab. Click **New** and define the filter as:
-
-1. **Label** = `Low Risk Customer`
-2. Create one condition:
-   - **Resource** = `customerCreditScore`
-   - **Operator** = `Greater Than`
-   - **Value** = `500`
-
-Click **Save**.
-
-<img src="images/billing3_4.png"
-     alt="Define Low Risk Customer filter"
-     width="920" />
-
-Next, apply this filter to both actions in your billing topic.  
-Open the **Topics** pane and navigate into your billing topic (name may vary).  
-Go to the **This Topic's Actions** tab and select the **INS - Update Policy Payment Method** action.
-
-At the top right of the action pane, click the filter icon, then search for and select the **Low Risk Customer** filter.  
-Close the action and repeat these steps for the **INS - Update Billing Frequency** action.
-
-<img src="images/billing3_3.png"
-     alt="Apply Low Risk Customer filter to billing actions"
-     width="320" />
+<img src="images/billing2.png" width="640" />
 
 ---
 
 ### 4.3 Test the Agent
 
-Let's test our agent. In the preview pane on the right, click the Eye icon at the top and for the MessagingSession EndUserAccountId variable, search and select Kiran Singh. Click Apply
+1. Let's test our agent. In the **Preview** pane, click **Set Initial Context Values**.
+2. Paste the ID for the `VerifiedCustomerId` variable under the **Override Value** field and click **Refresh Session**. 
 
 In the chat box, converse with the agent using these messages:
 
@@ -562,16 +547,8 @@ In the chat box, converse with the agent using these messages:
 
 The response back from the Agent wasn't what we were hoping for. We can see reasoning in the middle pane about why our Agent decided to choose this action. Let's click the Suggest Improvement button to get suggestions on how we can improve our agent and answer the questions from the builder. You can provide feedback like the screenshot below:
 
-<img src="images/billing5_2.png"
-     alt="Apply Low Risk Customer filter to billing actions"
-     width="320" />
-
 Based on the feedback. We can add a new instruction into our Topic, something like this:
 
 ```text
 Before updating billing frequency or payment method, verify that the customer's credit score is over 500. If the credit score is 500 or below, escalate the request to a live human agent
 ```
-
-Back on the Topic pane on the left and in our billing Topic, click Add Instruction at the bottom and copy/paste the above instruction in and click Save
-
-Click the Refresh (circular arrow) at the top left the Conversation Preview panel at the top and let's try it again! Did the agent behave as we would expect?
