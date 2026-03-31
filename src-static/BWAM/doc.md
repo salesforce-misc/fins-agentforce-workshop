@@ -191,6 +191,68 @@ In this exercise, you will:
 
 4. Click **Done** to save the resource.
 
+<img src="images/bwam11.png"
+     alt="Create action and context variable"
+     width="640" />
+
+
+##### Get Records: Get Branches
+
+5. Click on the + sign below the Start element and add the Get Records element  
+  
+
+<div style="margin-left: 40px; font-family: sans-serif;">
+  <p>For <strong>Label</strong>, enter: <strong>Get Branches</strong></p>
+  <p>For <strong>Description</strong>, enter: <strong>Find the Branch Details based on the Customer City</strong></p>
+  <p>For <strong>Object</strong>, select <strong>Branch Unit</strong></p>
+  <p>For <strong>Condition Requirements</strong>, add this condition:</p>
+  <ul style="list-style-type: disc; margin-left: 20px;">
+    <li>For <strong>Field</strong>, select <strong>Name</strong></li>
+    <li>For <strong>Operator</strong>, select <strong>Equals</strong></li>
+    <li>For <strong>Value</strong>, select <strong>Account</strong> then search and select <strong>BillingCity</strong> (Billing City)</li>
+  </ul>
+  <p>Note: This will look like {!$Account.BillingCity} and resolve to Account > Billing City  
+Leave How Many Records to Store as Only the first record.
+Leave How to Store Record Data as Automatically store all fields  </p>
+</div>
+   
+
+<img src="images/bwam9.png"
+     alt="Create action and context variable"
+     width="640" />
+
+##### Add Prompt Instructions: Add Nearest Branch.
+
+6. Click the + sign below the Get Branches step to add the Add Prompt Instructions element.  
+<div style="margin-left: 40px; font-family: sans-serif;">
+   <p>For <strong>Label</strong>, enter <strong>Add Nearest Branch</strong></p>
+   <p>For <strong>Prompt Instructions</strong>, enter the text below.</p>
+</div>
+ 
+
+```
+Branch address street: {!Get_Branches.Branch_Unit_Address__Street__s}
+Branch address city: {!Get_Branches.Branch_Unit_Address__City__s}
+Branch address state/province: {!Get_Branches.Branch_Unit_Address__StateCode__s}
+Branch address zip code: {!Get_Branches.Branch_Unit_Address__PostalCode__s}
+Branch address country: {!Get_Branches.Branch_Unit_Address__CountryCode__s}
+Advisor Name: {!Get_Branches.BranchManager.Name}
+```
+<img src="images/bwam12.png"
+     alt="Create action and context variable"
+     width="320" />
+
+7. Click **Save** and in the modal enter: 
+<div style="margin-left: 40px; font-family: sans-serif;">
+   <p>For <strong>Flow Label</strong>, enter: <strong>BWAM - Grounding Nearest Branch</strong> </p> 
+   <p>For the <strong>Description</strong>, enter: <strong>Find Nearest Branch for the Account</strong></p>
+</div>
+
+8. Click **Save** (it takes a moment to save)
+
+9. Click **Activate** (it takes a moment to activate) 
+
+
 ---
 
 ### Part 2: Create "Nearest Branch Introduction" Prompt
