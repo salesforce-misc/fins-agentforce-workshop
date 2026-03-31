@@ -15,18 +15,25 @@ In this workshop, you will build a specialized AI agent using deterministic logi
 
 Follow these steps to create the action context variable
 
-1. Click the **App Launcher** (waffle icon) and select the **Agentforce Studio** application.
-2. Click **Agents** and click on the **Banking Wealth Agent**
-3. In the left pane, select **Variables**.  This is where you can manage the variables used by your agent.
-4. Review the list of variables with a source of **Messaging Session**. Any context from the conversation channel can be provided through these variables.
-5. Click the **New** button and select **Create Custom Variable**
+1. Click the **App Launcher** (waffle icon) and select the **Agentforce Studio** application.  
+<img src="images/as_bwam0.png"
+     alt="Create action and context variable"
+     width="320" />
+2. Click **Agents** and click on the **Banking Wealth Agent**  
+3. In the left pane, select **Variables**.  This is where you can manage the variables used by your agent.  
+4. Review the list of variables with a source of **Messaging Session**. Any context from the conversation channel can be provided through these variables.  
+5. Click the **New** button and select **Create Custom Variable**  
 
-- **Name**: `accountJson`
-- **Data Type**: `String`
+  - **Name**: `accountJson`
+  - **Data Type**: `String`
+  
+<img src="images/as_bwam1.png"
+     alt="Create action and context variable"
+     width="640" />  
 
-1. Click **Create**
+6. Click **Create**
 
-You will use this new variable to store all of the active policy details you retrieve about the customer so you can keep this context throughout the conversation.
+You will use this new variable to store all of the active policy details you retrieve about the customer so you can keep this context throughout the conversation.  
 
 ---
 
@@ -40,13 +47,23 @@ Follow these steps to create the Apex action:
 4. Click **Create a custom action**
 5. In the dialog, give the action a name of **Get Account Details** and a description of "Retrieves the details for an account"
 6. Click **Create and Open**
+<img src="images/as_bwam2.png"
+     alt="Add Action"
+     width="640" />
+
 7. Click the **Reference Action Type** list box and select **Apex**
 8. Click the **Reference Action** search box and select **BWAM - Get Account Details**
-9. In the description field for **accountIds**, enter the following description: "account ID of the customer".  Check the **Require input to execute action*** checkbox.
-10. In the description field for **output**, enter the following description: "account JSON string"
+9. In the description field for **accountIds**, enter the following description: **account ID of the customer**.  Check the **Require input to execute action*** checkbox.
+10. In the description field for **output**, enter the following description: **account JSON string**
+<img src="images/as_bwam4.png"
+     alt="Configure Action"
+     width="640" />
 11. In the left hand pane, click on the **Financial Account Questions** topic.  At the bottom you will see **Get Account Details** listed as an available action.  Click on **Get Account Details** to expand its input and output variables.
 12. Set the input variable to **Account ID**
 13. Set the output variable to **accountJson**
+<img src="images/as_bwam5.png"
+     alt="Configure Action"
+     width="640" />
 14. Click the **Save** button in the top right corner of the page or press **Ctrl-S** to save.
 
 You have now finished configuring the action. Your agent can retrieve and retain proper context about your customer during the conversation.
@@ -69,10 +86,19 @@ Follow these steps to create the topic:
 ```text
 This 'Manage Beneficiaries' topic will allow customers to ask about, add or remove any existing Beneficiaries / Relationships associated to a specific financial Account. Using the financial account Ids in the accountJson variable, identify the financial account the customer is asking about. Ask for the name of the beneficiary, the percentage of the benefit to be received, and the tax ID for the beneficiary. When displaying the Financial Account Roles always include Related Account Name, Account Name, Role and Status. Execute Add Beneficiaries action when the customer wants to add new relationships or financial account role associated to a Financial Account. Execute the Remove Beneficiaries action when the customer wants to remove a relationship or financial account role associated to a Financial Account.
 ```
-
+<img src="images/as_bwam7.png"
+     alt="Add Actions"
+     width="640" />
 1. Click **Create and Open**
 2. You will see a new topic called **Manage Beneficiaries** has been created.  Hover over the new topic name in the left panel and select the plus ( + ) symbol to add new topics.  Select to **Add From Asset Library**
+<img src="images/as_bwam8.png"
+     alt="Add Actions"
+     width="320" />
 3. In the search box, enter **BWAM** to filter the topics.  Select **BWAM - Add Beneficiaries**, **BWAM - Get Beneficiaries**, and **BWAM - Remove Beneficiaries**
+<img src="images/as_bwam6.png"
+     alt="Add Actions"
+     width="640" />
+
 4. Click **Add to Agent**
 5. Click the **Save** button in the top right corner of the page or press **Ctrl-S** to save.
 
@@ -85,13 +111,23 @@ Your agent can now help with beneficiary requests.
 Follow these steps to test your agent:
 
 1. Click the **Preview** button.  It is located at the top left of the canvas.
-2. Click the **Set Context** link at the top of the chat window.  This will open up the list of variables in a pane at the bottom of the page.
-3. Find the **EndUserAccountId** variable and click on the cell for the **Override Value** column. This will allow you to set that variable for the test.  Search for **Kiran Singh** and select that account record.
-4. Click the **Apply and Restart Session** button.  It is located at the bottom left of the page.
+<img src="images/as_bwam9.png"
+     alt="Configure Action"
+     width="640" />
+2. Click the **Set Context** link at the top of the chat window.  This will open up the list of variables in a pane at the bottom of the page.  
+3. Find the **EndUserAccountId** variable and click on the cell for the **Override Value** column. This will allow you to set that variable for the test.  Search for **Kiran Singh** and select that account record.  
+4. Click the **Apply and Restart Session** button.  It is located at the bottom left of the page.  
+<img src="images/as_bwam10.png"
+     alt="Configure Action"
+     width="640" />
 5. Start a conversation in the chat window.  You can start by asking questions like:
 
 - What are all my accounts?
 - What can you tell me about my assets?
+
+<img src="images/as_bwam11.png"
+     alt="Create action and context variable"
+     width="320" />
 
 Feel free to experiment and ask the agent any other questions about financial accounts and assets. Some examples:
 
@@ -104,7 +140,7 @@ To test the ability to manage beneficiaries, try this sequence:
 1. Ask, **What are all my accounts?**
 2. Ask, **Show me the relationships for the family trust**.
 3. Say, **Help me add another person to this account**.
-4. Provide details such as: **David Singh, [david.singh@example.com](mailto:david.singh@example.com), 2000-01-01, Beneficiary**. Make up any other details it may need
+4. Provide details such as: **David Singh, david.singh@example.com, 2000-01-01, Beneficiary**. Make up any other details it may need
 5. Say, **Remove David Singh**.
 
 You can also test the agent from a customer portal.
@@ -113,6 +149,9 @@ In Setup, search for **All Sites** and click the URL link beside the **Retail** 
 Click the Messaging icon in the lower right corner to start a new chat session with the agent (it may take a few seconds to connect).
 You can use the same questions and instructions from above.
 
+<img src="images/bwam8.png"
+     alt="banner"
+     width="960" />
 ---
 
 ## Address Change
@@ -126,7 +165,6 @@ In this exercise, you will:
 - **Part 3**: Add the agent action to the agent.
 - **Part 4**: Test your agent in the builder.
 
----
 
 ### Part 1: Create Prompt Flow to Ground the Nearest Branch
 
@@ -142,39 +180,54 @@ In this exercise, you will:
 2. Open the **Toolbox** pane from the top left and click **New Resource**.
 3. Create a new input variable with the following values:
 
+| **Field**                     | **Value**               | **Explanation**                                                                   |
+| ----------------------------- | ----------------------- | --------------------------------------------------------------------------------- |
+| Resource Type                 | Variable                | Variable type                                                                     |
+| API Name                      | Account                 | Variable name that is the same as in the flex prompt                              |
+| Data Type                     | Record                  | Input is a record                                                                 |
+| Object                        | Account                 | Object data to be provided as input                                               |
+| Availability Outside the Flow | Check **Available for input** | Lets the prompt provide the account data to provide dynamic grounding      |
 
-| **Field**                     | **Value**                     | **Explanation**                                                       |
-| ----------------------------- | ----------------------------- | --------------------------------------------------------------------- |
-| Resource Type                 | Variable                      | Variable type                                                         |
-| API Name                      | Account                       | Variable name that is the same as in the flex prompt                  |
-| Data Type                     | Record                        | Input is a record                                                     |
-| Object                        | Account                       | Object data to be provided as input                                   |
-| Availability Outside the Flow | Check **Available for input** | Lets the prompt provide the account data to provide dynamic grounding |
+4. Click **Done** to save the resource.
+
+<img src="images/bwam11.png"
+     alt="Create action and context variable"
+     width="640" />
 
 
-1. Click **Done** to save the resource.
+##### Get Records: Get Branches
 
-Get Records: Get Branches
+5. Click on the + sign below the Start element and add the Get Records element  
+  
 
-1. Click on the + sign below the Start element and add the Get Records element
+<div style="margin-left: 40px; font-family: sans-serif;">
+  <p>For <strong>Label</strong>, enter: <strong>Get Branches</strong></p>
+  <p>For <strong>Description</strong>, enter: <strong>Find the Branch Details based on the Customer City</strong></p>
+  <p>For <strong>Object</strong>, select <strong>Branch Unit</strong></p>
+  <p>For <strong>Condition Requirements</strong>, add this condition:</p>
+  <ul style="list-style-type: disc; margin-left: 20px;">
+    <li>For <strong>Field</strong>, select <strong>Name</strong></li>
+    <li>For <strong>Operator</strong>, select <strong>Equals</strong></li>
+    <li>For <strong>Value</strong>, select <strong>Account</strong> then search and select <strong>BillingCity</strong> (Billing City)</li>
+  </ul>
+  <p>Note: This will look like {!$Account.BillingCity} and resolve to Account > Billing City  
+Leave How Many Records to Store as Only the first record.
+Leave How to Store Record Data as Automatically store all fields  </p>
+</div>
+   
 
-a. For Label, enter: Get Branches
-b. For Description, enter: Find the Branch Details based on the Customer City
-c. For Object, select Branch Unit.
-d. For Condition Requirements, add this condition: 
-  For Field, select Name.  
-  For Operator, select Equals.  
-  For Value, select Account then search and select BillingCity (Billing City)  
-  Note: This will look like {!$Account.BillingCity} and resolve to Account > Billing City
-e. Leave How Many Records to Store as Only the first record.
-f. Leave How to Store Record Data as Automatically store all fields
+<img src="images/bwam9.png"
+     alt="Create action and context variable"
+     width="640" />
 
-Add Prompt Instructions: Add Nearest Branch.
+##### Add Prompt Instructions: Add Nearest Branch.
 
-1. Click the + sign below the Get Branches step to add the Add Prompt Instructions element.
-
-a. For Label, enter Add Nearest Branch
-b. For Prompt Instructions, enter the text below.
+6. Click the + sign below the Get Branches step to add the Add Prompt Instructions element.  
+<div style="margin-left: 40px; font-family: sans-serif;">
+   <p>For <strong>Label</strong>, enter <strong>Add Nearest Branch</strong></p>
+   <p>For <strong>Prompt Instructions</strong>, enter the text below.</p>
+</div>
+ 
 
 ```
 Branch address street: {!Get_Branches.Branch_Unit_Address__Street__s}
@@ -184,12 +237,20 @@ Branch address zip code: {!Get_Branches.Branch_Unit_Address__PostalCode__s}
 Branch address country: {!Get_Branches.Branch_Unit_Address__CountryCode__s}
 Advisor Name: {!Get_Branches.BranchManager.Name}
 ```
+<img src="images/bwam12.png"
+     alt="Create action and context variable"
+     width="320" />
 
-1. Click Save and in the modal enter:
-  For Flow Label, enter: BWAM - Grounding Nearest Branch  
-  For the Description, enter: Find Nearest Branch for the Account
-2. Click Save (it takes a moment to save)
-3. Click Activate (it takes a moment to activate)
+7. Click **Save** and in the modal enter: 
+<div style="margin-left: 40px; font-family: sans-serif;">
+   <p>For <strong>Flow Label</strong>, enter: <strong>BWAM - Grounding Nearest Branch</strong> </p> 
+   <p>For the <strong>Description</strong>, enter: <strong>Find Nearest Branch for the Account</strong></p>
+</div>
+
+8. Click **Save** (it takes a moment to save)
+
+9. Click **Activate** (it takes a moment to activate) 
+
 
 ---
 
