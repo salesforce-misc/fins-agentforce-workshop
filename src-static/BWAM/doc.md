@@ -171,54 +171,49 @@ In this exercise, you will:
 
 #### Create the flow
 
-1. From Setup, in the Quick Find box, enter **Flows**, and then click **Flows**.
-2. Click the **New Flow** button in the top right corner.
+1. In **Setup**, search for **Flows** in **Quick Find**, then click **Flows**.
+2. Click **New Flow**.
 3. Select **Template-Triggered Prompt Flow**.
 
 #### Configure the flow
 
-1. Leave the **Input Type** as **Manual Inputs**.
-2. Open the **Toolbox** pane from the top left and click **New Resource**.
-3. Create a new input variable with the following values:
+1. Leave **Input Type** as **Manual Inputs**.
+2. Open the **Toolbox** pane and click **New Resource**.
+3. Create a new input variable with these values:
 
-| **Field**                     | **Value**               | **Explanation**                                                                   |
-| ----------------------------- | ----------------------- | --------------------------------------------------------------------------------- |
-| Resource Type                 | Variable                | Variable type                                                                     |
-| API Name                      | Account                 | Variable name that is the same as in the flex prompt                              |
-| Data Type                     | Record                  | Input is a record                                                                 |
-| Object                        | Account                 | Object data to be provided as input                                               |
-| Availability Outside the Flow | Check **Available for input** | Lets the prompt provide the account data to provide dynamic grounding      |
+| **Field**                     | **Value**                     | **Explanation**                                               |
+| ----------------------------- | ----------------------------- | ------------------------------------------------------------- |
+| **Resource Type**             | `Variable`                    | Creates a variable resource.                                  |
+| **API Name**                  | `Account`                     | Matches the variable name expected by the flex prompt.        |
+| **Data Type**                 | `Record`                      | Input is a record.                                            |
+| **Object**                    | `Account`                     | Specifies the input record object.                            |
+| **Availability Outside Flow** | Check **Available for input** | Lets the prompt pass account data for dynamic grounding.      |
 
-4. Click **Done** to save the resource.
+4. Click **Done**.
 
 <img src="images/bwam11.png"
-     alt="Create action and context variable"
+     alt="Input variable setup for prompt flow"
      width="640" />
 
+#### Add Get Records: Get Branches
 
-##### Get Records: Get Branches
+5. Click the plus (**+**) below **Start**, then add **Get Records**.
+6. Configure **Get Records**:
+   - **Label**: `Get Branches`
+   - **Description**: `Find the branch details based on the customer city`
+   - **Object**: `Branch Unit`
+7. In **Condition Requirements**, add:
+   - **Field**: `Name`
+   - **Operator**: `Equals`
+   - **Value**: select `Account`, then select `BillingCity` (Billing City)
+8. Keep defaults:
+   - **How Many Records to Store**: `Only the first record`
+   - **How to Store Record Data**: `Automatically store all fields`
 
-5. Click on the + sign below the Start element and add the Get Records element  
-  
-
-<div style="margin-left: 40px; font-family: sans-serif;">
-  <p>For <strong>Label</strong>, enter: <strong>Get Branches</strong></p>
-  <p>For <strong>Description</strong>, enter: <strong>Find the Branch Details based on the Customer City</strong></p>
-  <p>For <strong>Object</strong>, select <strong>Branch Unit</strong></p>
-  <p>For <strong>Condition Requirements</strong>, add this condition:</p>
-  <ul style="list-style-type: disc; margin-left: 20px;">
-    <li>For <strong>Field</strong>, select <strong>Name</strong></li>
-    <li>For <strong>Operator</strong>, select <strong>Equals</strong></li>
-    <li>For <strong>Value</strong>, select <strong>Account</strong> then search and select <strong>BillingCity</strong> (Billing City)</li>
-  </ul>
-  <p>Note: This will look like {!$Account.BillingCity} and resolve to Account > Billing City  
-Leave How Many Records to Store as Only the first record.
-Leave How to Store Record Data as Automatically store all fields  </p>
-</div>
-   
+The value expression appears as `{!$Account.BillingCity}`.
 
 <img src="images/bwam9.png"
-     alt="Create action and context variable"
+     alt="Get Records configuration for nearest branch"
      width="640" />
 
 ##### Add Prompt Instructions: Add Nearest Branch.
