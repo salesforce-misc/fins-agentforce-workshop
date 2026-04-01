@@ -65,6 +65,10 @@ Follow these steps to create the Apex action.
      alt="Map action variables in topic"
      width="640" />
 15. Click **Save** in the upper-right corner, or press **Ctrl-S**.
+   - If prompted to select a user for the agent, select the existing service agent user
+<img src="images/as_bwam18.png"
+     alt="Use existing service agent user"
+     width="640" />
 
 Your agent can now retrieve and retain customer account context during conversations.
 
