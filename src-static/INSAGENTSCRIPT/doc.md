@@ -422,19 +422,13 @@ Click **Create and Open**. In the action, use these configurations:
 In **Explorer**, open the Address Change topic and under instructions, add the following: 
 
 ```
-After a new address is provided, run it through the parse address action. If the response includes the field "Issue", re-ask the user for their address, while providing the reason being the value in the "Issue" field. Keep running the new address through the parse address action until it no longer has the "Issue" field
+Provide and confirm the customer's current address before asking for a new one by retrieving it with ​INS - Get Account Details​. Only consider their billing address.RetryundefinedCancelSave
 
-After confirming the customer account, always provide and confirm the customer's current address before asking for their new one. Only consider their billing address when doing this
+When an address is provided, parse, standardize and validate that it can be separated into "Street", "City", "State", "ZipCode", "Country". Do not use abbreviations when standardizing. If unable to properly parse the provided address, ask the user for the missing values and continue until a complete valid address that can be parsed. Once a complete valid address, run ​FINS - Update Account Address​ with the parsed values.RetryundefinedCancelSave
 
-For any address information, access this in the context of the account and only take their billing address into consideration
+Immediately after updating the customer's address, ask the customer if they are moving to this new address. If yes, run ​Property Insurance Call to Action​ and provide the response to the user.RetryundefinedCancelSave
 
-If the new address is parsed without any "Issue", immediately pass along the parsed address and account into the "Update Address" action
-
-You can only run the Cancel Insurance Policy action against Renters insurance policy types.
-
-Immediately after updating the customer's address, ask the customer if they are moving to this new address. If yes, run the 'INS - Property Insurance Call to Action' action.
-
-If the customer provided a date in the past about canceling their renter's insurance policy, inform them that we cannot cancel an insurance policy in the past and ask them for the cancellation date again until they provide one in the future, suggesting today. After a future or current date is successfully provided, query for the customer's renter's insurance policy and use that to run the ‘INS - Cancel Insurance Policy’ action with the provided date and renter’s insurance policy ID.
+If the customer provided a date in the past about canceling their renter's insurance policy, inform them that we cannot cancel an insurance policy in the past and ask them for the cancellation date again until they provide one in the future, suggesting today. After a future or current date is successfully provided, query for the customer's renter's insurance policy and use that to run ​INS - Cancel Insurance Policy​ with the provided date and renter’s insurance policy ID.
 ```
 
 Click **Save** in the top right.
