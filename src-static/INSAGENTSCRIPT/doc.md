@@ -269,6 +269,7 @@ We will explore:
 5. In the Topic, open the drop-down **Select action** and click **Add from Asset Library**. Search for and select:
  -  **FINS - Update Account Address**: This takes a standardized address strging and updates the customer’s billing address on their Account record.
  - **INS - Cancel Insurance Policy**: Begins the process to cancel an insurance policy. You can use this in case you need to cancel a renter's insurance policy.
+ - **INS - Get Account Details**: Retrieves customer account details, including their address.
  
 6. Click **Add to Agent**.
 
