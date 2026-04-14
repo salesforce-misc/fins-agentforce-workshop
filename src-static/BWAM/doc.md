@@ -6,7 +6,7 @@ We will explore:
 
 * Flows to build automations and workflows that an agent can execute
 * Context variables to maintain proper context for the agent and keep the most relevant information in mind
-* Topics that define how your agent should behave
+* Subagents that define how your agent should behave
 * Actions that give agents the tools they need to do their jobs
 
 In this exercise, you will:
@@ -22,7 +22,7 @@ Click **Next** to get started!
 Follow these steps to create the action context variable:
 
 1. In Setup, search for and select **Agentforce Agents** to open the list of agents.  
-2. Expand the **Banking Wealth Agent** by clicking **>** beside it, then select **Version 1** to open this agent in the Agent Builder.
+2. Expand the **Banking Wealth Agent 2025** by clicking **>** beside it, then select **Version 1** to open this agent in the Agent Builder.
 3. In the left pane, select **Context**, where you can manage the variables and filters for your agent.  
 4. Review the **Messaging Session** variable that is created for every conversation the agent has. Any context from the conversation channel can be provided through this variable, including data about the customer.
 5. Click **New Variable** at the top of the pane and configure the new custom variable with these values:
@@ -42,13 +42,13 @@ You will use this new variable to store all of the active policy details you ret
 
 Follow these steps to create the Apex action:
 
-1. In the left pane, select **Topics**, where you will find a number of pre-configured topics, including **Financial Account Questions**, and click **Financial Account Questions**.
-2. Review the description, scope, and instructions for this topic, which define how the agent should behave when answering any customer questions about their policy.  
-3. Click the **This Topic's Actions** tab at the top. You will add the updated flow as an action here so you can retrieve the customer's policy details.
+1. In the left pane, select **Subagents**, where you will find a number of pre-configured subagents, including **Financial Account Questions**, and click **Financial Account Questions**.
+2. Review the description, scope, and instructions for this subagent, which define how the agent should behave when answering any customer questions about their policy.  
+3. Click the **This Subagent's Actions** tab at the top. You will add the updated flow as an action here so you can retrieve the customer's policy details.
 4. Click the **New** dropdown and select **Create New Action**.
 
 <img src="images/question3_2.png"
-     alt="Create new topic action"
+     alt="Create new subagent action"
      width="320" />
 
 5. In the pop-up modal, set these values:
@@ -76,23 +76,23 @@ You have now finished configuring the action. Your agent can retrieve and retain
 
 ---
 
-### 3. Add Manage Beneficiary Topic
+### 3. Add Manage Beneficiary Subagent
 
 Now that you've given your agent the ability to retrieve context and details about your customer, you also want to give it tools to take action.  
-You will create a new topic for your agent to manage beneficiaries on a customer's account.
+You will create a new subagent for your agent to manage beneficiaries on a customer's account.
 
-Follow these steps to create the topic:
+Follow these steps to create the subagent:
 
-1. In the **Agent Builder** setup screen for the **Banking Wealth Agent**, open the **Topics** pane on the left.  
-2. Open the **New** dropdown within the pane and click **New Topic**.  
-3. Copy the following description into the topic:
+1. In the **Agent Builder** setup screen for the **Banking Wealth Agent 2025**, open the **Subagents** pane on the left.  
+2. Open the **New** dropdown within the pane and click **New Subagent**.  
+3. Copy the following description into the subagent:
 
 ```text
-This 'Manage Beneficiaries' topic will allow customers to ask about, add or remove any existing Beneficiaries / Relationships associated to a specific financial Account. Using the financial account Ids in the accountJson variable, identify the financial account the customer is asking about. Ask for the name of the beneficiary, the percentage of the benefit to be received, and the tax ID for the beneficiary. When displaying the Financial Account Roles always include Related Account Name, Account Name, Role and Status. Execute Add Beneficiaries action when the customer wants to add new relationships or financial account role associated to a Financial Account. Execute the Remove Beneficiaries action when the customer wants to remove a relationship or financial account role associated to a Financial Account.
+This 'Manage Beneficiaries' subagent will allow customers to ask about, add or remove any existing Beneficiaries / Relationships associated to a specific financial Account. Using the financial account Ids in the accountJson variable, identify the financial account the customer is asking about. Ask for the name of the beneficiary, the percentage of the benefit to be received, and the tax ID for the beneficiary. When displaying the Financial Account Roles always include Related Account Name, Account Name, Role and Status. Execute Add Beneficiaries action when the customer wants to add new relationships or financial account role associated to a Financial Account. Execute the Remove Beneficiaries action when the customer wants to remove a relationship or financial account role associated to a Financial Account.
 ```
 
-4. Click **Next** and review the generated topic definition. After reviewing, click **Next** again.  
-   *Salesforce takes you to the screen for adding actions to your topic.*
+4. Click **Next** and review the generated subagent definition. After reviewing, click **Next** again.  
+   *Salesforce takes you to the screen for adding actions to your subagent.*
 5. In the **Search actions** box, search for `beneficiaries` and add these three pre-built actions:
    - `BWAM - Add Beneficiaries`
    - `BWAM - Get Beneficiaries`
@@ -156,7 +156,7 @@ You can use the same questions and instructions from above.
 
 ## Address Change
 
-In this exercise, you will build a prompt and a flow, and update the **Address Change** topic in your banking agent to provide customers with a self-service way to manage their account address and communicate any follow-up actions to them.
+In this exercise, you will build a prompt and a flow, and update the **Address Change** subagent in your banking agent to provide customers with a self-service way to manage their account address and communicate any follow-up actions to them.
 
 In this exercise, you will:
 
@@ -316,8 +316,8 @@ To use your custom Agent action, you need to assign it to the **Agentforce Banki
 1. In the Quick Find box, enter **Agentforce Agents**, and then click **Agentforce Banking and Wealth Agent**.
 2. Click **Open in Builder** in the top right corner.
 3. Click **Deactivate** and, in the confirmation modal, click **OK**.
-4. On the left side of the screen, click the **Update Address** Topic.
-5. Click the **This Topic’s Actions** tab on the left.
+4. On the left side of the screen, click the **Update Address** Subagent.
+5. Click the **This Subagent's Actions** tab on the left.
 6. Click **New** and select **Create New Action**.
 7. For **Reference Action Type**, select **Prompt Template**.
 8. For **Reference Action**, select **BWAM - Nearest Branch Introduction**.
@@ -340,9 +340,9 @@ For the input and output configuration:
      alt="Agent action input/output configuration"
      width="640" />
 
-To finalize the topic behavior:
+To finalize the subagent behavior:
 
-1. Navigate to the **Topic Configuration** tab.
+1. Navigate to the **Subagent Configuration** tab.
 2. Click the **Add Instructions** button at the bottom.
 3. Enter the following text in the instruction:  
    **Ask the customer if they would like more information on their new nearest branch immediately after successfully updating their address. If the customer does want to find their nearest branch, run the 'BWAM - Nearest Branch Introduction' action and provide the response to the customer.**

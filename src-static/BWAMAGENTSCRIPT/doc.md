@@ -40,8 +40,13 @@ You will use `accountJson` to store account details so your agent can maintain c
 Follow these steps to create the Apex action.
 
 1. In the left pane, expand **Subagents**, then click **Financial Account Questions**.
+<<<<<<< HEAD
 2. Review the Subagent description and instructions so you understand expected behavior.
 3. In the Subagent canvas, click **Select Action** in the **Actions Available for Reasoning** section.
+=======
+2. Review the subagent description and instructions so you understand expected behavior.
+3. In the subagent canvas, click **Select Action** in the **Actions Available for Reasoning** section.
+>>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
 4. Click **Create a custom action**.
 5. In the dialog, set:
    - **Name**: `Get Account Details`
@@ -62,7 +67,11 @@ Follow these steps to create the Apex action.
 13. Set input variable to **Account ID**.
 14. Set output variable to **accountJson**.
 <img src="images/as_bwam5.png"
+<<<<<<< HEAD
      alt="Map action variables in Subagent"
+=======
+     alt="Map action variables in subagent"
+>>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
      width="640" />
 15. Click **Save** in the upper-right corner, or press **Ctrl-S**.
    - If prompted to select a user for the agent, select the existing service agent user
@@ -78,7 +87,11 @@ Your agent can now retrieve and retain customer account context during conversat
 
 Now that your agent can retrieve customer context, you can add tools to complete beneficiary-related actions.
 
+<<<<<<< HEAD
 Follow these steps to create the Subagent.
+=======
+Follow these steps to create the subagent.
+>>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
 
 1. In the left pane, hover over **Subagents** and click the plus (**+**) icon.
 2. Select **New Subagent**.
@@ -86,6 +99,7 @@ Follow these steps to create the Subagent.
 4. For **Description**, paste:
 
 ```text
+<<<<<<< HEAD
 This 'Manage Beneficiaries' Subagent allows customers to ask about, add, or remove existing Beneficiaries/Relationships associated with a specific financial account. Using the financial account IDs in the accountJson variable, identify the financial account the customer is asking about. Ask for the name of the beneficiary, the percentage of the benefit to be received, and the tax ID for the beneficiary. When displaying Financial Account Roles, always include Related Account Name, Account Name, Role, and Status. Execute the Add Beneficiaries action when the customer wants to add new relationships or financial account roles associated with a Financial Account. Execute the Remove Beneficiaries action when the customer wants to remove a relationship or financial account role associated with a Financial Account.
 ```
 <img src="images/as_bwam7.png"
@@ -93,6 +107,15 @@ This 'Manage Beneficiaries' Subagent allows customers to ask about, add, or remo
      width="640" />
 5. Click **Create and Open**.
 6. Hover over the new **Manage Beneficiaries** Subagent, click the plus (**+**) icon, then select **Add From Asset Library**.
+=======
+This 'Manage Beneficiaries' subagent allows customers to ask about, add, or remove existing Beneficiaries/Relationships associated with a specific financial account. Using the financial account IDs in the accountJson variable, identify the financial account the customer is asking about. Ask for the name of the beneficiary, the percentage of the benefit to be received, and the tax ID for the beneficiary. When displaying Financial Account Roles, always include Related Account Name, Account Name, Role, and Status. Execute the Add Beneficiaries action when the customer wants to add new relationships or financial account roles associated with a Financial Account. Execute the Remove Beneficiaries action when the customer wants to remove a relationship or financial account role associated with a Financial Account.
+```
+<img src="images/as_bwam7.png"
+     alt="Create Manage Beneficiaries subagent"
+     width="640" />
+5. Click **Create and Open**.
+6. Hover over the new **Manage Beneficiaries** subagent, click the plus (**+**) icon, then select **Add From Asset Library**.
+>>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
 <img src="images/as_bwam8.png"
      alt="Add actions from asset library"
      width="320" />
@@ -153,7 +176,11 @@ Follow these steps to test your agent.
 
 ## Address Change
 
+<<<<<<< HEAD
 In this exercise, you will build a prompt and a flow, then update the **Update Address** Subagent in your banking agent. This gives customers a self-service way to manage address changes and receive follow-up guidance.
+=======
+In this exercise, you will build a prompt and a flow, then update the **Update Address** subagent in your banking agent. This gives customers a self-service way to manage address changes and receive follow-up guidance.
+>>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
 
 In this exercise, you will:
 
@@ -289,13 +316,21 @@ New address: {!$Input:Account.BillingStreet}, {!$Input:Account.BillingCity} {!$I
 
 ### 3. Add Agent Action to Agent
 
+<<<<<<< HEAD
 To use the custom action, add it to the **Update Address** Subagent in **Banking Wealth Agent**.
+=======
+To use the custom action, add it to the **Update Address** subagent in **Banking Wealth Agent**.
+>>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
 
 1. If needed, return to **Agentforce Studio** and open **Banking Wealth Agent**.
 2. In the left pane, expand **Update Address**, then click the plus (**+**) icon to add a new action.
 3. Select **New Action**.
 <img src="images/as_bwam12.png"
+<<<<<<< HEAD
      alt="Create new action for update address Subagent"
+=======
+     alt="Create new action for update address subagent"
+>>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
      width="320" />
 4. Set:
    - **Action Name**: `Nearest Branch Introduction`
@@ -322,7 +357,11 @@ This is the account related to the user's request.
 <img src="images/as_bwam15.png"
      alt="Configure account input description"
      width="640" />
+<<<<<<< HEAD
 9. To finalize the Subagent behavior, click **Update Address** in the left pane.
+=======
+9. To finalize the subagent behavior, click **Update Address** in the left pane.
+>>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
 10. Append this text to the existing instructions:
 
 ```text
