@@ -5,7 +5,7 @@ In this workshop, you will build a specialized AI agent with deterministic logic
 ### What you will do
 
 - Create and configure a new agent in **Agentforce Studio**.
-- Define custom **Topics** and **Actions** for business-specific flows.
+- Define custom **Subagents** and **Actions** for business-specific flows.
 - Use deterministic instructions and variables to provide conditional responses.
 - Test and validate your agent using customer-specific data.
 
@@ -39,9 +39,9 @@ You will use `accountJson` to store account details so your agent can maintain c
 
 Follow these steps to create the Apex action.
 
-1. In the left pane, expand **Topics**, then click **Financial Account Questions**.
-2. Review the topic description and instructions so you understand expected behavior.
-3. In the topic canvas, click **Select Action** in the **Actions Available for Reasoning** section.
+1. In the left pane, expand **Subagents**, then click **Financial Account Questions**.
+2. Review the Subagent description and instructions so you understand expected behavior.
+3. In the Subagent canvas, click **Select Action** in the **Actions Available for Reasoning** section.
 4. Click **Create a custom action**.
 5. In the dialog, set:
    - **Name**: `Get Account Details`
@@ -62,7 +62,7 @@ Follow these steps to create the Apex action.
 13. Set input variable to **Account ID**.
 14. Set output variable to **accountJson**.
 <img src="images/as_bwam5.png"
-     alt="Map action variables in topic"
+     alt="Map action variables in Subagent"
      width="640" />
 15. Click **Save** in the upper-right corner, or press **Ctrl-S**.
    - If prompted to select a user for the agent, select the existing service agent user
@@ -74,25 +74,25 @@ Your agent can now retrieve and retain customer account context during conversat
 
 ---
 
-### 3. Add the Manage Beneficiaries Topic
+### 3. Add the Manage Beneficiaries Subagent
 
 Now that your agent can retrieve customer context, you can add tools to complete beneficiary-related actions.
 
-Follow these steps to create the topic.
+Follow these steps to create the Subagent.
 
-1. In the left pane, hover over **Topics** and click the plus (**+**) icon.
-2. Select **New Topic**.
-3. For **Topic Name**, enter `Manage Beneficiaries`.
+1. In the left pane, hover over **Subagents** and click the plus (**+**) icon.
+2. Select **New Subagent**.
+3. For **Subagent Name**, enter `Manage Beneficiaries`.
 4. For **Description**, paste:
 
 ```text
-This 'Manage Beneficiaries' topic allows customers to ask about, add, or remove existing Beneficiaries/Relationships associated with a specific financial account. Using the financial account IDs in the accountJson variable, identify the financial account the customer is asking about. Ask for the name of the beneficiary, the percentage of the benefit to be received, and the tax ID for the beneficiary. When displaying Financial Account Roles, always include Related Account Name, Account Name, Role, and Status. Execute the Add Beneficiaries action when the customer wants to add new relationships or financial account roles associated with a Financial Account. Execute the Remove Beneficiaries action when the customer wants to remove a relationship or financial account role associated with a Financial Account.
+This 'Manage Beneficiaries' Subagent allows customers to ask about, add, or remove existing Beneficiaries/Relationships associated with a specific financial account. Using the financial account IDs in the accountJson variable, identify the financial account the customer is asking about. Ask for the name of the beneficiary, the percentage of the benefit to be received, and the tax ID for the beneficiary. When displaying Financial Account Roles, always include Related Account Name, Account Name, Role, and Status. Execute the Add Beneficiaries action when the customer wants to add new relationships or financial account roles associated with a Financial Account. Execute the Remove Beneficiaries action when the customer wants to remove a relationship or financial account role associated with a Financial Account.
 ```
 <img src="images/as_bwam7.png"
-     alt="Create Manage Beneficiaries topic"
+     alt="Create Manage Beneficiaries Subagent"
      width="640" />
 5. Click **Create and Open**.
-6. Hover over the new **Manage Beneficiaries** topic, click the plus (**+**) icon, then select **Add From Asset Library**.
+6. Hover over the new **Manage Beneficiaries** Subagent, click the plus (**+**) icon, then select **Add From Asset Library**.
 <img src="images/as_bwam8.png"
      alt="Add actions from asset library"
      width="320" />
@@ -153,7 +153,7 @@ Follow these steps to test your agent.
 
 ## Address Change
 
-In this exercise, you will build a prompt and a flow, then update the **Update Address** topic in your banking agent. This gives customers a self-service way to manage address changes and receive follow-up guidance.
+In this exercise, you will build a prompt and a flow, then update the **Update Address** Subagent in your banking agent. This gives customers a self-service way to manage address changes and receive follow-up guidance.
 
 In this exercise, you will:
 
@@ -289,13 +289,13 @@ New address: {!$Input:Account.BillingStreet}, {!$Input:Account.BillingCity} {!$I
 
 ### 3. Add Agent Action to Agent
 
-To use the custom action, add it to the **Update Address** topic in **Banking Wealth Agent**.
+To use the custom action, add it to the **Update Address** Subagent in **Banking Wealth Agent**.
 
 1. If needed, return to **Agentforce Studio** and open **Banking Wealth Agent**.
 2. In the left pane, expand **Update Address**, then click the plus (**+**) icon to add a new action.
 3. Select **New Action**.
 <img src="images/as_bwam12.png"
-     alt="Create new action for update address topic"
+     alt="Create new action for update address Subagent"
      width="320" />
 4. Set:
    - **Action Name**: `Nearest Branch Introduction`
@@ -322,7 +322,7 @@ This is the account related to the user's request.
 <img src="images/as_bwam15.png"
      alt="Configure account input description"
      width="640" />
-9. To finalize the topic behavior, click **Update Address** in the left pane.
+9. To finalize the Subagent behavior, click **Update Address** in the left pane.
 10. Append this text to the existing instructions:
 
 ```text

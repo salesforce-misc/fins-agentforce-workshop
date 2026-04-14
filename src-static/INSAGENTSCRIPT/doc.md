@@ -5,7 +5,7 @@ In this workshop, you will build a specialized AI agent using deterministic logi
 ### What we will explore
 
 * How to create and configure a new agent using **Agentforce Studio**.
-* How to define custom **Topics** and **Actions** for specific business logic.
+* How to define custom **Subagents** and **Actions** for specific business logic.
 * How to use deterministic instructions and variables to provide conditional responses.
 * How to test and validate your agent using specific customer data.
 
@@ -46,17 +46,17 @@ In this workshop, you will build a specialized AI agent using deterministic logi
 
 ---
 
-### 1.2 Create a Topic for Policy and Quote Analysis
+### 1.2 Create a Subagent for Policy and Quote Analysis
 
-#### Define the Policy and Quote Analysis topic
+#### Define the Policy and Quote Analysis Subagent
 
-1. In the Explorer pane, hover over **Topics** and click the **+** (plus) icon.
-2. Select **Create New Topic**.
+1. In the Explorer pane, hover over **Subagents** and click the **+** (plus) icon.
+2. Select **Create New Subagent**.
 3. Enter the following values: 
-    - **Topic Name**: `Policy Questions`
-    - **Describe the job you want the topic to do**: `Assists customers to analyze their existing policies and comparing them with quotes from other carriers. Use this topic when a user asks about their insurance.`
-4. Click **Create and Open**. This will take us to the Canvas for defining our new Topic. 
-5. In the **Agentforce pane on the right, give Agentforce this instruction: `In the Topic Selector, add the action to transition to the Policy Questions topic`
+    - **Subagent Name**: `Policy Questions`
+    - **Describe the job you want the Subagent to do**: `Assists customers to analyze their existing policies and comparing them with quotes from other carriers. Use this Subagent when a user asks about their insurance.`
+4. Click **Create and Open**. This will take us to the Canvas for defining our new Subagent. 
+5. In the **Agentforce pane on the right, give Agentforce this instruction: `In the Subagent Selector, add the action to transition to the Policy Questions Subagent`
 6. Click **Accept Change**
 
     <img src="images/policy1-2.png" alt="Agent creation dialog with natural language prompt" width="640" />
@@ -74,11 +74,11 @@ In this workshop, you will build a specialized AI agent using deterministic logi
 
         <img src="images/policy2-2.png" alt="Configuring the flow action reference" width="640" />
 
-3. In the **Explorer** pane, click Policy Questions to go back to our Topic. Expand the action and set: 
+3. In the **Explorer** pane, click Policy Questions to go back to our Subagent. Expand the action and set: 
     - `With input: ` **InsuredAccountId** = `VerifiedCustomerId`
     - `Set output: ` `PolicyJson` = **PolicyJson**
 
-6. In the **Explorer** pane, click Policy Questions to go back to our Topic. Put your cursor after our new `Get Customer Policies` action and press Enter to start a new line. Click **Select action** and choose **Create a custom action**.
+6. In the **Explorer** pane, click Policy Questions to go back to our Subagent. Put your cursor after our new `Get Customer Policies` action and press Enter to start a new line. Click **Select action** and choose **Create a custom action**.
 7. For the Action Name, enter `Analyze Quote`. For Description, enter `Analyze the PDF quote file related to the customer's account record` and click **Create and Open**.
 8. Configure with the following values:
     - **Reference Action Type**: `Flow`
@@ -86,7 +86,7 @@ In this workshop, you will build a specialized AI agent using deterministic logi
 
         <img src="images/policy2-3.png" alt="Configuring the Apex action reference" width="640" />
 
-9. In the **Explorer** pane, click Policy Questions to go back to our Topic. Expand the **Analyze Quote** action and set: 
+9. In the **Explorer** pane, click Policy Questions to go back to our Subagent. Expand the **Analyze Quote** action and set: 
     - `With input: ` **accountId** = `VerifiedCustomerId`
     - `Set output: ` `QuoteJson` = **quoteJson**
 
@@ -138,43 +138,41 @@ Follow these steps to verify your agent's reasoning and execution.
 5. Ask the agent: `What can you tell me about my policies?`
 6. Open the **Trace** tab in the bottom pane to inspect the agent's work.
 
-**Successful Outcome:** The agent should trigger the "Policy Questions" topic, call the Flow action, and return the correct summary response based of Kiran Singh's insurance policies.
+**Successful Outcome:** The agent should trigger the "Policy Questions" Subagent, call the Flow action, and return the correct summary response based of Kiran Singh's insurance policies.
     <img src="images/policy5.png" alt="Successful test result in the preview pane" width="640" />
 7. Ask the agent: `Can compare the recent auto quote with my existing policy?`
 8. Open the **Trace** tab in the bottom pane to inspect the agent's work.
 
-**Successful Outcome:** The agent should trigger the "Policy Questions" topic, call the Analyze Quote action, and return the correct conditional response based on the equity percentage.
+**Successful Outcome:** The agent should trigger the "Policy Questions" Subagent, call the Analyze Quote action, and return the correct conditional response based on the equity percentage.
     <img src="images/policy6.png" alt="Successful test result in the preview pane" width="640" />
 
 ## 2. Add a Driver Exercise
 
 In this exercise, you will enhance the insurance agent so it can manage drivers on an auto insurance policy.  
-This topic will allow the agent to add a driver to an insurance policy and capture the necessary details.
+This Subagent will allow the agent to add a driver to an insurance policy and capture the necessary details.
 
-**Part 1**: Create a **Manage Drivers on Auto Policy** topic for the Insurance Agent  
+**Part 1**: Create a **Manage Drivers on Auto Policy** Subagent for the Insurance Agent  
 **Part 2**: Create new agent actions to add a new driver and extract data from a driver’s license image  
-**Part 3**: Test the new agent topic
+**Part 3**: Test the new agent Subagent
 
 The concepts you'll explore include:
 
-- **Topics** to coach/instruct Agents on how to behave and what to do
+- **Subagents** to coach/instruct Agents on how to behave and what to do
 - **Actions** to give Agents tools to execute tasks
-
-Click **Next** to get started!
 
 ---
 
-### 2.1 Create Driver Management Topic
+### 2.1 Create Driver Management Subagent
 
 1. Click the **App Launcher** (waffle icon) and select the **Agentforce Studio** application.
 2. In the list of agents, click the **Insurance Agent** that we recently created.
-3. Once in the builder, hover over **Topics** on the left, click the **+** beside it and select **Create new topic**. Use these values: 
- - **Topic Name**: `Driver Management`
+3. Once in the builder, hover over **Subagents** on the left, click the **+** beside it and select **Create new Subagent**. Use these values: 
+ - **Subagent Name**: `Driver Management`
  - **Description**: `Manage drivers on Auto policies, including retrieving existing auto insurance policies, listing all existing drivers and adding a new driver after collecting their first name, last name, email, phone number, driver's license number, license issue date and license expiry date`
 
 4. Click **Create and Open**
 
-5. In the Topic, open the drop-down **Select action** and click **Add from Asset Library**. Search for and select the **INS - Get Drivers on Policy** action, then click **Add to Agent**. We can't help with drivers on a policy until we've retrieved policy information. Under the **Instructions** section, type `/` and select **If/Else (Conditional)**. Set the conidtion to be **PolicyJson** == "". Within the if statement, type `/` and select **Transition**. For the transition, select the **Policy_Questions** topic. On a new line, copy-paste these instructions: 
+5. In the Subagent, open the drop-down **Select action** and click **Add from Asset Library**. Search for and select the **INS - Get Drivers on Policy** action, then click **Add to Agent**. We can't help with drivers on a policy until we've retrieved policy information. Under the **Instructions** section, type `/` and select **If/Else (Conditional)**. Set the conidtion to be **PolicyJson** == "". Within the if statement, type `/` and select **Transition**. For the transition, select the **Policy_Questions** Subagent. On a new line, copy-paste these instructions: 
 
 ```text
 Retrieve existing auto insurance policies associated with an account, listing all existing drivers and adding a new driver after collecting their first name, last name, email, phone number, driver's license number, license issue date and license expiry date.
@@ -185,15 +183,15 @@ Retrieve existing auto insurance policies associated with an account, listing al
      width="640" />
 ---
 
-6. In the **Agentforce pane on the right, give Agentforce this instruction: `In the Topic Selector, add the action to transition to the Driver Management topic`
+6. In the **Agentforce pane on the right, give Agentforce this instruction: `In the Subagent Selector, add the action to transition to the Driver Management Subagent`
 7. Click **Accept Change**
 
 ### 2.2 Create New Agent Action
 
-You will now create a new Agent Action to include in this topic.  
+You will now create a new Agent Action to include in this Subagent.  
 This action is based on an existing pre-built flow and prompt template and gives the agent the ability to add a new driver.
 
-In the **Explorer** on the left, hover over **Actions** sub-section within the **Driver Management** topic and click **+**. In the drop-down, click **Create a custom action**. Use these values: 
+In the **Explorer** on the left, hover over **Actions** sub-section within the **Driver Management** Subagent and click **+**. In the drop-down, click **Create a custom action**. Use these values: 
  - **Action Name**: `Add Driver to Policy`
  - **Description**: `Add a new driver to the customer's active auto insurance policy`
 
@@ -225,7 +223,7 @@ Complete the Agent Action configuration by:
 
 ### 2.3 Test by Adding a Driver
 
-Uploading a file isn’t supported in the Conversation Preview, so you will test this new topic directly from the insurance portal.
+Uploading a file isn’t supported in the Conversation Preview, so you will test this new Subagent directly from the insurance portal.
 
 1. In the **Preview** pane, click **Set Initial Context Values**.
 2. Paste the ID for the `VerifiedCustomerId` variable under the **Override Value** field and click **Refresh Session**.
@@ -255,18 +253,18 @@ We will explore:
 
 ---
 
-### 3.1 Create the Address Change Topic
+### 3.1 Create the Address Change Subagent
 
 1. Click the **App Launcher** (waffle icon) and select the **Agentforce Studio** application.
 2. In the list of agents, click the **Insurance Agent** that we recently created.
 
-3. Once in the builder, hover over **Topics** on the left, click the **+** beside it and select **Create new topic**. Use these values: 
- - **Topic Name**: `Address Change`
+3. Once in the builder, hover over **Subagents** on the left, click the **+** beside it and select **Create new Subagent**. Use these values: 
+ - **Subagent Name**: `Address Change`
  - **Description**: `Help policyholders manage changes to their account address and any subsequent impacts to their insurance products.`
 
 4. Click **Create and Open**
 
-5. In the Topic, open the drop-down **Select action** and click **Add from Asset Library**. Search for and select:
+5. In the Subagent, open the drop-down **Select action** and click **Add from Asset Library**. Search for and select:
  -  **FINS - Update Account Address**: This takes a standardized address strging and updates the customer’s billing address on their Account record.
  - **INS - Cancel Insurance Policy**: Begins the process to cancel an insurance policy. You can use this in case you need to cancel a renter's insurance policy.
  - **INS - Get Account Details**: Retrieves customer account details, including their address.
@@ -274,10 +272,10 @@ We will explore:
 6. Click **Add to Agent**.
 
 <img src="images/address1.png"
-     alt="Address Change topic actions"
+     alt="Address Change Subagent actions"
      width="400" />
 
-7. In the **Agentforce pane on the right, give Agentforce this instruction: `In the Topic Selector, add the action to transition to the Address Change topic`
+7. In the **Agentforce pane on the right, give Agentforce this instruction: `In the Subagent Selector, add the action to transition to the Address Change Subagent`
 8. Click **Accept Change**
 
 ---
@@ -405,8 +403,8 @@ Click **Save** and **Activate** the Prompt Template.
 
 Now you’ll wire the new prompt template into the agent as an action.
 
-Go back to the Agent Builder for the **Insurance Agent**. In the **Explorer** on the left, hover over **Actions** sub-section within the **Driver Management** topic and click **+**. In the drop-down, click **Create new action**. Use these values: 
- - **Topic Name**: `Property Insurance Call to Action`
+Go back to the Agent Builder for the **Insurance Agent**. In the **Explorer** on the left, hover over **Actions** sub-section within the **Driver Management** Subagent and click **+**. In the drop-down, click **Create new action**. Use these values: 
+ - **Subagent Name**: `Property Insurance Call to Action`
  - **Description**: `After an address change, generate a follow up ask or call to action for the customer`
 
 Click **Create and Open**. In the action, use these configurations: 
@@ -420,7 +418,7 @@ Click **Create and Open**. In the action, use these configurations:
      alt="Add prompt template as an action"
      width="640" />
 
-In **Explorer**, open the Address Change topic and under instructions, add the following: 
+In **Explorer**, open the Address Change Subagent and under instructions, add the following: 
 
 ```
 Provide and confirm the customer's current address before asking for a new one by retrieving it with ​INS - Get Account Details​. Only consider their billing address.RetryundefinedCancelSave
@@ -457,16 +455,16 @@ g. next week Thursday
 
 ## 4. Billing Management
 
-With the policy management topic, you’ve retrieved customer details, including information about payments.  
+With the policy management Subagent, you’ve retrieved customer details, including information about payments.  
 Now you’ll give the agent tools to help customers manage their payments as well.
 
-**Part 1**: Create a topic for managing billing information  
+**Part 1**: Create a Subagent for managing billing information  
 **Part 2**: Create actions to change payment frequency and method  
 **Part 3**: Test the new agent capabilities
 
 We will explore:
 
-- **Topics** to coach/instruct Agents on how to behave and what to do
+- **Subagents** to coach/instruct Agents on how to behave and what to do
 - **Filters** to ensure your agent doesn't overstep its bounds
 - **Instructions** to coach your Agent on how to operate
 
@@ -474,18 +472,18 @@ Click **Next** to get started!
 
 ---
 
-### 4.1 Create Billing Topic
+### 4.1 Create Billing Subagent
 
 1. Click the **App Launcher** (waffle icon) and select the **Agentforce Studio** application.
 2. In the list of agents, click the **Insurance Agent** that we recently created.
 
-3. Once in the builder, hover over **Topics** on the left, click the **+** beside it and select **Create new topic**. Use these values: 
- - **Topic Name**: `Billing Management`
+3. Once in the builder, hover over **Subagents** on the left, click the **+** beside it and select **Create new Subagent**. Use these values: 
+ - **Subagent Name**: `Billing Management`
  - **Description**: `Help policyholders manage their billing and payments information for active insurance policies, such as payment frequency and payment method`
 
 4. Click **Create and Open**
 
-5. In the Topic, open the drop-down **Select action** and click **Add from Asset Library**. Search for and select:
+5. In the Subagent, open the drop-down **Select action** and click **Add from Asset Library**. Search for and select:
 a. **INS - Update Billing Frequency**
 b. **INS - Update Payment Method**
 c. **INS - Get Account Details**
@@ -498,7 +496,7 @@ c. **INS - Get Account Details**
 Using the PolicyJson and customerCreditScore variables, help the customer update their payment/billing frequency for a policy or update their payment method for a policy. The allowed payment frequencies include Semi-Monthly, Monthly, Quarterly, Semi-Annual and Annually. The allowed payment methods are Credit Card, Bank Transfer, PayPal and Check by Mail.
 ```
 
-9. In the **Agentforce pane on the right, give Agentforce this instruction: `In the Topic selector, add the action to transition to the Billing Management topic`
+9. In the **Agentforce pane on the right, give Agentforce this instruction: `In the Subagent selector, add the action to transition to the Billing Management Subagent`
 10. Click **Accept Change**
 
 <img src="images/billing1.png" width="640" />
@@ -516,7 +514,7 @@ You don’t want to let the customer update their payment method or billing freq
 - **API Name**: `customerCreditScore`
 - **Data Type**: `Number`
 4. Click **Create**
-5. Open the **Billing Management** topic. Expand the **INS - Get Account Details** action and set these inputs/outputs: 
+5. Open the **Billing Management** Subagent. Expand the **INS - Get Account Details** action and set these inputs/outputs: 
     - Input **accountID** = **VerifiedCustomerId**
     - Output **customerCreditScore** = **customerCreditScore**
 
@@ -542,7 +540,7 @@ In the chat box, converse with the agent using these messages:
 
 The response back from the Agent wasn't what we were hoping for. We can see reasoning in the middle pane about why our Agent decided to choose this action. Let's click the Suggest Improvement button to get suggestions on how we can improve our agent and answer the questions from the builder. You can provide feedback like the screenshot below:
 
-Based on the feedback. We can add a new instruction into our Topic, something like this:
+Based on the feedback. We can add a new instruction into our Subagent, something like this:
 
 ```text
 Before updating billing frequency or payment method, verify that the customer's credit score is over 500. If the credit score is 500 or below, escalate the request to a live human agent
