@@ -9,10 +9,8 @@ Part 2: Give our agent the ability to analyze PDF files
 We will explore:
 
 - **Agent Creator** to rapidly build a new agent using a Financial Services Cloud template
-- **Topics & Instructions** to coach/instruct our Agents on how to behave and what to do
+- **Subagents & Instructions** to coach/instruct our Agents on how to behave and what to do
 - **Prompt Builder** to give our Agent the ability to work with both structured and unstructured data
-
-Click Next to get started!
 
 ### 1.1 Build and Deploy an Agent
 
@@ -20,16 +18,16 @@ In this exercise we will first explore the standard Agentforce assets that come 
 
 Click the **Setup Cog** icon at the top right and select **Setup**. Search for **Agentforce** in **Quick Find** and select **Agentforce Assets**.
 
-This page has 2 tabs - Topics and Actions
+This page has 2 tabs - Subagents and Actions
 
-1. Topics are how we organize and define how our Agent should operate and captures the instructions and scope of what an Agent should do. Review the list of existing standard topics for templates on how Agents can handle certain tasks. You'll notice there are a number of financial services specific topics, including **Financial Account Balances**, **Checkbook Ordering** and **Transfer Funds**
+1. Subagents are how we organize and define how our Agent should operate and captures the instructions and scope of what an Agent should do. Review the list of existing standard Subagents for templates on how Agents can handle certain tasks. You'll notice there are a number of financial services specific Subagents, including **Financial Account Balances**, **Checkbook Ordering** and **Transfer Funds**
 2. Actions are the tools we can give Agents to execute for their jobs to be done. There are a lot of standard actions available for many of the common tasks we may want an agent to do. There are also financial services-specific ones such as creating cases for **transfer funds**, **checkbook requests** or **fee reversals**, **interaction summaries** and **getting financial account data**. Take a look through this list as well
 
 Let's now use some of these assets to build an agent. In **Quick Find**, search for and select **Agentforce Agents**. At the top right, click the **+ New Agent** button to get taken to the Agent Creator. We can see that there are a lot of agent templates we can use to get started. For this exercise, we will use the **Banking Relationship Assistance** template. Click it and then click **Next** in the top right.
 
 ![](images/general1.png)
 
-On the next screen, by default, there is the **Post-Meeting Assistance** Topic associated with the agent that gives our agent a bunch of assistive tools for helping employees track and manage their customer interactions in FSC. Click Next again to get to the **Customize your Agent** section. We'll make a few adjustments here (because relationship management spans across financial products):
+On the next screen, by default, there is the **Post-Meeting Assistance** Subagent associated with the agent that gives our agent a bunch of assistive tools for helping employees track and manage their customer interactions in FSC. Click Next again to get to the **Customize your Agent** section. We'll make a few adjustments here (because relationship management spans across financial products):
 
 - Name = Relationship Assistant
 - API Name = Relationship_Assistant
@@ -91,7 +89,7 @@ In the top right, click the **Activate** button
 
 Now that we have our prompt, we want to add it to our Relationship Assistance Agent. Back in Setup, search for **Agentforce** in **Quick Find** and select **Agentforce Agents**. In the list of agents, expand **Relationship Assistance** by clicking the **>** and clicking **Version 1**
 
-In the Agent Builder, in the Topics pane on the left, select the **New** drop-down and click on **+ New Topic**. When prompted about what you want this topic to do, copy/paste this in:
+In the Agent Builder, in the Subagents pane on the left, select the **New** drop-down and click on **+ New Subagent**. When prompted about what you want this Subagent to do, copy/paste this in:
 
 ```text
 Summarize and analyze a customer's income statement document
@@ -99,7 +97,7 @@ Summarize and analyze a customer's income statement document
 
 Review the generated Description, Scope and Instructions, then click **Next**. In the list of Actions, search for and check off the **INS - Get File on Account** pre-built action and click **Finish**. This action will retrieve the income statement file for our agent.
 
-We now also want to add our prompt template into the Topic. Click our newly created topic on the left and then select the **This Topic's Action** tab at the top.
+We now also want to add our prompt template into the Subagent. Click our newly created Subagent on the left and then select the **This Subagent's Action** tab at the top.
 
 Open the **New** drop-down and select **+ Create New Action**. For Reference Action Type, select **Prompt Template**. In Reference Action, select the prompt we created: **INS - Analyze Income Statement**. Click **Next**. Finish the action definition by:
 
@@ -140,12 +138,12 @@ For Test Conditions, check off **Include context variables**, then check off the
 
 In the next **Test Data** section, we can upload test cases in CSV format or use generative AI to create test use cases. For this exercise, we will define use cases with generative AI.
 
-1. Click the **Generate Test Cases based on topics and actions** button
+1. Click the **Generate Test Cases based on Subagents and actions** button
 2. Set Number of test cases = 6
 3. Copy/paste this prompt into the describe the test cases box:
 
 ```text
-Build 5 test cases for the Post-Meeting Assistance Topic about creating an interaction, creating a task, drafting an email to the customer, creating an interaction attendee and creating an interaction summary. Create 1 test case for the Income Statement Analysis Topic that will analyze the income statement of the customer
+Build 5 test cases for the Post-Meeting Assistance Subagent about creating an interaction, creating a task, drafting an email to the customer, creating an interaction attendee and creating an interaction summary. Create 1 test case for the Income Statement Analysis Subagent that will analyze the income statement of the customer
 ```
 <p float="left">
   <img src="images/general12.png" width="320" />
