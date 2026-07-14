@@ -12,35 +12,26 @@ Click the **Setup** icon in the top right and select **Data Cloud Setup**. A new
 
 ---
 
-### 2. Open Setup
+### 2. Enable Agentforce
 
-Click the **Setup** icon in the top right and select **Setup**. A new tab will open.
-
-![Org setup step 1](images/orgSetup1.png)
-
----
-
-### 3. Enable Agentforce
-
-Refresh the browser and, in the Quick Find box, search for and select **Agentforce Agents** or go [here](/lightning/setup/EinsteinCopilot/home).  
+Click the **Setup** icon in the top right and select **Setup**. A new tab will open. Refresh the browser and, in the Quick Find box, search for and select **Agentforce Agents**.  
 At the top of the page, toggle on **Agentforce**.
 
 ![Org setup step 2](images/orgSetup2.png)
 
 ---
 
-### 4. Enable Messaging
+### 3. Enable Messaging
 
-In the Quick Find box, search for and select **Messaging Settings** or go [here](/lightning/setup/LiveMessageSetup/home).  
-Toggle on **Messaging**.
+In the Quick Find box, search for and select **Messaging Settings** and toggle on **Messaging**.
 
 ![Org setup step 4](images/orgSetup5.png)
 
 ---
 
-### 5. Create an Embedded Service Deployment (Web)
+### 4. Create an Embedded Service Deployment (Web)
 
-In the Quick Find box, search for and select **Embedded Service Deployments** or go [here](/lightning/setup/EmbeddedServiceDeployments/home).
+In the Quick Find box, search for and select **Embedded Service Deployments**.
 
 1. Click **New Deployment** on the top right.
 2. In the pop-up, select **Enhanced Chat**. If you cannot select it, close the pop-up by clicking the **X** at the top right. You may have opened the pop-up multiple times.
@@ -58,9 +49,9 @@ Click **Publish** after the deployment is saved. It will need up to 10 minutes t
 
 ---
 
-### 6. Add Embedded Messaging to an Experience Cloud Site
+### 5. Add Embedded Messaging to an Experience Cloud Site
 
-In the Quick Find box, search for and select **All Sites** or go [here](/lightning/setup/SetupNetworks/home).  
+In the Quick Find box, search for and select **All Sites**.  
 This takes you to the Experience Cloud setup page where you can publish your agent to a customer-facing website.
 
 1. Click **Builder** next to the **Retail** site. This opens a new tab that lets you configure, build, and publish a customer-facing website.

@@ -13,12 +13,10 @@ const LIBS = {
 const SETUP_RESOURCE_NAME = "SETUP";
 
 const DEFAULT_RESOURCE_NAMES = [
-  "BWAM",
   "BWAMAGENTSCRIPT",
-  "INS",
-  "GENERAL",
   "GENERALAGENTSCRIPT",
-  "INSAGENTSCRIPT"
+  "INSAGENTSCRIPT",
+  "PROMPT"
 ];
 const DEFAULT_RESOURCE_STRING = DEFAULT_RESOURCE_NAMES.join(",");
 const LEGACY_DEFAULT_RESOURCE_STRING = "BWAM,BWAMAGENTSCRIPT,INS";
@@ -64,9 +62,6 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
   @track isLoading = false;
   @track showSetupSteps = true;
 
-  // Guide year toggle: '2025' or '2026'
-  @track guideYear = "2026";
-
   resourceList = [];
   htmlCacheByResource = {};
   showDocumentPicker = true;
@@ -98,22 +93,14 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
     }));
   }
 
-  get guideYearOptions() {
-    return [
-      { label: "2025", value: "2025" },
-      { label: "2026", value: "2026" }
-    ];
-  }
-
   get filteredResourceList() {
-    // Visible options per requirement:
-    // 2025 => BWAM, INS, GENERAL
-    // 2026 => BWAMAGENTSCRIPT, INSAGENTSCRIPT, GENERAL
-    const mapByYear = {
-      "2025": ["GENERAL", "BWAM", "INS"],
-      "2026": ["GENERALAGENTSCRIPT", "BWAMAGENTSCRIPT", "INSAGENTSCRIPT"]
-    };
-    const desired = mapByYear[this.guideYear] || [];
+    const desired = [
+      "GENERALAGENTSCRIPT",
+      "BWAMAGENTSCRIPT",
+      "INSAGENTSCRIPT",
+      "PROMPT"
+    ];
+
     // Only include those that actually exist in overall resourceList
     const available = new Set(this.resourceList);
     return desired.filter((n) => available.has(n));
@@ -125,6 +112,7 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
       BWAM: "Banking & Wealth",
       BWAMAGENTSCRIPT: "Banking & Wealth",
       INS: "Insurance",
+      PROMPT: "Automated GenAI with Insurance",
       GENERAL: "General",
       GENERALAGENTSCRIPT: "General",
       INSAGENTSCRIPT: "Insurance"
@@ -160,14 +148,18 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
       return;
     }
 
+    const visibleResources = this.filteredResourceList;
+
     // Determine the initial resource to load
     if (
       this.defaultResourceName &&
-      this.resourceList.includes(this.defaultResourceName)
+      visibleResources.includes(this.defaultResourceName)
     ) {
       this.currentResourceName = this.defaultResourceName;
     } else {
-      [this.currentResourceName] = this.resourceList;
+      [this.currentResourceName] = visibleResources.length
+        ? visibleResources
+        : this.resourceList;
     }
 
     try {
@@ -413,25 +405,6 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
     }
   }
 
-  handleGuideYearChange(event) {
-    const nextYear = event.detail.value;
-    if (nextYear === this.guideYear) {
-      return;
-    }
-    this.guideYear = nextYear;
-
-    // If current resource is not visible under the new year, switch to first visible
-    const visible = this.filteredResourceList;
-    if (!visible.length) {
-      // Nothing visible (shouldn't happen with defaults), leave selection as-is
-      return;
-    }
-    if (!visible.includes(this.currentResourceName)) {
-      this.currentResourceName = visible[0];
-      this.loadCurrentDocument();
-    }
-  }
-
   handleShowSetupChange(event) {
     this.showSetupSteps = event.target.checked;
 
@@ -454,7 +427,8 @@ export default class MarkdownStaticResourceViewer extends LightningElement {
       INS: "Insurance",
       GENERAL: "General",
       GENERALAGENTSCRIPT: "General",
-      INSAGENTSCRIPT: "Insurance"
+      INSAGENTSCRIPT: "Insurance",
+      PROMPT: "Automated GenAI with Insurance"
     };
 
     if (!this.currentResourceName) {

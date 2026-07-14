@@ -22,19 +22,8 @@
 
     <template if:true={showPicker}>
       <div class="viewer-header">
-        <div class="slds-grid slds-gutters slds-wrap">
-          <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
-            <lightning-radio-group
-              name="guideYear"
-              label="Guide Version"
-              options={guideYearOptions}
-              value={guideYear}
-              type="radio"
-              onchange={handleGuideYearChange}
-            >
-            </lightning-radio-group>
-          </div>
-          <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+        <div class="slds-grid slds-gutters slds-wrap slds-grid_vertical-align-start">
+          <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
             <lightning-radio-group
               name="markdownDocSelector"
               label="Workshop Guide"
@@ -45,30 +34,34 @@
             >
             </lightning-radio-group>
           </div>
-        </div>
 
-        <div class="viewer-toggle">
-          <lightning-input
-            type="toggle"
-            name="showSetupSteps"
-            label="Show Setup Steps"
-            message-toggle-active="Show"
-            message-toggle-inactive="Hide"
-            checked={showSetupSteps}
-            onchange={handleShowSetupChange}
-          >
-          </lightning-input>
-        </div>
+          <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+            <div class="viewer-toggle">
+              <lightning-input
+                type="toggle"
+                name="showSetupSteps"
+                label="Show Setup Steps"
+                message-toggle-active="Show"
+                message-toggle-inactive="Hide"
+                checked={showSetupSteps}
+                onchange={handleShowSetupChange}
+              >
+              </lightning-input>
+            </div>
+          </div>
 
-        <div class="viewer-actions">
-          <lightning-button
-            variant="neutral"
-            label="Print Guide"
-            title="Open a print-friendly version of this guide in a new tab"
-            icon-name="utility:print"
-            onclick={handlePrintClick}
-          >
-          </lightning-button>
+          <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+            <div class="viewer-actions">
+              <lightning-button
+                variant="neutral"
+                label="Print Guide"
+                title="Open a print-friendly version of this guide in a new tab"
+                icon-name="utility:print"
+                onclick={handlePrintClick}
+              >
+              </lightning-button>
+            </div>
+          </div>
         </div>
       </div>
     </template>

@@ -29,10 +29,16 @@
 }
 
 .viewer-toggle {
-  margin-top: 0.75rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  margin-top: 0;
+}
+
+.viewer-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 0;
 }
 
 .viewer-toggle__label {

@@ -2,15 +2,10 @@
 
 In this workshop, you will build two practical generative AI automations for an insurance business using **Prompt Builder**, **Flow Builder**, and **Financial Services Cloud** data. Both exercises are designed for a Salesforce admin and focus on common service operations: routing inbound service requests and summarizing policy-related service history.
 
-These exercises assume **Email-to-Case** is already configured and that your org uses **Financial Services Cloud**, including the **InsurancePolicy** object. They also assume that Cases related to a policy can be identified through an existing relationship field. If your org uses a different field name than the one shown in this guide, substitute your own field when configuring the flows.
-
 We will explore:
 
 - **Prompt Templates** to classify inbound requests and summarize related service activity
 - **Flow Builder** to orchestrate prompt execution and update records automatically
-- **JSON output** so a flow can reliably interpret AI results
-- **Autolaunched Flows** to run policy summaries from the record page
-- **Testing** to validate both routing and summarization outcomes
 
 ---
 
@@ -23,46 +18,33 @@ The routing categories for this exercise are:
 - `Account Management`
 - `Policy Management`
 - `Claims`
-- `Sales`
+- `Investments`
+- `Beneficiary`
+- `Transactions`
+- `Billing`
 
-#### 1.1 Create Fields for AI Routing Output
-
-First, create a few fields on the **Case** object so you can store the AI result and make the routing transparent for service teams.
-
-1. In **Setup**, open **Object Manager**.
-2. Select **Case**.
-3. Click **Fields & Relationships** and then click **New**.
-4. Create a **Text** field with these values:
-   - **Field Label**: `AI Case Category`
-   - **Length**: `100`
-5. Create a second **Long Text Area** field with these values:
-   - **Field Label**: `AI Routing Reason`
-   - **Visible Lines**: `4`
-   - **Length**: `1000`
-6. Create a third **Checkbox** field with these values:
-   - **Field Label**: `AI Routed`
-   - **Default Value**: unchecked
-
-> Screenshot placeholder: Case custom fields for AI routing output
-
-If your org already has a queue-routing pattern, you can reuse existing fields instead of creating new ones.
-
----
-
-#### 1.2 Create the Case Routing Prompt Template
+#### 1.1 Create the Case Routing Prompt Template
 
 Next, create a prompt template that classifies an inbound insurance service request and returns JSON that a flow can parse.
 
 1. In **Setup**, use **Quick Find** to search for and select **Prompt Builder**.
 2. Click **New Prompt Template**.
-3. Choose the prompt template type that supports use in **Flow**.
-4. Enter these values:
+3. Enter these values:
+   - **Prompt Template Type**: `Flex`
    - **Template Name**: `Insurance Case Routing`
    - **API Name**: `Insurance_Case_Routing`
-   - **Description**: `Classifies inbound insurance email cases into a service routing category and returns structured JSON for Flow`
+   - **Description**: `Classifies inbound email cases into a service routing category and returns structured JSON`
+4. Add an input with these values: 
+   - **Name**: Case
+   - **API Name**: Case
+   - **Source Type**: Object
+   - **Object**: Case
 5. Save the prompt template.
 
-For the prompt instructions, use a prompt similar to the one below:
+<img src="images/prompt1-1.png" width="640" />
+
+6. Under Template Settings, set **Response Format** to **JSON**
+7. For the prompt instructions, use a prompt similar to the one below:
 
 ```text
 You are assisting an insurance operations team with triaging inbound email cases.
@@ -71,51 +53,48 @@ Review the case subject and description and classify the request into exactly on
 - Account Management
 - Policy Management
 - Claims
-- Sales
+- Investments
+- Beneficiary
+- Transactions
+- Billing
 
-Use these definitions:
-- Account Management: profile updates, billing contacts, communication preferences, beneficiary or household updates, login/access support, general account maintenance
-- Policy Management: coverage questions, renewals, cancellations, endorsements, ID cards, declarations, underwriting follow-up, policy changes
-- Claims: loss reporting, claim status, claim documents, claim payment questions, adjuster follow-up, incident details
-- Sales: quote requests, new policy inquiries, cross-sell, upsell, product comparisons, requests to speak with a producer or agent about buying coverage
+Use these classification rules:
+- Account Management: use for profile updates, contact detail changes, communication preferences, login or portal access help, household changes, or general account maintenance requests
+- Policy Management: use for coverage questions, endorsements, renewals, cancellations, ID card requests, declarations, underwriting follow-up, or changes to an existing insurance policy
+- Claims: use for loss reporting, claim status, claim documents, settlement questions, adjuster follow-up, incident details, or reimbursement questions
+- Investments: use for annuity, retirement, cash value, investment allocation, market performance, asset transfer, or financial product servicing questions related to investment products
+- Beneficiary: use for adding, removing, changing, reviewing, or confirming beneficiaries on a life insurance, annuity, or other financial policy
+- Transactions: use for transfers, withdrawals, deposits, disbursements, rollover requests, surrender activity, exchange requests, or other money movement activity
+- Billing: use for premium payments, invoices, autopay, failed payments, payment methods, refunds, billing schedules, balances due, or other payment servicing requests
 
 Return valid JSON only.
 
 Use this JSON structure:
 {
   "category": "",
-  "confidence": "",
-  "reason": "",
-  "suggestedQueueDeveloperName": ""
+  "reason": ""
 }
 
 Rules:
-- The category must be exactly one of the four allowed values.
-- The confidence must be High, Medium, or Low.
-- The reason must be one short sentence.
-- suggestedQueueDeveloperName must be one of:
-  - Account_Management
-  - Policy_Management
-  - Claims
-  - Sales
+- The category must be exactly one of the allowed values.
+- The reason must be under 3 sentences long and include a reference to confidence of categorization being high, medium or low.
 - Do not include markdown fences or extra commentary.
 
 Case Subject: {!$Input:Case.Subject}
 Case Description: {!$Input:Case.Description}
 ```
 
-6. Add the necessary prompt inputs so the template can receive Case data from Flow.
-7. Save and, if required in your org, activate or make the template available for use.
+8. Save and activate. 
 
-> Screenshot placeholder: Prompt Builder template showing instructions and JSON response shape
+<img src="images/prompt1-2.png" width="640" />
 
 This prompt design keeps the output deterministic enough for a flow to interpret while still using AI to understand natural-language insurance requests.
 
 ---
 
-#### 1.3 Build the Record-Triggered Flow
+#### 1.2 Build the Record-Triggered Flow
 
-Now create the flow that runs whenever a new case arrives from Email-to-Case.
+Now recreate the flow that runs whenever a new case arrives from Email-to-Case. The existing flow in the org is named **Route Email Cases with AI**, and it uses a prompt template followed by an Apex action to interpret the JSON response before routing the Case to either the **Sales** or **Service** queue.
 
 1. In **Setup**, search for and select **Flows**.
 2. Click **New Flow**.
@@ -123,79 +102,120 @@ Now create the flow that runs whenever a new case arrives from Email-to-Case.
 4. Configure the start conditions:
    - **Object**: `Case`
    - **Trigger the Flow When**: `A record is created`
-   - **Condition Requirements**: add a condition that identifies inbound Email-to-Case records in your org
-5. Set the flow to run **After the record is saved**.
 6. Click **Done**.
 
-If your org distinguishes Email-to-Case using **Origin = Email**, use that condition. If your implementation uses another field or logic, use that instead.
-
-> Screenshot placeholder: Start element for new case routing flow
-
-Add the core flow logic:
+Add the first action that calls the prompt template:
 
 1. Click the **+** icon after **Start** and add an **Action**.
 2. Search for the prompt template action for **Insurance Case Routing** and select it.
-3. Set the prompt inputs so the template receives:
-   - **Subject** from the new Case record
-   - **Description** from the new Case record
-4. Store the prompt response in an output variable.
-5. Add an **Assignment**, **Transform**, or parsing step based on the prompt action output available in your org so you can access:
-   - `category`
-   - `confidence`
-   - `reason`
-   - `suggestedQueueDeveloperName`
-6. Add a **Get Records** element to retrieve the target **Group** record for the queue returned by the prompt.
-7. Add an **Update Records** element to update the Case with:
-   - **OwnerId** = queue Id from the **Group** record
-   - **AI Case Category** = parsed `category`
-   - **AI Routing Reason** = parsed `reason`
-   - **AI Routed** = `True`
+3. Set the input parameter:
+   - **Input:Case** = `Triggering Case > Entire Resource`
+4. Leave the action configured to **store output automatically**.
+5. Use this element configuration:
+   - **Label**: `Analyze Case`
+   - **API Name**: `Analyze_Case`
 
-Use a **Decision** element before assigning the owner if you want to handle null or malformed JSON safely. For example, route low-confidence or invalid responses to a fallback operations queue.
+This action sends the entire Case record into the prompt template and stores the generated JSON response as the prompt output.
 
-> Screenshot placeholder: Flow canvas showing prompt action, queue lookup, and case update
+Next, add the Apex action that parses the JSON and updates the Case fields:
 
----
+1. Click the **+** icon after **Analyze Case** and add an **Action**.
+2. Search for and select the Apex action **Update Case from JSON**.
+3. Configure the action with:
+   - **Label**: `Update Case`
+4. Set the input parameters:
+   - **caseId** = `Triggering Case > Id`
+   - **jsonString** = `Outputs from Analyze Case > Prompt Response`
+5. Leave the action configured to **store output automatically**.
 
-#### 1.4 Add a Fallback Branch
+This Apex action uses the prompt response to update the Case and returns the normalized routing category that the flow uses in the next step.
 
-It is a good practice to define what happens if the model returns an unexpected result.
+<img src="images/prompt1-3.png" width="640" />
 
-1. Add a **Decision** element after the prompt action.
-2. Create one outcome for a valid response where `category` is populated and `suggestedQueueDeveloperName` matches one of the expected values.
-3. Create a default outcome for fallback handling.
-4. In the fallback path, update the case with:
-   - **AI Routing Reason** = `AI routing could not confidently determine a category.`
-   - **AI Routed** = `False`
-5. Optionally assign the case to a general triage queue for manual review.
+Now add the routing decision:
 
-> Screenshot placeholder: Decision element for valid AI response versus fallback route
+1. Click the **+** icon after **Update Case** and add a **Decision**.
+2. Configure the decision:
+   - **Label**: `Sales or Service Routing`
+   - **API Name**: `Sales_or_Service_Routing`
+3. Create an outcome with:
+   - **Outcome Label**: `Sales`
+   - Set Conditions to be for `Any Condition Is Met (OR)` and include 3 conditions: 
+      - **Update_Case.Category** Equals `Policy Management`
+      - **Update_Case.Category** Equals `Investments`
+      - **Update_Case.Category** Equals `Beneficiary`
+4. Update the default outcome label as `Service`.
 
----
+This means the flow sends Cases classified into the sales-oriented categories down the **Sales** branch. All other categories continue down the default **Service** branch.
 
-#### 1.5 Test Case Routing
+Next, configure the **Sales** branch:
 
-Now test the end-to-end routing experience.
+1. Under the **Sales** outcome, add a **Get Records** element.
+2. Configure it with:
+   - **Label**: `Get Sales Queue`
+   - **Object**: `Group`
+   - **Condition**: **Developer Name** Equals `Sales`
+3. After that, add an **Update Triggering Record** element.
+4. Configure it with:
+   - **Label**: `Assign Case to Sales`
+   - **Field**: `OwnerId`
+   - **Value**: `Get_Sales_Queue.Id`
 
-1. Save the flow as:
+Then configure the **Service** branch:
+
+1. Under the default **Service** outcome, add a **Get Records** element.
+2. Configure it with:
+   - **Label**: `Get Service Queue`
+   - **Object**: `Group`
+   - **Condition**: **Developer Name** Equals `Service`
+3. After that, add an **Update Triggering Record** element.
+4. Configure it with:
+   - **Label**: `Assign Case to Service`
+   - **Field**: `OwnerId`
+   - **Value**: `Get_Service_Queue.Id`
+
+<img src="images/prompt1-4.png" width="640" />
+
+Save and activate the flow:
+
+1. Click **Save** and use:
    - **Flow Label**: `Route Email Cases with AI`
-2. Click **Activate**.
-3. Create four test inbound cases that reflect realistic insurance scenarios. You can use Email-to-Case, or create test cases manually if needed.
+2. If prompted, confirm the API name generated by Salesforce.
+3. Click **Activate**.
 
-Use examples like these:
+---
 
-1. **Claims**
-   - **Subject**: `Need help with claim after windshield damage`
-   - **Description**: `I submitted a claim for my auto policy after road debris cracked my windshield and I want to know the next steps and deductible.`
+#### 1.3 Test Case Routing
+
+Now test the end-to-end routing experience. Use your own email inbox. 
+
+In setup, search for and open **Email-to-Case**. If there is an introduction screen, click **Continue**. At the bottom under **Routing Addresses**, click **Edit** beside the **Incoming Case** routing. Within its configuration, scroll down and click **Save**. Afterwards, you'll see an email address generated under the **Email Services Address** column that can be used for triggering Email-to-Case. Keep this email for use with testing. 
+
+Go to Kiran Singh's account record and update his email address to your own email address that you will use for testing. 
+
+Send emails to the routing email address to test our automated routing. It can take a minute for the case to be created via email. Some possible tests include:
+
+1. **Account Management**
+   - **Subject**: `Update mailing address and communication preferences`
+   - **Description**: `I moved to a new address and also want paperless statements for all of my policies. Please update my contact preferences on my account.`
 2. **Policy Management**
    - **Subject**: `Please add my new vehicle to my policy`
-   - **Description**: `I replaced my old car and need to update coverage on my active auto policy before the weekend.`
-3. **Account Management**
-   - **Subject**: `Update mailing address and communication preferences`
-   - **Description**: `I moved to a new address and also want paperless statements for all of my policies.`
-4. **Sales**
-   - **Subject**: `Interested in bundling home and auto coverage`
-   - **Description**: `I currently have auto insurance and want a quote for homeowners insurance to see if I can save by bundling.`
+   - **Description**: `I replaced my old car and need to update coverage on my active auto policy before the weekend. Please let me know what information you need for the endorsement.`
+3. **Claims**
+   - **Subject**: `Need help with claim after windshield damage`
+   - **Description**: `I submitted a claim for my auto policy after road debris cracked my windshield and I want to know the next steps, deductible, and current claim status.`
+4. **Investments**
+   - **Subject**: `Question about my annuity allocation options`
+   - **Description**: `I want to review the current investment allocations in my annuity and understand whether I can move funds into a more conservative option.`
+5. **Beneficiary**
+   - **Subject**: `Need to update beneficiary on my life policy`
+   - **Description**: `I recently got married and want to change the beneficiary on my life insurance policy from my sister to my spouse.`
+6. **Transactions**
+   - **Subject**: `Request for partial withdrawal from my policy`
+   - **Description**: `I would like to take a partial withdrawal from the cash value of my policy and need help understanding the process and timing.`
+7. **Billing**
+   - **Subject**: `Autopay failed for my premium payment`
+   - **Description**: `My monthly premium did not process and I need help updating my payment method and confirming whether my balance is now past due.`
 
 For each test case, verify the following:
 
@@ -204,48 +224,31 @@ For each test case, verify the following:
 - The **AI Routing Reason** explains the classification
 - The Case owner is updated to the expected queue
 
-> Screenshot placeholder: Case record after routing showing AI category, reason, and queue owner
-
 **Successful outcome:** New inbound email cases are automatically classified and routed to the right insurance service team with a visible explanation of why the routing decision was made.
 
 ---
 
 ### 2. Summarize Recent Cases for an Insurance Policy
 
-In this exercise, you will build a policy-level summary experience for service users. An **Autolaunched Flow** will collect recent Cases related to an **InsurancePolicy** record, send those details to a prompt template, and write the generated summary back to the policy. You will also add a button so users can run the summary directly from the policy record.
+In this exercise, you will build a policy-level summary experience for service users using a **Field Generation Prompt Template** on the **InsurancePolicy** object. A prompt-template-triggered flow will retrieve recent Case details, prepare the grounding context, and then the field generation template will write a summary into the existing **Recent Case Summary** rich text field on the policy.
 
 This is useful when a service rep is reviewing a policy before a renewal call, investigating repeat service issues, or preparing for a high-touch customer conversation.
 
-#### 2.1 Create a Field to Store the Summary
-
-First, create a field on **InsurancePolicy** to store the generated summary.
-
-1. In **Setup**, open **Object Manager**.
-2. Search for and select **InsurancePolicy**.
-3. Click **Fields & Relationships** and then click **New**.
-4. Create a **Long Text Area** field with these values:
-   - **Field Label**: `Recent Case Summary`
-   - **Visible Lines**: `8`
-   - **Length**: `32000`
-5. Save the field.
-
-If you want to track when the summary was last refreshed, also create a **Date/Time** field named `Case Summary Last Generated`.
-
-> Screenshot placeholder: InsurancePolicy fields including Recent Case Summary
-
 ---
 
-#### 2.2 Create the Policy Case Summary Prompt Template
+#### 2.1 Create the Policy Case Summary Prompt Template
 
-Now create the prompt template that will turn recent policy-related cases into a concise insurance service summary.
+Now create the field generation prompt template that will turn recent policy-related cases into a concise insurance service summary directly on the policy record.
 
 1. In **Setup**, open **Prompt Builder**.
 2. Click **New Prompt Template**.
-3. Choose the prompt template type that can be invoked from **Flow**.
+3. Choose **Field Generation** as the prompt template type.
 4. Enter these values:
    - **Template Name**: `Insurance Policy Case Summary`
    - **API Name**: `Insurance_Policy_Case_Summary`
-   - **Description**: `Summarizes recent cases related to an insurance policy for service and operations users`
+   - **Description**: `Generates a summary of recent policy-related cases for service and operations users`
+   - **Object**: `InsurancePolicy`
+   - **Target Field**: `Recent Case Summary`
 5. Save the template.
 
 Use prompt instructions similar to the following:
@@ -253,142 +256,111 @@ Use prompt instructions similar to the following:
 ```text
 You are helping an insurance service representative prepare for a policy conversation.
 
-Review the insurance policy details and the recent related cases. Create a concise summary for an internal user.
+Review the insurance policy details and the recent related cases. Generate a concise rich-text summary for an internal insurance service user.
 
 Your summary must include:
-1. A one-paragraph overall summary of recent service activity
+1. A one-paragraph overall summary of recent case activity
 2. The most common themes or issues
 3. Any open issues that may need follow-up
 4. Any signs of customer frustration, urgency, or repeat contact
 
 Write in clear professional language for an insurance operations user.
 Do not invent facts that are not present in the source data.
+Use simple HTML formatting only when helpful, such as short paragraphs and bold labels.
 
-Insurance Policy:
-{!$Input:PolicyContext}
+Insurance Policy: {!$RecordSnapshot:InsurancePolicy.snapshot}
 
-Recent Related Cases:
-{!$Input:CaseContext}
+Recent Related Cases: <FLOW PLACEHOLDER>
 ```
 
-6. Configure prompt inputs for:
-   - `PolicyContext`
-   - `CaseContext`
-7. Save and activate the prompt template if needed.
+7. Save the prompt template.
 
-> Screenshot placeholder: Policy case summary prompt template in Prompt Builder
+<img src="images/prompt2-1.png" width="640" />
 
 ---
 
-#### 2.3 Build the Autolaunched Flow
+#### 2.2 Build the Prompt-Template-Triggered Flow
 
-Next, build the flow that gathers policy data, retrieves recent cases, calls the prompt, and writes the summary back to the policy record.
+Next, build the prompt-template-triggered flow that appends recent Case details into the prompt context. In the org, this flow is named **Get Recent Cases for Policy Summary Prompt** and is a **Prompt Flow** that loops through a recent Case collection and adds each Case as structured prompt instructions.
 
 1. In **Setup**, open **Flows**.
 2. Click **New Flow**.
-3. Select **Autolaunched Flow (No Trigger)**.
-4. Click **Create**.
-5. Create a **Text** input variable with these values:
-   - **API Name**: `recordId`
+3. Select the flow option used for a **Prompt Template Triggered Flow** in your org.
+4. In the **Manager** tab, click **New Resource** and create this input variable:
+   - **Resource Type**: `Variable`
+   - **API Name**: `insurancePolicy`
+   - **Data Type**: `Record`
+   - **Object**: `InsurancePolicy`
    - **Available for input**: checked
 
-This allows the flow to run from an **InsurancePolicy** record page.
+This flow is invoked by the prompt template, so the active policy record is passed into the flow through this `insurancePolicy` variable.
 
-> Screenshot placeholder: Autolaunched flow input variable for recordId
-
-Add the policy retrieval logic:
-
-1. Add a **Get Records** element for **InsurancePolicy**.
-2. Filter where **Id** equals the `recordId` input variable.
-3. Store the policy record.
+<img src="images/prompt2-2.png" width="640" />
 
 Add the recent case retrieval logic:
 
 1. Add a **Get Records** element for **Case**.
-2. Filter for Cases related to the current policy using your org's relationship field.
-3. Sort by **Created Date** descending.
-4. Limit the results to a recent set such as the most recent `5` or `10` cases.
-5. Store the returned records.
+2. Configure it with:
+   - **Label**: `Get Recent Cases`
+   - **Object**: `Case`
+   - **How Many Records to Store**: all records
+   - **Sort By**: `LastModifiedDate`
+   - **Sort Order**: `Descending`
+   - **Limit**: `10`
+   - **How to Store Record Data**: automatically store all fields
+3. Add the relationship filter your org uses to identify Cases for the current policy. If your org uses a policy lookup on Case, use the incoming `insurancePolicy` variable to build that filter.
 
-If your org uses a custom lookup such as `InsurancePolicy__c` on Case, use that field. If it uses a standard FSC relationship or an intermediary model, adjust the query logic accordingly.
+<img src="images/prompt2-3.png" width="640" />
 
-Now prepare the data for the prompt:
+Next, loop through the Cases and append them into the prompt output:
 
-1. Add a **Text Template** or **Assignment** step to build a readable policy context string that includes useful details such as:
-   - Policy number
-   - Policy type
-   - Status
-   - Effective date
-   - Expiration date
-   - Named insured, if available
-2. Add a second **Text Template** or loop-based concatenation step to build a case context string from the recent cases. Include values such as:
-   - Case number
-   - Created date
-   - Status
-   - Subject
-   - Description
-   - Priority, if used in your org
+1. Add a **Loop** element after **Get Recent Cases**.
+2. Configure it with:
+   - **Label**: `Loop Cases`
+   - **Collection Variable**: `Get Recent Cases`
+   - **Direction**: `First item to last item`
+3. Inside the loop, add an **Add Prompt Instructions** element and set the **Label** to `Include Case Details`. Copy/paste this content into the **Prompt Instructions** text box: 
 
-Then invoke the prompt:
+```text
+{"Case Number": "{!Loop_Cases.CaseNumber}",
+"Created Date": "{!Loop_Cases.CreatedDate}",
+"Status": "{!Loop_Cases.Status}",
+"Subject": "{!Loop_Cases.Subject}",
+"Description": "{!Loop_Cases.Description}"}
+```
 
-1. Add an **Action** element and select the **Insurance Policy Case Summary** prompt template action.
-2. Pass the policy context text into `PolicyContext`.
-3. Pass the recent case context text into `CaseContext`.
-4. Store the generated summary output.
+This flow appends each recent Case into `$Output.Prompt`, which makes those Case details available to the **Recent Case Summary** field generation prompt.
 
-Finally, update the policy:
+<img src="images/prompt2-4.png" width="640" />
 
-1. Add an **Update Records** element.
-2. Update the current **InsurancePolicy** record with:
-   - **Recent Case Summary** = prompt output
-3. If you created the timestamp field, also set:
-   - **Case Summary Last Generated** = current date/time
+Save and activate the flow with the name `Get Recent Cases for Policy Summary Prompt`.
 
-> Screenshot placeholder: Autolaunched flow canvas showing policy lookup, case lookup, prompt action, and record update
-
-Save the flow with these values:
-
-- **Flow Label**: `Generate Insurance Policy Case Summary`
-- **API Name**: `Generate_Insurance_Policy_Case_Summary`
-
-Activate the flow.
+Let's now go back to our **Insurace Policy Case Summary** prompt template and highlight <FLOW PLACEHOLDER>. Click through **Insert Resource** > **Flows** > **Get Recent Cases for Policy Summary Prompt**. This inserts our recently created flow to help dynamically ground our prompt with recent cases related to the insurance policy. **Save** and **Activate** the prompt template. 
 
 ---
 
-#### 2.4 Add a Button to the InsurancePolicy Record
+#### 2.3 Update the InsurancePolicy Lightning Record Page
 
-Now expose the flow to users from the policy record page.
+Now update the **InsurancePolicy** Lightning record page so the **Recent Case Summary** field uses the field generation prompt template you created.
 
-1. In **Setup**, open **Object Manager**.
-2. Select **InsurancePolicy**.
-3. Click **Buttons, Links, and Actions**.
-4. Click **New Action**.
-5. Configure the action:
-   - **Action Type**: `Flow`
-   - **Flow**: `Generate Insurance Policy Case Summary`
-   - **Label**: `Generate Case Summary`
-6. Save the action.
+1. Back in our main user screen, open the Insurance Policies list view and then open the record detail page of the LP29384 life insurance policy belonging to Kiran Singh. 
+3. In the top-right, click the cog icon and select **Edit Page** at the bottom of the drop-down. This navigates us to the Lightning App Builder of our Insurance Policy record page. 
+4. Under the details tab, find and select the **Recent Case Summary** field (it's under the **Case Summary** section). In the right pane, find and select our **Insurance Policy Case Summary** prompt template. 
+6. Save the page. If prompted, click **Activate** so the updated page is available to users.
+7. Click the back arrow in the top left to go back to our insurance policy record page. 
 
-Next, add the action to the page layout or Lightning record page:
-
-1. Open **Page Layouts** or **Lightning App Builder**, depending on how your org surfaces actions.
-2. Add **Generate Case Summary** to the visible policy actions.
-3. Save and activate the page if needed.
-
-Also consider adding the **Recent Case Summary** field to the page so the user can see the generated output immediately after running the flow.
-
-> Screenshot placeholder: InsurancePolicy record page with Generate Case Summary action visible
+<img src="images/prompt2-5.png" width="640" />
 
 ---
 
-#### 2.5 Test Policy Summarization
+#### 2.4 Test Policy Summarization
 
 You are now ready to test the policy summary experience.
 
 1. Open an **InsurancePolicy** record that already has several related Cases.
 2. Review the related list to confirm there is enough recent service activity to summarize.
-3. Click **Generate Case Summary**.
-4. Wait for the flow to complete.
+3. Use the **Recent Case Summary** field on the Lightning record page to generate the summary with the configured prompt template.
+4. Wait for prompt generation to complete.
 5. Refresh the record if needed.
 6. Review the **Recent Case Summary** field.
 
@@ -399,22 +371,17 @@ Validate that the generated summary:
 - Reflects repeat contacts or urgency when present
 - Uses details only from the related Cases
 
-Test with at least two different policies:
+<img src="images/prompt2-6.png" width="640" />
 
-1. A policy with multiple recent service cases, such as billing questions, endorsement requests, and claim follow-up
-2. A policy with little or no recent activity, to confirm the summary remains concise and does not invent details
-
-> Screenshot placeholder: InsurancePolicy record showing generated recent case summary
-
-**Successful outcome:** A user can open any policy record, run a single action, and quickly understand recent support history before helping the customer.
+**Successful outcome:** A user can open any policy record, generate the summary from the field experience on the Lightning record page, and quickly understand recent support history before helping the customer.
 
 ---
 
 ### 3. Wrap-Up
 
 In this workshop, you built two insurance-focused generative AI automations:
-
+May
 1. A **record-triggered flow** that classifies and routes inbound Email-to-Case requests using a prompt template with **JSON output**
-2. An **autolaunched flow** that summarizes recent policy-related cases and writes the result back to the **InsurancePolicy** record
+2. A **field generation prompt template** on **InsurancePolicy** that uses a prompt-template-triggered flow to gather recent case context and generate a policy service summary
 
 These patterns are useful starting points for many Financial Services Cloud use cases. Once they are working, you can extend them with more sophisticated routing logic, confidence thresholds, escalation rules, policy-specific prompts, or richer summary formats for service and underwriting teams.

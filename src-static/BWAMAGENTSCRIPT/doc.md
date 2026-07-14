@@ -16,9 +16,11 @@ In this workshop, you will build a specialized AI agent with deterministic logic
 Follow these steps to create an action context variable.
 
 1. Click the **App Launcher** (waffle icon), then select **Agentforce Studio**.
+
 <img src="images/as_bwam0.png"
      alt="Open Agentforce Studio from App Launcher"
      width="320" />
+
 2. Click **Agents**, then open **Banking Wealth Agent**.
 3. In the left pane, click **Variables**.
 4. Review the variables with a **Messaging Session** source. These variables provide channel context to the agent.
@@ -26,9 +28,11 @@ Follow these steps to create an action context variable.
 6. Configure the variable:
    - **Name**: `accountJson`
    - **Data Type**: `String`
+
 <img src="images/as_bwam1.png"
      alt="Create custom variable named accountJson"
      width="640" />
+
 7. Click **Create**.
 
 You will use `accountJson` to store account details so your agent can maintain context throughout the conversation.
@@ -40,41 +44,39 @@ You will use `accountJson` to store account details so your agent can maintain c
 Follow these steps to create the Apex action.
 
 1. In the left pane, expand **Subagents**, then click **Financial Account Questions**.
-<<<<<<< HEAD
 2. Review the Subagent description and instructions so you understand expected behavior.
 3. In the Subagent canvas, click **Select Action** in the **Actions Available for Reasoning** section.
-=======
-2. Review the subagent description and instructions so you understand expected behavior.
-3. In the subagent canvas, click **Select Action** in the **Actions Available for Reasoning** section.
->>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
 4. Click **Create a custom action**.
 5. In the dialog, set:
    - **Name**: `Get Account Details`
    - **Description**: `Retrieves the details for an account`
 6. Click **Create and Open**.
+
 <img src="images/as_bwam2.png"
      alt="Create Get Account Details action"
      width="640" />
+
 7. Set **Reference Action Type** to `Apex`.
 8. In **Reference Action**, select `BWAM - Get Account Details`.
 9. For **accountIds**, enter description: `account ID of the customer`, then check **Require input to execute action**.
 10. For **output**, enter description: `account JSON string`.
+
 <img src="images/as_bwam4.png"
      alt="Configure Apex action inputs and outputs"
      width="640" />
+
 11. In the left pane, click **Financial Account Questions**.
 12. At the bottom of the canvas, expand **Get Account Details**.
 13. Set input variable to **Account ID**.
 14. Set output variable to **accountJson**.
+
 <img src="images/as_bwam5.png"
-<<<<<<< HEAD
      alt="Map action variables in Subagent"
-=======
-     alt="Map action variables in subagent"
->>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
      width="640" />
+
 15. Click **Save** in the upper-right corner, or press **Ctrl-S**.
    - If prompted to select a user for the agent, select the existing service agent user
+
 <img src="images/as_bwam18.png"
      alt="Use existing service agent user"
      width="640" />
@@ -87,11 +89,7 @@ Your agent can now retrieve and retain customer account context during conversat
 
 Now that your agent can retrieve customer context, you can add tools to complete beneficiary-related actions.
 
-<<<<<<< HEAD
 Follow these steps to create the Subagent.
-=======
-Follow these steps to create the subagent.
->>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
 
 1. In the left pane, hover over **Subagents** and click the plus (**+**) icon.
 2. Select **New Subagent**.
@@ -99,33 +97,29 @@ Follow these steps to create the subagent.
 4. For **Description**, paste:
 
 ```text
-<<<<<<< HEAD
 This 'Manage Beneficiaries' Subagent allows customers to ask about, add, or remove existing Beneficiaries/Relationships associated with a specific financial account. Using the financial account IDs in the accountJson variable, identify the financial account the customer is asking about. Ask for the name of the beneficiary, the percentage of the benefit to be received, and the tax ID for the beneficiary. When displaying Financial Account Roles, always include Related Account Name, Account Name, Role, and Status. Execute the Add Beneficiaries action when the customer wants to add new relationships or financial account roles associated with a Financial Account. Execute the Remove Beneficiaries action when the customer wants to remove a relationship or financial account role associated with a Financial Account.
 ```
+
 <img src="images/as_bwam7.png"
      alt="Create Manage Beneficiaries Subagent"
      width="640" />
+
 5. Click **Create and Open**.
 6. Hover over the new **Manage Beneficiaries** Subagent, click the plus (**+**) icon, then select **Add From Asset Library**.
-=======
-This 'Manage Beneficiaries' subagent allows customers to ask about, add, or remove existing Beneficiaries/Relationships associated with a specific financial account. Using the financial account IDs in the accountJson variable, identify the financial account the customer is asking about. Ask for the name of the beneficiary, the percentage of the benefit to be received, and the tax ID for the beneficiary. When displaying Financial Account Roles, always include Related Account Name, Account Name, Role, and Status. Execute the Add Beneficiaries action when the customer wants to add new relationships or financial account roles associated with a Financial Account. Execute the Remove Beneficiaries action when the customer wants to remove a relationship or financial account role associated with a Financial Account.
-```
-<img src="images/as_bwam7.png"
-     alt="Create Manage Beneficiaries subagent"
-     width="640" />
-5. Click **Create and Open**.
-6. Hover over the new **Manage Beneficiaries** subagent, click the plus (**+**) icon, then select **Add From Asset Library**.
->>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
+
 <img src="images/as_bwam8.png"
      alt="Add actions from asset library"
      width="320" />
+
 7. In search, enter `BWAM`, then select:
    - `BWAM - Add Beneficiaries`
    - `BWAM - Get Beneficiaries`
    - `BWAM - Remove Beneficiaries`
+
 <img src="images/as_bwam6.png"
      alt="Select beneficiary actions from asset library"
      width="640" />
+
 8. Click **Add to Agent**.
 9. Click **Save** in the upper-right corner, or press **Ctrl-S**.
 
@@ -138,21 +132,27 @@ Your agent can now support beneficiary requests.
 Follow these steps to test your agent.
 
 1. Click **Preview** at the top-left of the canvas.
+
 <img src="images/as_bwam9.png"
      alt="Preview button in Agentforce Studio"
      width="640" />
+
 2. In the chat window, click **Set Context**.
 3. Locate **EndUserAccountId**, then click the **Override Value** cell.
 4. Search for `Kiran Singh`, select the account record, then click **Apply and Restart Session**.
+
 <img src="images/as_bwam10.png"
      alt="Set EndUserAccountId context variable"
      width="640" />
+
 5. Start a conversation with prompts such as:
    - `What are all my accounts?`
    - `What can you tell me about my assets?`
+
 <img src="images/as_bwam11.png"
      alt="Conversation preview with account questions"
      width="320" />
+     
 6. Ask additional account questions, for example:
    - `What is the total balance across my investment accounts?`
    - `What is the total valuation of my assets?`
@@ -176,11 +176,7 @@ Follow these steps to test your agent.
 
 ## Address Change
 
-<<<<<<< HEAD
 In this exercise, you will build a prompt and a flow, then update the **Update Address** Subagent in your banking agent. This gives customers a self-service way to manage address changes and receive follow-up guidance.
-=======
-In this exercise, you will build a prompt and a flow, then update the **Update Address** subagent in your banking agent. This gives customers a self-service way to manage address changes and receive follow-up guidance.
->>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
 
 In this exercise, you will:
 
@@ -316,21 +312,13 @@ New address: {!$Input:Account.BillingStreet}, {!$Input:Account.BillingCity} {!$I
 
 ### 3. Add Agent Action to Agent
 
-<<<<<<< HEAD
 To use the custom action, add it to the **Update Address** Subagent in **Banking Wealth Agent**.
-=======
-To use the custom action, add it to the **Update Address** subagent in **Banking Wealth Agent**.
->>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
 
 1. If needed, return to **Agentforce Studio** and open **Banking Wealth Agent**.
 2. In the left pane, expand **Update Address**, then click the plus (**+**) icon to add a new action.
 3. Select **New Action**.
 <img src="images/as_bwam12.png"
-<<<<<<< HEAD
      alt="Create new action for update address Subagent"
-=======
-     alt="Create new action for update address subagent"
->>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
      width="320" />
 4. Set:
    - **Action Name**: `Nearest Branch Introduction`
@@ -357,11 +345,7 @@ This is the account related to the user's request.
 <img src="images/as_bwam15.png"
      alt="Configure account input description"
      width="640" />
-<<<<<<< HEAD
 9. To finalize the Subagent behavior, click **Update Address** in the left pane.
-=======
-9. To finalize the subagent behavior, click **Update Address** in the left pane.
->>>>>>> 67645f06084b43a8b7d087d95db832ac7596fdf6
 10. Append this text to the existing instructions:
 
 ```text

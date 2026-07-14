@@ -1,0 +1,4 @@
+interface:
+  display_name: "Enable Agentforce Data Cloud"
+  short_description: "Log in and enable Data Cloud plus Agentforce"
+  default_prompt: "Use $enable-agentforce-data-cloud to log into a Salesforce org and enable Data Cloud and Agentforce."
