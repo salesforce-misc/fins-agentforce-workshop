@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Retrieve all the current active drivers on a policy given a policy ID</description>
+    <developerName>INS_Get_Drivers_on_Policy</developerName>
+    <invocationTarget>INS_Get_Drivers_on_Policy</invocationTarget>
+    <invocationTargetType>flow</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <masterLabel>INS - Get Drivers on Policy</masterLabel>
+</GenAiFunction>

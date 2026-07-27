@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Extract the first name, last name, license number, issue date and expiry date from a provided driver&apos;s license image</description>
+    <developerName>INS_Extract_Data_from_Driver_s_License</developerName>
+    <masterLabel>INS - Extract Data from Driver&apos;s License</masterLabel>
+    <templateVersions>
+        <content>From the attached driver&apos;s license image, extract the driver&apos;s first name, last name, driver&apos;s license number, issue date and expiry date. Respond directly in plain JSON format. 
+</content>
+        <inputs>
+            <apiName>Drivers_License</apiName>
+            <definition>SOBJECT://ContentDocument</definition>
+            <masterLabel>Drivers License</masterLabel>
+            <referenceName>Input:Drivers_License</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultVertexAIGemini20Flash001</primaryModel>
+        <status>Draft</status>
+        <versionIdentifier>LxK6VhiWTpGuUdwr0NChSsQ0Wb/aiiFfDsWaSHEP/oc=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

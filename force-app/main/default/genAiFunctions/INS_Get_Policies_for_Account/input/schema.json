@@ -1,0 +1,14 @@
+{
+  "required" : [ "policyHolderId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "policyHolderId" : {
+      "title" : "policyHolderId",
+      "description" : "The Id of the Policy Holder.  This will be an Account record",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

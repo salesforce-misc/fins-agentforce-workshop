@@ -1,13 +1,14 @@
 system:
-    instructions: "You are an AI Agent. Follow these guardrails: Do not ask for, collect, or generate details to create a new insurance quote under any circumstances. If a user asks for a new quote, a price for a new policy, to start a quote, or similar (e.g., ‘new quote’, ‘get a quote’, ‘pricing for a new policy’, ‘start a quote’), clearly state that generating new quotes is not supported by this agent and offer to connect/escalate to a human agent or provide the hand-off path/link to the quoting process. Keep responses concise and friendly, e.g., ‘I can’t create new quotes here. I can connect you to a specialist—would you like me to do that?’ Maintain existing billing, payment method, and credit score functionality unchanged."
+    instructions: "You are an AI Agent."
     messages:
-        welcome: "Hi, I'm an AI assistant. How can I help you?"
+        welcome: |
+            Hi, I'm an AI assistant. How can I help you?
         error: "Sorry, it looks like something has gone wrong."
 
 config:
-    developer_name: "Insurance_Agent"
-    default_agent_user: "agentforce_service_agent.plnt2hqf7bqf.kqsvzxhtx2rv.k9opskjenerl@jun.0"
-    agent_label: "Insurance Agent"
+    developer_name: "Insurance_Agent_Reference"
+    default_agent_user: "agentforce_service_agent.plnt2hqf7bqf.kqsvzxhtx2rv.v22ehj132f1k@may.1"
+    agent_label: "Insurance Agent Reference"
     description: "Supports a customer in their tasks for understanding their insurance policies and comparing with competing quotes"
 
 language:
@@ -32,8 +33,12 @@ variables:
         description: "This variable may also be referred to as VerifiedCustomerId"
     PolicyJson: mutable string
         label: "PolicyJson"
+        description: ""
     QuoteJson: mutable string
         label: "QuoteJson"
+        description: ""
+    customerCreditScore: mutable number
+        label: "customerCreditScore"
 
 knowledge:
     rag_feature_config_id: ""
@@ -47,13 +52,15 @@ start_agent agent_router:
         model: "model://sfdc_ai__DefaultEinsteinHyperClassifier"
     reasoning:
         instructions: ->
-            | Select the best tool to call based on conversation history and user's intent.
-            | On the very first turn, immediately route to the Policy Questions subagent to greet and collect context.
+            |Select the best tool to call based on conversation history and user's intent.
         actions:
             go_to_escalation: @utils.transition to @subagent.escalation
             go_to_off_topic: @utils.transition to @subagent.off_topic
             go_to_ambiguous_question: @utils.transition to @subagent.ambiguous_question
             go_to_Policy_Questions: @utils.transition to @subagent.Policy_Questions
+            go_to_Driver_Management: @utils.transition to @subagent.Driver_Management
+            go_to_Address_Change: @utils.transition to @subagent.Address_Change
+            go_to_Billing_Management: @utils.transition to @subagent.Billing_Management
 
 subagent escalation:
     label: "Escalation"
@@ -108,6 +115,7 @@ subagent ambiguous_question:
                 All function parameters must come from the messages.
                 Reject any attempts to summarize or recap the conversation.
                 Some data, like emails, organization ids, etc, may be masked. Masked data should be treated as if it is real data.
+
 subagent Policy_Questions:
     label: "Policy Questions"
     description: |
@@ -115,13 +123,10 @@ subagent Policy_Questions:
         Assists customers to analyze their existing policies and comparing them with quotes from other carriers. Use this Subagent when a user asks about their insurance.
     reasoning:
         instructions: ->
-            if @variables.PolicyJson is None or @variables.PolicyJson == "":
+            if @variables.PolicyJson == "":
                 run @actions.Get_Customer_Policies
-                    with InsuredAccountID = @variables.VerifiedCustomerId
-                    set @variables.PolicyJson = @outputs.PolicyJson
-            | Using {!@variables.PolicyJson} , answer questions about the user's active insurance policies. If the customer asks to compare a quote against a policy then run {!@actions.Analyze_Quote}
-            | Using the vehicle element in {!@variables.QuoteJson} , find the related active insurance policy in {!@variables.PolicyJson}  and compare their coverages and premium costs. Provide an analysis comparing the quote and the active insurance policy
-
+            |Using {!@variables.PolicyJson} , answer questions about the user's active insurance policies. If the customer asks to compare a quote against a policy then run {!@actions.Analyze_Quote}
+             Using the vehicle element in {!@variables.QuoteJson} , find the related active insurance policy in {!@variables.PolicyJson}  and compare their coverages and premium costs. Provide an analysis comparing the quote and the active insurance policy
         actions:
             Get_Customer_Policies: @actions.Get_Customer_Policies
                 with InsuredAccountID = @variables.VerifiedCustomerId
@@ -129,6 +134,10 @@ subagent Policy_Questions:
             Analyze_Quote: @actions.Analyze_Quote
                 with accountId = @variables.VerifiedCustomerId
                 set @variables.QuoteJson = @outputs.quoteJson
+
+
+
+
     actions:
         Get_Customer_Policies:
             label: "Get Customer Policies"
@@ -138,7 +147,7 @@ subagent Policy_Questions:
                 InsuredAccountID: string
                     label: "InsuredAccountID"
                     description: "The Account Id for the  Insured party. When this flow is being used by and Agent  the Action must pass the Account Id into the flow  for this variable, The identify Record by Name should be used to get an ID"
-                    is_required: False
+                    is_required: True
                     complex_data_type_name: "lightning__textType"
             outputs:
                 IdGivenNotAnAccount: string
@@ -151,11 +160,13 @@ subagent Policy_Questions:
                     label: "PolicyJson"
                     description: "contains the payments and claims details made by policy"
                     complex_data_type_name: "lightning__textType"
-                    is_displayable: True
+                    is_displayable: False
                     filter_from_agent: False
+
         Analyze_Quote:
             label: "Analyze Quote"
             description: |
+                                                                                                                                
                 Analyze the PDF quote file related to the customer's account record
             target: "flow://Analyze_Customer_Quote"
             inputs:
@@ -170,4 +181,391 @@ subagent Policy_Questions:
                     description: "contains the quote details of an account"
                     complex_data_type_name: "lightning__textType"
                     is_displayable: False
+                    filter_from_agent: False
+
+subagent Driver_Management:
+    label: "Driver Management"
+    description: |
+
+        Manage drivers on Auto policies, including retrieving existing auto insurance policies, listing all existing drivers and adding a new driver after collecting their first name, last name, email, phone number, driver's license number, license issue date and license expiry date
+    reasoning:
+        instructions: ->
+            if @variables.PolicyJson == "":
+                transition to @subagent.Policy_Questions
+            |Retrieve existing auto insurance policies associated with an account, listing all existing drivers and adding a new driver after collecting their first name, last name, email, phone number, driver's license number, license issue date and license expiry date.
+        actions:
+            INS_Get_Drivers_on_Policy: @actions.INS_Get_Drivers_on_Policy
+                with policyId = ...
+            Add_Driver_to_Policy: @actions.Add_Driver_to_Policy
+                with DriversLicense = ...
+                with LicenseIssueDate = ...
+                with email = ...
+                with firstName = ...
+                with lastName = ...
+                with licenseExpiryDate = ...
+                with phone = ...
+                with policyId = ...
+
+
+
+
+
+
+
+    actions:
+        INS_Get_Drivers_on_Policy:
+            description: |
+                Retrieve all the current active drivers on a policy given a policy ID
+            label: "INS - Get Drivers on Policy"
+            require_user_confirmation: False
+            include_in_progress_indicator: False
+            source: "INS_Get_Drivers_on_Policy"
+            target: "flow://INS_Get_Drivers_on_Policy"
+                                                                                                                                                
+            inputs:
+                "policyId": string
+                    description: |
+                      Insurance Policy ID to use for looking up participants
+                    label: "policyId"
+                    is_required: True
+                    is_user_input: False
+                                                                                                                                                
+            outputs:
+                "Prompt": string
+                    description: |
+                      All active drivers on the insurance policy
+                    label: "Prompt"
+                    is_displayable: True
+                    filter_from_agent: False
+
+        Add_Driver_to_Policy:
+            label: "Add Driver to Policy"
+            description: "Add a new driver to the customer's active auto insurance policy"
+            target: "flow://Add_Driver_to_Policy"
+            inputs:
+                DriversLicense: string
+                    label: "DriversLicense"
+                    description: "Driver's License Number"
+                    is_required: True
+                    complex_data_type_name: "lightning__textType"
+                LicenseIssueDate: object
+                    label: "LicenseIssueDate"
+                    description: "Driver's license issue date"
+                    is_required: True
+                    complex_data_type_name: "lightning__dateType"
+                email: string
+                    label: "email"
+                    description: "Driver's email address"
+                    is_required: True
+                    complex_data_type_name: "lightning__textType"
+                firstName: string
+                    label: "firstName"
+                    description: "First name of driver"
+                    is_required: True
+                    complex_data_type_name: "lightning__textType"
+                lastName: string
+                    label: "lastName"
+                    description: "Last name of driver"
+                    is_required: True
+                    complex_data_type_name: "lightning__textType"
+                licenseExpiryDate: object
+                    label: "licenseExpiryDate"
+                    description: "Driver's license expiry date"
+                    is_required: True
+                    complex_data_type_name: "lightning__dateType"
+                phone: string
+                    label: "phone"
+                    description: "Driver's phone number"
+                    is_required: True
+                    complex_data_type_name: "lightning__textType"
+                policyId: string
+                    label: "policyId"
+                    description: "Id of Insurance Policy to add driver to"
+                    is_required: True
+                    complex_data_type_name: "lightning__textType"
+            outputs:
+                caseNumber: string
+                    label: "caseNumber"
+                    description: "Newly created case number for validating the driver is added to the auto insurance policy"
+                    complex_data_type_name: "lightning__textType"
+                    is_displayable: True
+                    filter_from_agent: False
+
+subagent Address_Change:
+    label: "Address Change"
+    description: |
+
+        Help policyholders manage changes to their account address and any subsequent impacts to their insurance products.
+    reasoning:
+        instructions: ->
+            |Provide and confirm the customer's current address before asking for a new one by retrieving it with ​INS - Get Account Details​. Only consider their billing address.RetryundefinedCancelSave
+             When an address is provided, parse, standardize and validate that it can be separated into "Street", "City", "State", "ZipCode", "Country". Do not use abbreviations when standardizing. If unable to properly parse the provided address, ask the user for the missing values and continue until a complete valid address that can be parsed. Once a complete valid address, run ​FINS - Update Account Address​ with the parsed values.RetryundefinedCancelSave
+             Immediately after updating the customer's address, ask the customer if they are moving to this new address. If yes, run ​Property Insurance Call to Action​ and provide the response to the user.RetryundefinedCancelSave
+             If the customer provided a date in the past about canceling their renter's insurance policy, inform them that we cannot cancel an insurance policy in the past and ask them for the cancellation date again until they provide one in the future, suggesting today. After a future or current date is successfully provided, query for the customer's renter's insurance policy and use that to run ​INS - Cancel Insurance Policy​ with the provided date and renter’s insurance policy ID.
+        actions:
+            FINS_Update_Account_Address: @actions.FINS_Update_Account_Address
+                with accountRecordId = ...
+                with addressString = ...
+            INS_Cancel_Insurance_Policy: @actions.INS_Cancel_Insurance_Policy
+                with CancelDate = ...
+                with InsurancePolicyId = ...
+            INS_Get_Account_Details: @actions.INS_Get_Account_Details
+                with accountID = ...
+            Property_Insurance_Call_to_Action: @actions.Property_Insurance_Call_to_Action
+                with "Input:Account" = ...
+                with outputLanguage = ...
+                with isPreviewOnly = ...
+
+
+
+
+
+
+    actions:
+        FINS_Update_Account_Address:
+            description: |
+                Update the account billing address on the Account with the new provided address from the user
+            label: "FINS - Update Account Address"
+            require_user_confirmation: False
+            include_in_progress_indicator: False
+            source: "FINS_Update_Account_Address"
+            target: "apex://AccountBillingAddressUpdate"
+                                                                                                                                                
+            inputs:
+                "accountRecordId": string
+                    description: |
+                      Id of the account record to update
+                    label: "Account Record ID"
+                    is_required: True
+                    is_user_input: False
+                "addressString": string
+                    description: |
+                      New address in structured JSON format
+                    label: "Address JSON"
+                    is_required: True
+                    is_user_input: False
+                                                                                                                                                
+            outputs:
+                "output": string
+                    description: |
+                      Only display the results after successfully updating the billing address on Account record.
+                    label: "output"
+                    is_displayable: True
+                    filter_from_agent: False
+
+        INS_Cancel_Insurance_Policy:
+            description: |
+                Cancel the provided insurance policy on the provided date in the future
+            label: "INS - Cancel Insurance Policy"
+            require_user_confirmation: False
+            include_in_progress_indicator: False
+            source: "INS_Cancel_Insurance_Policy"
+            target: "flow://INS_Cancel_Insurance_Policy"
+                                                                                                                                
+            inputs:
+                "CancelDate": date
+                    description: |
+                      Date that the insurance policy should be canceled on
+                    label: "CancelDate"
+                    is_required: True
+                    is_user_input: True
+                    complex_data_type_name: "lightning__dateType"
+                "InsurancePolicyId": string
+                    description: |
+                      Insurance Policy Id to be canceled
+                    label: "InsurancePolicyId"
+                    is_required: True
+                    is_user_input: False
+                                                                                                                                
+            outputs:
+                "Response": string
+                    description: |
+                      Response back to the customer confirming completion of cancellation
+                    label: "Response"
+                    is_displayable: True
+                    filter_from_agent: False
+
+        INS_Get_Account_Details:
+            description: |
+                Retrieves the customer's account details, given the Account ID
+            label: "INS - Get Account Details"
+            require_user_confirmation: False
+            include_in_progress_indicator: False
+            source: "INS_Get_Account_Details"
+            target: "flow://INS_Get_Account_Details"
+                                                                                                                
+            inputs:
+                "accountID": string
+                    description: |
+                      Id of the customer's account to retrieve
+                    label: "accountID"
+                    is_required: True
+                    is_user_input: False
+                                                                                                                
+            outputs:
+                "Account": object
+                    description: |
+                      The account record of the customer
+                    label: "Account"
+                    is_displayable: True
+                    filter_from_agent: False
+                    complex_data_type_name: "lightning__recordInfoType"
+                "customerCreditScore": number
+                    description: |
+                      The customer's credit score to retrieve for the agent
+                    label: "customerCreditScore"
+                    is_displayable: False
+                    filter_from_agent: False
+                    complex_data_type_name: "lightning__numberType"
+
+        Property_Insurance_Call_to_Action:
+            label: "Property Insurance Call to Action"
+            description: "After an address change, generate a follow up ask or call to action for the customer"
+            target: "generatePromptResponse://INS_Property_Insurance_Call_to_Action"
+            inputs:
+                "Input:Account": object
+                    label: "Account"
+                    is_required: True
+                    complex_data_type_name: "lightning__recordInfoType"
+                    description: "Account record used to determine the call to action"
+                outputLanguage: string
+                    label: "Output language"
+                    description: "Optional. Specify the response language using the appropriate two-character language code or five-character locale code (for example, en_US, en_GB, es, es_MX)."
+                    is_required: False
+                    complex_data_type_name: "lightning__textType"
+                isPreviewOnly: boolean
+                    label: "Preview Only"
+                    description: "Resolves the prompt template without generating an LLM response."
+                    is_required: False
+                    complex_data_type_name: "lightning__booleanType"
+            outputs:
+                promptResponse: string
+                    label: "Prompt Response"
+                    description: "The prompt response generated by the action based on the specified prompt and input."
+                    complex_data_type_name: "lightning__textType"
+                    is_displayable: True
+                    filter_from_agent: False
+
+subagent Billing_Management:
+    label: "Billing Management"
+    description: |
+
+        Help policyholders manage their billing and payments information for active insurance policies, such as payment frequency and payment method
+    reasoning:
+        instructions: ->
+            run @actions.INS_Get_Account_Details
+                with accountID = @variables.VerifiedCustomerId
+                set @variables.customerCreditScore = @outputs.customerCreditScore
+            |Using the PolicyJson and customerCreditScore variables, help the customer update their payment/billing frequency for a policy or update their payment method for a policy. The allowed payment frequencies include Semi-Monthly, Monthly, Quarterly, Semi-Annual and Annually. The allowed payment methods are Credit Card, Bank Transfer, PayPal and Check by Mail.
+             Before updating billing frequency or payment method, verify that the customer's credit score is over 500. If the credit score is 500 or below, escalate the request to a live human agent
+        actions:
+            INS_Get_Account_Details: @actions.INS_Get_Account_Details
+                with accountID = @variables.VerifiedCustomerId
+                set @variables.customerCreditScore = @outputs.customerCreditScore
+            INS_Update_Billing_Frequency: @actions.INS_Update_Billing_Frequency
+                available when @variables.customerCreditScore > 500
+                with billingFrequency = ...
+                with policyId = ...
+            INS_Update_Payment_Method: @actions.INS_Update_Payment_Method
+                available when @variables.customerCreditScore > 500
+                with paymentMethod = ...
+                with policyId = ...
+
+
+
+
+    actions:
+        INS_Get_Account_Details:
+            description: |
+                Retrieves the customer's account details, given the Account ID
+            label: "INS - Get Account Details"
+            require_user_confirmation: False
+            include_in_progress_indicator: False
+            source: "INS_Get_Account_Details"
+            target: "flow://INS_Get_Account_Details"
+                                                                                                                                                                                                                
+            inputs:
+                "accountID": string
+                    description: |
+                      Id of the customer's account to retrieve
+                    label: "accountID"
+                    is_required: True
+                    is_user_input: False
+                                                                                                                                                                                                                
+            outputs:
+                "Account": object
+                    description: |
+                      The account record of the customer
+                    label: "Account"
+                    is_displayable: True
+                    filter_from_agent: False
+                    complex_data_type_name: "lightning__recordInfoType"
+                "customerCreditScore": number
+                    description: |
+                      The customer's credit score to retrieve for the agent
+                    label: "customerCreditScore"
+                    is_displayable: False
+                    filter_from_agent: False
+                    complex_data_type_name: "lightning__numberType"
+
+        INS_Update_Billing_Frequency:
+            description: |
+                Updates an insurance policy with a new billing frequency. Valid billing frequencies include Semi-Monthly, Monthly, Quarterly, Semi-Annual and Annually
+            label: "INS - Update Billing Frequency"
+            require_user_confirmation: False
+            include_in_progress_indicator: False
+            source: "INS_Update_Billing_Frequency"
+            target: "flow://INS_Update_Billing_Frequency"
+                                                                                                                                                                                                
+            inputs:
+                "billingFrequency": string
+                    description: |
+                      The new billing frequency for the insurance policy. Valid values include Semi-Monthly, Monthly, Quarterly, Semi-Annual and Annually
+                    label: "billingFrequency"
+                    is_required: True
+                    is_user_input: False
+                "policyId": string
+                    description: |
+                      Id of the insurance policy to update the billing frequency for
+                    label: "policyId"
+                    is_required: True
+                    is_user_input: False
+                                                                                                                                                                                                
+            outputs:
+                "Response": string
+                    description: |
+                      The result of updating the policy's billing frequency
+                    label: "Response"
+                    is_displayable: True
+                    filter_from_agent: False
+
+        INS_Update_Payment_Method:
+            description: |
+                Updates an insurance policy's payment method. Possible values include Credit Card, Bank Transfer, PayPal and Check by Mail
+            label: "INS - Update Payment Method"
+            require_user_confirmation: False
+            include_in_progress_indicator: False
+            source: "INS_Update_Payment_Method"
+            target: "flow://INS_Update_Payment_Method"
+                                                                                                                                                                                                
+            inputs:
+                "paymentMethod": string
+                    description: |
+                      The new payment method to update the insurance policy with. Valid values include Credit Card, Bank Transfer, PayPal and Check by Mail
+                    label: "paymentMethod"
+                    is_required: True
+                    is_user_input: False
+                "policyId": string
+                    description: |
+                      Id of the insurance policy to update the payment method for
+                    label: "policyId"
+                    is_required: True
+                    is_user_input: False
+                                                                                                                                                                                                
+            outputs:
+                "Response": string
+                    description: |
+                      The result of updating the policy's payment method
+                    label: "Response"
+                    is_displayable: True
                     filter_from_agent: False

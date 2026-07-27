@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Removes beneficiaries by updating a financial account role associated to a financial account record</description>
+    <developerName>BWAM_Remove_Beneficiaries</developerName>
+    <invocationTarget>BWAM_Remove_Beneficiaries</invocationTarget>
+    <invocationTargetType>flow</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <masterLabel>BWAM - Remove Beneficiaries</masterLabel>
+</GenAiFunction>

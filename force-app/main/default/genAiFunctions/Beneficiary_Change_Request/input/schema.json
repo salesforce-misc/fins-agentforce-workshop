@@ -1,0 +1,21 @@
+{
+  "required" : [ "beneficaries", "policyId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "beneficaries" : {
+      "title" : "Beneficiaries",
+      "description" : "JSON formatted list of beneficiaries\n",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "policyId" : {
+      "title" : "Policy Id",
+      "description" : "the ID of the insurance policy\n",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

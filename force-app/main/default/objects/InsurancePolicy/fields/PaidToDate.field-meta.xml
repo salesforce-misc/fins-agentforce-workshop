@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PaidToDate</fullName>
+    <description>This fields used to determine  how far the policy is currently paid until. Policies typically allow a 15 day grace period into the month. if being paid bi monthly then the payments must  be 100% current. I.E  a bi monthly payment for  10/1 must be received prior to or before 10/1</description>
+    <trackHistory>false</trackHistory>
+</CustomField>

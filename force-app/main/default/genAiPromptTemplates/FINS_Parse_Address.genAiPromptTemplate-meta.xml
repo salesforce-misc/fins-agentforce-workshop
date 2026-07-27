@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>LxK6VhiWTpGuUdwr0NChSsQ0Wb/aiiFfDsWaSHEP/oc=_2</activeVersionIdentifier>
+    <description>With the unstructured address for a customer, transform it into a structured JSON format</description>
+    <developerName>FINS_Parse_Address</developerName>
+    <masterLabel>FINS - Parse Address</masterLabel>
+    <templateVersions>
+        <content>Unstructured address: {!$Input:Raw_Address}
+
+&quot;&quot;&quot;
+- Standardize and convert the unstructured address into JSON formatted output with following fields: &quot;Street&quot;, &quot;City&quot;, &quot;State&quot;, &quot;ZipCode&quot;, &quot;Country&quot;
+- Avoid using abbreviations in the field values
+- Respond only with a JSON structured output and nothing else
+- If you are unable to confidently parse this address, respond only with the field &quot;Issue&quot; with a value that briefly describes in 1 sentence why you were unable to parse the address
+- All fields must be populated
+&quot;&quot;&quot;
+</content>
+        <inputs>
+            <apiName>Raw_Address</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Raw Address</masterLabel>
+            <referenceName>Input:Raw_Address</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT4OmniMini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>LxK6VhiWTpGuUdwr0NChSsQ0Wb/aiiFfDsWaSHEP/oc=_2</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

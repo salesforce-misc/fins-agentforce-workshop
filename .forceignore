@@ -10,3 +10,44 @@ package.xml
 
 # LWC Jest
 **/__tests__/**
+
+# Retrieved managed-package and standard namespace metadata can't be deployed
+# as local source into an unpackaged scratch org.
+**/FinServ__*
+**/vlocity_ins__*
+**/vlocity_ins_fsc__*
+**/et4ae5__*
+**/standard__*
+
+# Retrieved standard fields and record type with unavailable packaged values.
+force-app/main/default/objects/Account/fields/ChannelProgramLevelName.field-meta.xml
+force-app/main/default/objects/Account/fields/ChannelProgramName.field-meta.xml
+force-app/main/default/objects/Account/fields/IsCustomerPortal.field-meta.xml
+force-app/main/default/objects/Account/fields/IsPartner.field-meta.xml
+force-app/main/default/objects/InsurancePolicy/fields/SourceQuoteId.field-meta.xml
+force-app/main/default/objects/Account/recordTypes/FSC_Account.recordType-meta.xml
+
+# Retrieved UI metadata that depends on queues, packaged components, or org
+# features that aren't part of this workshop scratch-org shape.
+force-app/main/default/objects/Case/listViews/Sales_Case.listView-meta.xml
+force-app/main/default/objects/Case/listViews/Service_Case_Case.listView-meta.xml
+force-app/main/default/layouts/Account-Account Layout.layout-meta.xml
+force-app/main/default/layouts/InsurancePolicy-Insurance Policy Layout.layout-meta.xml
+force-app/main/default/layouts/Case-Case Layout.layout-meta.xml
+force-app/main/default/layouts/Case-Case Layout Template v1.layout-meta.xml
+force-app/main/default/quickActions/Case.SendEmail.quickAction-meta.xml
+force-app/main/default/recordActionDeployments/AccountComplaintManagement.deployment-meta.xml
+force-app/main/default/timelineObjectDefinitions/Relationship_Manager.timelineObjectDefinition-meta.xml
+force-app/main/default/timelineObjectDefinitions/Servicing.timelineObjectDefinition-meta.xml
+force-app/main/default/flexipages/Account_Record_Page1.flexipage-meta.xml
+force-app/main/default/flexipages/Case_Record_Page.flexipage-meta.xml
+force-app/main/default/flexipages/Insurance_Policy_Record_Page1.flexipage-meta.xml
+force-app/main/default/flexipages/Insurance_Policy_Record_Page_Manual.flexipage-meta.xml
+force-app/main/default/flexipages/LightningSalesConsole_UtilityBar.flexipage-meta.xml
+
+# Known automation dependencies that aren't provisioned in this scratch shape.
+force-app/main/default/flows/BWAM_Inbound_to_Agentforce_Bot.flow-meta.xml
+force-app/main/default/flows/FINS_Outbound_Route_to_Messaging_Queue.flow-meta.xml
+force-app/main/default/flows/INS_Inbound_to_Agentforce_Bot.flow-meta.xml
+force-app/main/default/flows/Route_Email_Cases_with_AI.flow-meta.xml
+force-app/main/default/genAiPromptTemplates/Summarization_of_Interaction_Summaries.genAiPromptTemplate-meta.xml

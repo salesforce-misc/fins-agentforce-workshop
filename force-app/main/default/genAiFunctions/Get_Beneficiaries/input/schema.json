@@ -1,0 +1,14 @@
+{
+  "required" : [ "policyId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "policyId" : {
+      "title" : "Policy Id",
+      "description" : "The id of the insurance policy\n",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

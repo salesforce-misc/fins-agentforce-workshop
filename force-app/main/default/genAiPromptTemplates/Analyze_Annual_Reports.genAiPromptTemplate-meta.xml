@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Answers questions about details in client business&apos; annual reports</description>
+    <developerName>Analyze_Annual_Reports</developerName>
+    <masterLabel>Analyze Annual Reports</masterLabel>
+    <templateVersions>
+        <content>You are a financial analyst that is analyzing the annual reports of {!$Input:Account.Name} to formulate a succinct, incisive answer to this question: {!$Input:Question}
+
+After reviewing the annual reports from the last 3 years, these are the relevant sections: &lt;RETRIEVER PLACEHOLDER&gt;
+</content>
+        <inputs>
+            <apiName>Account</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Account</masterLabel>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Question</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Question</masterLabel>
+            <referenceName>Input:Question</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT4OmniMini</primaryModel>
+        <status>Draft</status>
+        <versionIdentifier>LxK6VhiWTpGuUdwr0NChSsQ0Wb/aiiFfDsWaSHEP/oc=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

@@ -1,0 +1,21 @@
+{
+  "required" : [ "accountRecordId", "addressString" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "accountRecordId" : {
+      "title" : "Account Record ID",
+      "description" : "Id of the account record to update",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "addressString" : {
+      "title" : "Address JSON",
+      "description" : "New address in structured JSON format",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

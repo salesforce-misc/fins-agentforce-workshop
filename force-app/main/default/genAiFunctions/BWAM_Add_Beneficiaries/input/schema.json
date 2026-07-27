@@ -1,0 +1,49 @@
+{
+  "required" : [ "BeneficiaryBirthDate", "BeneficiaryEmail", "BeneficiaryFirstName", "BeneficiaryLastName", "RelationshipType" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "BeneficiaryBirthDate" : {
+      "title" : "BeneficiaryBirthDate",
+      "description" : "Input the Birthdate into Person Birthdate when creating Related Account",
+      "lightning:type" : "lightning__dateType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "BeneficiaryEmail" : {
+      "title" : "BeneficiaryEmail",
+      "description" : "Input the BeneficiaryEmail into Person Email when creating Related Account",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "BeneficiaryFirstName" : {
+      "title" : "BeneficiaryFirstName",
+      "description" : "Input the Beneficiary First Name into Person First Name when creating Related Account",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "BeneficiaryLastName" : {
+      "title" : "BeneficiaryLastName",
+      "description" : "Input the Beneficiary Last Name into Person Last Name when creating Related Account",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "FinancialAccountName" : {
+      "title" : "FinancialAccountName",
+      "description" : "if the Financial Account Name already exists don't ask the user again. Used to query the financial account record",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "RelationshipType" : {
+      "title" : "RelationshipType",
+      "description" : "Input Relationship Type into Role when creating the Financial Account Roles",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

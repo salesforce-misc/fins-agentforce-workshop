@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Policy_Accepted_Payment_options__c</fullName>
+    <defaultValue>&apos;{&quot;paymentMethods&quot;:[{&quot;methodId&quot;:1,&quot;name&quot;:&quot;Credit Card&quot;,&quot;description&quot;:&quot;Pay using Visa, MasterCard, or American Express&quot;,&quot;fees&quot;:{&quot;processingFee&quot;:2.5,&quot;currency&quot;:&quot;USD&quot;},&quot;supportedCards&quot;:[&quot;Visa&quot;,&quot;MasterCard&quot;,&quot;American Express&quot;],&quot;processingTime&quot;:&quot;Immediate&quot;},{&quot;methodId&quot;:2,&quot;name&quot;:&quot;Bank Transfer&quot;,&quot;description&quot;:&quot;Direct transfer from your bank account&quot;,&quot;fees&quot;:{&quot;processingFee&quot;:0,&quot;currency&quot;:&quot;USD&quot;},&quot;processingTime&quot;:&quot;1-2 Business Days&quot;,&quot;accountDetailsRequired&quot;:[&quot;Account Number&quot;,&quot;Routing Number&quot;]},{&quot;methodId&quot;:3,&quot;name&quot;:&quot;PayPal&quot;,&quot;description&quot;:&quot;Secure online payment through PayPal&quot;,&quot;fees&quot;:{&quot;processingFee&quot;:3.0,&quot;currency&quot;:&quot;USD&quot;},&quot;processingTime&quot;:&quot;Immediate&quot;},{&quot;methodId&quot;:4,&quot;name&quot;:&quot;Check by Mail&quot;,&quot;description&quot;:&quot;Send a check to our office&quot;,&quot;fees&quot;:{&quot;processingFee&quot;:0,&quot;currency&quot;:&quot;USD&quot;},&quot;processingTime&quot;:&quot;5-7 Business Days&quot;,&quot;mailingAddress&quot;:{&quot;line1&quot;:&quot;1234 Car Insurance Blvd&quot;,&quot;line2&quot;:&quot;Suite 567&quot;,&quot;city&quot;:&quot;Auto City&quot;,&quot;state&quot;:&quot;CA&quot;,&quot;postalCode&quot;:&quot;90210&quot;}}]}&apos;</defaultValue>
+    <description>Field contains a JSON object that represents the accepted  payment options for this policy</description>
+    <label>Policy Accepted Payment options</label>
+    <length>32768</length>
+    <trackHistory>false</trackHistory>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

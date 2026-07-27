@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordActionDeployment xmlns="http://soap.sforce.com/2006/04/metadata">
+    <componentName>ActionLauncher</componentName>
+    <deploymentContexts>
+        <entityName>Account</entityName>
+    </deploymentContexts>
+    <hasComponents>false</hasComponents>
+    <hasGuidedActions>true</hasGuidedActions>
+    <hasOmniscripts>true</hasOmniscripts>
+    <hasRecommendations>false</hasRecommendations>
+    <masterLabel>Account Complaint Management</masterLabel>
+    <selectableItems>
+        <action>FSCAddressUpdateCreateRequestEnglish_77u8gkbatpd9153wptpc3biu3</action>
+        <frequentActionSequenceNbr>1</frequentActionSequenceNbr>
+        <isFrequentAction>true</isFrequentAction>
+        <type>Omniscript</type>
+    </selectableItems>
+    <selectableItems>
+        <action>FSCComplaintIntakeMultiLanguage_twxm633d3j2e1mbe1ed5cru7v</action>
+        <frequentActionSequenceNbr>0</frequentActionSequenceNbr>
+        <isFrequentAction>true</isFrequentAction>
+        <type>Omniscript</type>
+    </selectableItems>
+    <selectableItems>
+        <action>ServiceCaseCreationEnglish_dwd9lwgzwn0711tqo6c33iou0</action>
+        <frequentActionSequenceNbr>0</frequentActionSequenceNbr>
+        <isFrequentAction>false</isFrequentAction>
+        <type>Omniscript</type>
+    </selectableItems>
+</RecordActionDeployment>

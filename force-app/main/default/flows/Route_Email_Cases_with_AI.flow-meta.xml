@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Analyze_Case</name>
-        <label>Analyze Case</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <actionName>Insurance_Case_Routing</actionName>
-        <actionType>generatePromptResponse</actionType>
-        <connector>
-            <targetReference>Update_Case</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>Input:Case</name>
-            <value>
-                <elementReference>$Record</elementReference>
-            </value>
-        </inputParameters>
-        <nameSegment>Insurance_Case_Routing</nameSegment>
-        <offset>0</offset>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
-    <actionCalls>
         <name>Update_Case</name>
         <label>Update Case</label>
         <locationX>0</locationX>

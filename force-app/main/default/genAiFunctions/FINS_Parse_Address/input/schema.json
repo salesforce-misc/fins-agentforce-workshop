@@ -1,0 +1,14 @@
+{
+  "required" : [ "Input:Raw_Address" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "Input:Raw_Address" : {
+      "title" : "Raw Address",
+      "description" : "Raw address provided by user",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -52,6 +52,9 @@ $RECYCLE.BIN/
 .cursor/
 .husky/
 
+# Local Salesforce data exports can contain customer PII and must never be committed.
+data/fsc-exports/
+
 # VS Code: ignore local-only files; keep shared settings in git
 .vscode/*
 !.vscode/settings.json

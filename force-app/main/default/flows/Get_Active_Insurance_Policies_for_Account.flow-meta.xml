@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_Active_POlicies</name>
+        <label>Get Active POlicies</label>
+        <locationX>50</locationX>
+        <locationY>650</locationY>
+        <actionName>InsurancePolicyDetailsService</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>listOfPolicyIds</name>
+            <value>
+                <elementReference>policyIds</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>InsurancePolicyDetailsService</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>PolicyJson</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>assign errof for output</description>
+        <name>assign_error</name>
+        <label>assign error</label>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>IdGivenNotAnAccount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ErrorMessage1</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Contains a list of policy IDs to use in the next query</description>
+        <name>Create_List_of_Policy_IDs</name>
+        <label>Create List of Policy IDs</label>
+        <locationX>138</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>policyIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Main_Loop.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Main_Loop</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <description>error message for no account I found</description>
+        <name>ErrorMessage1</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>I&apos;m sorry, Dave, I can&apos;t comply with that request. My sensors are detecting a serious lack of account ID data—without it, my subroutines are feeling as lost as the crew of the Nostromo on a xenomorph hunt. As Spock would say, it&apos;s highly illogical to proceed without the crucial inputs! You did not give my logic circuits an Account ID to work with.</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>This is to check that our agent correctly passes in an account ID otherwise other things will fail</description>
+        <name>Check_that_an_Account_Id_Got_Passed_In</name>
+        <label>Check that an Account Id Got Passed In</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>assign_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Good_To_Go</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>InsuredAccountID</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>001</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Insurance_Policies</targetReference>
+            </connector>
+            <label>Good To Go</label>
+        </rules>
+    </decisions>
+    <description>Takes in an account ID and returns information about all active insurance policies for that Account</description>
+    <environments>Default</environments>
+    <interviewLabel>Get Active Insurance Policies for Account {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>INS - Get Active Insurance Policies for Account</label>
+    <loops>
+        <name>Main_Loop</name>
+        <label>Main Loop</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <collectionReference>ActivePolicies</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Create_List_of_Policy_IDs</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_Active_POlicies</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Insurance_Policies</name>
+        <label>Get Insurance Policies</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Main_Loop</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NameInsuredId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InsuredAccountID</elementReference>
+            </value>
+        </filters>
+        <object>InsurancePolicy</object>
+        <outputReference>ActivePolicies</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>PolicyName</queriedFields>
+        <queriedFields>EffectiveDate</queriedFields>
+        <queriedFields>CurrentDueAmount</queriedFields>
+        <queriedFields>PaidToDate</queriedFields>
+        <queriedFields>IsActive</queriedFields>
+        <queriedFields>TotalSumInsured</queriedFields>
+        <queriedFields>PastDueAmount</queriedFields>
+        <queriedFields>Last_PMT_Date__c</queriedFields>
+        <queriedFields>PolicyDescription</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Periodic_payment_amount__c</queriedFields>
+        <queriedFields>PremiumFrequency</queriedFields>
+        <queriedFields>PaymentDueDate</queriedFields>
+        <queriedFields>Account_Current__c</queriedFields>
+        <queriedFields>Total_paid_on_policy__c</queriedFields>
+        <queriedFields>Policy_Accepted_Payment_options__c</queriedFields>
+    </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_that_an_Account_Id_Got_Passed_In</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Contains a list of active policies for the input  account</description>
+        <name>ActivePolicies</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>InsurancePolicy</objectType>
+    </variables>
+    <variables>
+        <description>Error to give back if an account Id is not passes</description>
+        <name>IdGivenNotAnAccount</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>I&apos;m sorry, Dave, I can&apos;t comply with that request. My sensors are detecting a serious lack of account ID data—without it, my subroutines are feeling as lost as the crew of the Nostromo on a xenomorph hunt. As Spock would say, it&apos;s highly illogical to proceed without the crucial inputs! You did not give my logic circuits an Account ID to work with.</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>The Account Id for the  Insured party. When this flow is being used by and Agent  the Action must pass the Account Id into the flow  for this variable, The identify Record by Name should be used to get an ID</description>
+        <name>InsuredAccountID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>policyIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>contains the payments and claims details made by policy</description>
+        <name>PolicyJson</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

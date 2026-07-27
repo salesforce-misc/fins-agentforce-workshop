@@ -1,0 +1,21 @@
+{
+  "required" : [ "paymentMethod", "policyId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "paymentMethod" : {
+      "title" : "paymentMethod",
+      "description" : "The new payment method to update the insurance policy with. Valid values include Credit Card, Bank Transfer, PayPal and Check by Mail",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "policyId" : {
+      "title" : "policyId",
+      "description" : "Id of the insurance policy to update the payment method for",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

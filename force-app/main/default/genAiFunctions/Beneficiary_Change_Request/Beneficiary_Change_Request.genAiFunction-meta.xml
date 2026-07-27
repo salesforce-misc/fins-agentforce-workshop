@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used to process a change of beneficiaries for a given insurance policy</description>
+    <developerName>Beneficiary_Change_Request</developerName>
+    <invocationTarget>INS_BeneficiaryChangeRequest</invocationTarget>
+    <invocationTargetType>apex</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <masterLabel>INS - Beneficiary Change Request</masterLabel>
+</GenAiFunction>
