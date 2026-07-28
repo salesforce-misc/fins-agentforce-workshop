@@ -1,71 +1,84 @@
 ## 1 Relationship Assistant Agent
 
-In this exercise, we will explore some of the standard Agentforce tools in Financial Services Cloud and how to build an assistive agent for bank tellers, wealth insurance advisors or producers to be more productive. The Agent we'll build today will assist employees with managing their relationships with clients.
+In this exercise, we will use Agent Script to build an assistive agent for bank tellers, wealth advisors, insurance advisors, and producers. The Relationship Assistant helps employees manage client interactions, capture follow-up work, and analyze a customer's income statement.
 
-Part 1: Build and deploy a relationship assistant agent
+Part 1: Build and deploy a Relationship Assistant with Agent Script
 
 Part 2: Give our agent the ability to analyze PDF files
 
 We will explore:
 
-- **Agent Creator** to rapidly build a new agent using a Financial Services Cloud template
-- **Subagents & Instructions** to coach/instruct our Agents on how to behave and what to do
-- **Prompt Builder** to give our Agent the ability to work with both structured and unstructured data
+- **Agent Script** to define the agent, route work between subagents, and wire actions in source
+- **Financial Services Cloud assets** to retain the standard post-meeting relationship-management use case
+- **Prompt Builder** to work with structured Account data and an unstructured income-statement PDF
+- **Preview and Testing Center** to validate the agent before employees use it
+
+Agent Script combines natural-language reasoning instructions with deterministic logic. In the current terminology, the reusable jobs in a script are called **subagents**. Older scripts can still contain `topic`, but new work should use `subagent`.
 
 ### 1.1 Build and Deploy an Agent
 
-In this exercise we will first explore the standard Agentforce assets that come with Financial Services Cloud and how we can leverage them to accelerate building our Relationship Assistant Agent.
+We will start with the Financial Services Cloud Banking Relationship Assistance template so that we retain its standard **Post-Meeting Assistance** capabilities. We will then make Agent Script—not the legacy Subagents and Actions panes—the source of truth for our custom work.
 
 Click the **Setup Cog** icon at the top right and select **Setup**. Search for **Agentforce** in **Quick Find** and select **Agentforce Assets**.
 
-This page has 2 tabs - Subagents and Actions
+Review the available Financial Services Cloud assets:
 
-1. Subagents are how we organize and define how our Agent should operate and captures the instructions and scope of what an Agent should do. Review the list of existing standard Subagents for templates on how Agents can handle certain tasks. You'll notice there are a number of financial services specific Subagents, including **Financial Account Balances**, **Checkbook Ordering** and **Transfer Funds**
-2. Actions are the tools we can give Agents to execute for their jobs to be done. There are a lot of standard actions available for many of the common tasks we may want an agent to do. There are also financial services-specific ones such as creating cases for **transfer funds**, **checkbook requests** or **fee reversals**, **interaction summaries** and **getting financial account data**. Take a look through this list as well
+1. **Subagents** organize a job, its scope, its reasoning instructions, and the actions it can use. Examples include **Financial Account Balances**, **Checkbook Ordering**, and **Transfer Funds**.
+2. **Actions** are the tools an agent can execute. Financial services actions include creating cases for transfers, checkbook requests, and fee reversals; creating interaction summaries; and retrieving financial-account data.
 
-Let's now use some of these assets to build an agent. In **Quick Find**, search for and select **Agentforce Agents**. At the top right, click the **+ New Agent** button to get taken to the Agent Creator. We can see that there are a lot of agent templates we can use to get started. For this exercise, we will use the **Banking Relationship Assistance** template. Click it and then click **Next** in the top right.
+In **Quick Find**, search for and select **Agentforce Agents**, then create a new agent from the **Banking Relationship Assistance** template. Keep the template's **Post-Meeting Assistance** subagent and its standard actions. Configure the agent as follows:
 
-![](images/general1.png)
+- **Name**: Relationship Assistant
+- **API Name**: Relationship_Assistant
+- **Description**: Streamline client interactions at a financial services organization with Relationship Assistance. The agent logs meeting notes, performs sentiment analysis, updates relevant records, and more. Additionally, the agent allows for the creation and updating of account plan objectives and measures based on meeting discussions. The agent can help with analysis of the customer's income statements and provide insights into any discrepancies.
+- **Role**: Leave the template value as-is
+- **Company**: As a large financial services organization, Cumulus Financial provides a wide range of services, including retail banking, wealth management, and life insurance policies.
 
-On the next screen, by default, there is the **Post-Meeting Assistance** Subagent associated with the agent that gives our agent a bunch of assistive tools for helping employees track and manage their customer interactions in FSC. Click Next again to get to the **Customize your Agent** section. We'll make a few adjustments here (because relationship management spans across financial products):
+> **Screenshot placeholder:** Banking Relationship Assistance template and the Relationship Assistant configuration.
 
-- Name = Relationship Assistant
-- API Name = Relationship_Assistant
-- Description = Streamline client interactions at a financial services organization with Relationship Assistance. The agent logs meeting notes, performs sentiment analysis, updates relevant records, and more. Additionally, the agent allows for the creation and updating of account plan objectives and measures based on meeting discussions. The agent can help with analysis of the customer's income statements and provide insights into any discrepancies
-- Role = **Leave as-is**
-- Company = As a large financial services organization, Cumulus Financial provides a wide range of services, including retail banking, wealth management and life insurance policies
+Create the agent. In the current Agentforce Builder, switch the view picker to **Script**. The generated script already contains the template's router, Post-Meeting Assistance subagent, and action definitions. Do not delete them.
 
-After adjusting the Agent details, click **Next** and then **Create**.
+Find the `config` block and confirm that it includes these values. Preserve any other properties generated by the template.
 
-This will take us into the Agent Builder where we can further configure and build out our agent. On the left, we have all our configurations tools. The right has the Conversation Preview where we can test our agent. In the middle, we can see the reasoning and process flow that our Agent goes through in real time when we test our agent.
+```yaml
+config:
+    developer_name: "Relationship_Assistant"
+    agent_label: "Relationship Assistant"
+    description: "Helps financial services employees manage client relationships, capture post-meeting work, and analyze customer income statements."
+    role: "Assist employees with relationship management across banking, wealth, and insurance."
+    company: "Cumulus Financial provides retail banking, wealth management, and life insurance services."
+    agent_type: "AgentforceEmployeeAgent"
+```
 
-<img src="images/general2.png"
-     alt="Create employee agent"
-     width="1080" />
+Because this is an employee agent, do not add a `default_agent_user`. Save the script once to confirm that the template compiles before adding custom code.
+
+> **Screenshot placeholder:** Relationship Assistant open in Agentforce Builder with **Script** selected in the view picker.
 
 ### 1.2 Build Multimodal Prompt to Analyze Income Statements
 
-While assisting with managing interactions is very helpful, we want to give our agent the ability to analyze income statements of our customers.
+The standard relationship-management actions help employees capture and follow up on client interactions. We will extend the agent so it can also analyze a customer's income statement.
 
-Back in Setup, search and select Prompt Builder. In the top right, click New Prompt Template and provide this definition:
+Back in Setup, search for and select **Prompt Builder**. Click **New Prompt Template** and provide this definition:
 
-**Prompt Template Type** = Flex
-**Prompt Template Name** = INS - Analyze Income Statement
-**Template Description** = Summarize an income statement document and identify discrepancies
+- **Prompt Template Type**: Flex
+- **Prompt Template Name**: INS - Analyze Income Statement
+- **API Name**: INS_Analyze_Income_Statement
+- **Template Description**: Summarize an income statement document and identify discrepancies
 
-Under Define Sources add 2 variables:
+Under **Define Sources**, add two variables:
 
-| Name | API Name | Source Type | Object |
-| ---- | ---- | ---- | ---- |
-| Account | Account | Object | Account |
+| Name             | API Name         | Source Type | Object  |
+| ---------------- | ---------------- | ----------- | ------- |
+| Account          | Account          | Object      | Account |
 | Income Statement | Income_Statement | Object | File |
 
-Click Next and we will be taken into the Prompt Builder. There are 3 panes here:
+Click **Next** to open Prompt Builder. There are three panes:
 
 1. **Prompt**: The prompt template that we will provide
 2. **Resolved Prompt**: The raw prompt that is sent to the LLM with the resolved RAG data
 3. **Response**: Results from the LLM
-On the left under Template Settings, we can choose/configure the LLM being used, choose allowed languages and provide inputs for testing our prompt. Copy/paste the prompt template below into the Prompt pane:
+
+Under **Template Settings**, choose the model and allowed languages, and provide inputs for testing. Copy and paste the following text into the **Prompt** pane:
 
 ```text
 Analyze and provide a succinct summary of an income statement file for a business owned by <CUSTOMER_NAME> to identify the costs, revenue, profits, discrepancies and income statement year.
@@ -74,91 +87,236 @@ Do not exceed over 200 words
 Focus on the most recent year data and any discrepancies in the document. If there are no discrepancies, explicitly state that
 ```
 
-In our prompt template, we have the placeholder **<CUSTOMER_NAME>** that we want to replace with grounding of the actual customer's name. Delete this placeholder and with your cursor at its location, click the **+ Insert Resource** drop-down in the prompt pane. From this drop-down, we can insert structured and unstructured data from flows, objects, vector database, data cloud and more sources. In our case, we want to click Account and then search for and click Account Name to insert this field variable into our prompt.
+Replace **<CUSTOMER_NAME>** with the actual Account name. Place the cursor on the placeholder, click **+ Insert Resource**, select **Account**, and insert **Account Name**.
 
-![](images/general3.png) ![](images/general4.png)
-![](images/general5.png)
+> **Screenshot placeholder:** Prompt Builder showing the Account and Income Statement inputs and the inserted Account Name resource.
 
-At the top left, click **Save & Preview** and you will be asked to provide inputs. Search for and select **Kiran Singh** for **Account**. For **Income Statement**, click Select File and search for, select and add the **incomeStatement2024** file. Click the **Preview** button at the top again and now we can see the analysis results
+Click **Save & Preview**. Select **Kiran Singh** for **Account**. For **Income Statement**, select the **incomeStatement2024** file. Click **Preview** again and review the analysis.
 
-![](images/general6.png)
+> **Screenshot placeholder:** Successful Prompt Builder preview for Kiran Singh and incomeStatement2024.
 
-In the top right, click the **Activate** button
+Click **Activate**. The Agent Script action cannot publish successfully while the prompt template is still in Draft status.
 
-### 1.3 Update our Agent
+### 1.3 Add the Income Statement Subagent in Agent Script
 
-Now that we have our prompt, we want to add it to our Relationship Assistance Agent. Back in Setup, search for **Agentforce** in **Quick Find** and select **Agentforce Agents**. In the list of agents, expand **Relationship Assistance** by clicking the **>** and clicking **Version 1**
+Return to the Relationship Assistant and open **Script** view. We will make three changes to the template-generated script:
 
-In the Agent Builder, in the Subagents pane on the left, select the **New** drop-down and click on **+ New Subagent**. When prompted about what you want this Subagent to do, copy/paste this in:
+1. Add variables that receive the current Account context and hold action outputs.
+2. Expose the new subagent to the existing agent router.
+3. Define the subagent and its three actions.
 
-```text
-Summarize and analyze a customer's income statement document
+Add the following entries inside the existing top-level `variables` block. If the template does not yet have a `variables` block, add one after `config`.
+
+```yaml
+    currentRecordId: mutable string
+        description: "The Salesforce ID of the Account record currently open in the employee workspace."
+        visibility: "External"
+    account_record: mutable object
+        description: "The Account record used to ground the income statement prompt."
+    income_statement_file: mutable object
+        description: "The ContentDocument returned for the current Account."
+    income_statement_analysis: mutable string = ""
+        description: "The completed income statement analysis."
 ```
 
-Review the generated Description, Scope and Instructions, then click **Next**. In the list of Actions, search for and check off the **INS - Get File on Account** pre-built action and click **Finish**. This action will retrieve the income statement file for our agent.
+Find the existing `start_agent` block. Inside its `reasoning.actions` block, add this router tool alongside the template's existing Post-Meeting Assistance transition:
 
-We now also want to add our prompt template into the Subagent. Click our newly created Subagent on the left and then select the **This Subagent's Action** tab at the top.
+```yaml
+            go_to_income_statement_analysis: @utils.transition to @subagent.income_statement_analysis
+                description: "Use when an employee asks to summarize or analyze a customer's income statement."
+```
 
-Open the **New** drop-down and select **+ Create New Action**. For Reference Action Type, select **Prompt Template**. In Reference Action, select the prompt we created: **INS - Analyze Income Statement**. Click **Next**. Finish the action definition by:
+Append the following subagent after the template's existing subagents. Agent Script is whitespace-sensitive, so use spaces consistently and do not mix spaces and tabs.
 
-1. Uncheck **Show loading text for this action**
-2. For the **Account** input variable, enter these instructions: Account record of the customer
-3. For the **File** input variable enter these instructions: Income statement file
-4. For the **Prompt Response** output variable, check off **Show in conversation**
-5. Click **Finish**
+```yaml
+subagent income_statement_analysis:
+    label: "Income Statement Analysis"
+    description: "Summarizes a customer's income statement and identifies material discrepancies."
 
-We've now finished updating our agent, click Activate at the top right to turn it on!
+    reasoning:
+        instructions: ->
+            # Stop before running actions when there is no Account page context.
+            if @variables.currentRecordId is None:
+                transition to @subagent.missing_account_context
+            if @variables.currentRecordId == "":
+                transition to @subagent.missing_account_context
 
-![](images/general7.png)
+            # Each action causes the instructions to resolve again from the top.
+            if @variables.account_record is None:
+                run @actions.get_account_details
+                    with accountID = @variables.currentRecordId
+                    set @variables.account_record = @outputs.Account
 
-### 1.4 Deploy and Test the Relationship Assistant
+            if @variables.income_statement_file is None:
+                run @actions.get_income_statement
+                    with accountId = @variables.currentRecordId
+                    set @variables.income_statement_file = @outputs.File
 
-We are almost done! Our agent is built and now we can deploy and test it out. Go back to Setup and in Quick Find, search for and select **Permission Set**. On the left side, click **R** to filter to permission sets that start with "R" where we will want to select the **Relationship Assistant Agent Access** permission set. This permission set is already assigned to our user, but we want to associate our agent with it. At the bottom of the Apps section, click **Agent Access**
+            if @variables.income_statement_analysis == "":
+                run @actions.analyze_income_statement
+                    with "Input:Account" = @variables.account_record
+                    with "Input:Income_Statement" = @variables.income_statement_file
+                    set @variables.income_statement_analysis = @outputs.promptResponse
 
-![](images/general8.png)
+            | Present {!@variables.income_statement_analysis} as a succinct bulleted summary.
+              State the most recent reporting year and explicitly state whether discrepancies were found.
 
-Click the **Edit** button in the middle. Select our **Relationship Assistant** Agent and the **Add** right arrow to move it from the Available Agents to Enabled Agents column. Click **Save**. Now our agent is assigned to our user!
+    actions:
+        get_account_details:
+            label: "INS - Get Account Details"
+            description: "Retrieves the Account record for the current Account ID."
+            target: "flow://INS_Get_Account_Details"
+            require_user_confirmation: False
+            include_in_progress_indicator: False
+            inputs:
+                accountID: string
+                    description: "ID of the Account to retrieve."
+                    is_required: True
+            outputs:
+                Account: object
+                    description: "The Account record used to ground the prompt."
+                    complex_data_type_name: "lightning__recordInfoType"
+                    is_displayable: False
+                    filter_from_agent: False
 
-![](images/general9.png)
+        get_income_statement:
+            label: "INS - Get File on Account"
+            description: "Retrieves the income statement file related to the current Account."
+            target: "flow://INS_Get_File_on_Account"
+            require_user_confirmation: False
+            include_in_progress_indicator: False
+            inputs:
+                accountId: string
+                    description: "ID of the Account whose income statement is required."
+                    is_required: True
+            outputs:
+                File: object
+                    description: "Income statement ContentDocument associated with the Account."
+                    complex_data_type_name: "lightning__recordInfoType"
+                    is_displayable: False
+                    filter_from_agent: False
 
-Click the **App Launcher** (9 dots at the top left) and search for and select **Accounts**. In the list of accounts, find and open the **Kiran Singh** Account record. You will also now see the Agentforce icon at the top right. Click it to open a chat window with our Relationship Assistant. We can now ask it to do a number of things, such as:
+        analyze_income_statement:
+            label: "INS - Analyze Income Statement"
+            description: "Analyzes an Account's income statement and identifies discrepancies."
+            target: "prompt://INS_Analyze_Income_Statement"
+            require_user_confirmation: False
+            include_in_progress_indicator: False
+            inputs:
+                "Input:Account": object
+                    description: "Account record of the customer."
+                    complex_data_type_name: "lightning__recordInfoType"
+                    is_required: True
+                "Input:Income_Statement": object
+                    description: "Income statement ContentDocument."
+                    complex_data_type_name: "lightning__recordInfoType"
+                    is_required: True
+            outputs:
+                promptResponse: string
+                    description: "The generated income statement analysis."
+                    is_displayable: False
+                    is_used_by_planner: True
+                    filter_from_agent: False
 
-1. Analyze the income statement for kiran singh
-2. For my phone call with Kiran Singh on his account, we talked about this financial goals and his appetite for risk in his investments. The call was very positive and we had follow ups to explore some more risky financial products to include in his portfolio. This call happened today from 3-4PM
+subagent missing_account_context:
+    label: "Missing Account Context"
+    description: "Handles income statement requests made without an Account record context."
 
-![](images/general10.png)
+    reasoning:
+        instructions: |
+            Ask the employee to open the customer's Account record and try the request again.
+```
+
+The quoted prompt input names must exactly match the Flex template inputs. If your org generated different input names, copy them from the template action schema and update the script before saving.
+
+Save the agent as a new version. Resolve every compiler error before continuing.
+
+> **Screenshot placeholder:** Script view showing the new `income_statement_analysis` subagent and a successful save.
+
+### 1.4 Preview, Activate, and Assign the Relationship Assistant
+
+Open **Preview** from the current Agentforce Builder. Set `currentRecordId` to the Kiran Singh Account ID, then verify both branches of the retained use case:
+
+1. `Analyze the income statement for Kiran Singh.`
+2. `For my phone call with Kiran Singh on his account, we talked about his financial goals and his appetite for risk in his investments. The call was very positive, and we had follow-ups to explore some riskier financial products to include in his portfolio. This call happened today from 3–4 PM.`
+
+The first request should route to `income_statement_analysis`. The second should continue to route to the template's Post-Meeting Assistance subagent.
+
+> **Screenshot placeholder:** Preview trace showing routing to Income Statement Analysis and the three-action chain.
+
+If you are maintaining the authoring bundle in a local Salesforce DX project, use the equivalent CLI loop below. Replace `<target-org>`, `<session-id>`, and `<version>` with values for your environment.
+
+```bash
+SF_DISABLE_LOG_FILE=true sf agent validate authoring-bundle \
+  --api-name Relationship_Assistant \
+  --target-org <target-org>
+
+SF_DISABLE_LOG_FILE=true sf agent preview start \
+  --authoring-bundle Relationship_Assistant \
+  --target-org <target-org> \
+  --use-live-actions
+
+SF_DISABLE_LOG_FILE=true sf agent preview send \
+  --authoring-bundle Relationship_Assistant \
+  --target-org <target-org> \
+  --session-id <session-id> \
+  --utterance "Analyze the income statement for Kiran Singh."
+
+SF_DISABLE_LOG_FILE=true sf agent preview end \
+  --authoring-bundle Relationship_Assistant \
+  --target-org <target-org> \
+  --session-id <session-id>
+
+SF_DISABLE_LOG_FILE=true sf agent publish authoring-bundle \
+  --api-name Relationship_Assistant \
+  --target-org <target-org>
+
+SF_DISABLE_LOG_FILE=true sf agent activate \
+  --api-name Relationship_Assistant \
+  --version <version> \
+  --target-org <target-org>
+```
+
+Publishing creates an agent version; it does not activate it. In the UI workflow, click **Activate** after the script compiles and the preview passes.
+
+Next, grant employee access:
+
+1. In Setup, search for and select **Permission Sets**.
+2. Open **Relationship Assistant Agent Access**.
+3. Under **Apps**, open **Agent Access** and click **Edit**.
+4. Move **Relationship Assistant** from **Available Agents** to **Enabled Agents**, then save.
+
+> **Screenshot placeholder:** Relationship Assistant enabled in the permission set's Agent Access page.
+
+Open the **Kiran Singh** Account from the Accounts tab. Open the Agentforce panel and repeat the two preview requests to confirm that record context, the Post-Meeting Assistance actions, file retrieval, and prompt analysis work in the employee experience.
+
+> **Screenshot placeholder:** Relationship Assistant running from the Kiran Singh Account record.
 
 ### 1.5 Automate Agent Testing
 
-Building agents is critical, but its critical that we can rapidly iterate and evolve our coaching over time. To maintain the consistency and quality of our core agent capabilities as we change.
+As the script evolves, automated tests help protect both the standard post-meeting behavior and the income-statement extension.
 
-Back in **Agent Builder** for our **Relationship Assistance** agent, let's click the **Batch Test** button at the top right. This will take us to **Agentforce Testing Center** and asked to define a **New Test** where we can define a suite of test use cases to automate testing for our Agent. Let's start by naming our new test **Relationship Assistant Test Suite** and click **Next**
+In Setup, open **Agentforce Testing Center** and create a test named **Relationship Assistant Test Suite**.
 
-For Test Conditions, check off **Include context variables**, then check off the **currentRecordId** context variable and finally click **Next**. This way our tests will include this context, knowing which customer record the user is currently viewing.
+For **Test Conditions**, select **Include context variables**, include `currentRecordId`, and supply the Kiran Singh Account ID. This mirrors the Account record context that the employee agent receives at runtime.
 
-In the next **Test Data** section, we can upload test cases in CSV format or use generative AI to create test use cases. For this exercise, we will define use cases with generative AI.
+In **Test Data**, generate test cases with generative AI:
 
-1. Click the **Generate Test Cases based on Subagents and actions** button
-2. Set Number of test cases = 6
-3. Copy/paste this prompt into the describe the test cases box:
+1. Select **Generate Test Cases based on Subagents and actions**.
+2. Set **Number of test cases** to 6.
+3. Use this description:
 
 ```text
 Build 5 test cases for the Post-Meeting Assistance Subagent about creating an interaction, creating a task, drafting an email to the customer, creating an interaction attendee and creating an interaction summary. Create 1 test case for the Income Statement Analysis Subagent that will analyze the income statement of the customer
 ```
-<p float="left">
-  <img src="images/general12.png" width="320" />
-  <img src="images/general13v2.png" width="320" /> 
-</p>
 
-Click **Next**. The Evaluations section lets us choose which criteria we want to evaluate when we run our test. Let's check off all evaluation criteria and click **Generate Test Cases**
+> **Screenshot placeholder:** Generated test configuration with six cases and `currentRecordId` context.
 
-This next part can take a few minutes so take a break, relax, and watch some cat videos. Refresh the screen after 1-2 minutes and you should see 6 test cases generated for you. Let's see how our agent performs against this now by clicking **Run Test Suite** at the top right
+Select the evaluation criteria that matter for the workshop, generate the cases, and run the test suite. Review the expected subagent, expected actions, and response quality for every case.
 
-![](images/general11.png)
+> **Screenshot placeholder:** Completed Relationship Assistant Test Suite showing the six test results.
 
-After another 1-2 minutes, our set of tests should be finished running! Refresh the screen again and the status should be **Complete**. You can see the range of results and iterate on the test prompts from here to better reflect the use cases you want to test for.
-
-It is also best to keep in mind that not getting a follow-up question from the agent can be a good thing and that agents are inherently semantic. Test results will not always consistently pass the same use cases, even if we changed nothing. Even so, this can be a great tool to monitor your agent's performance and catch any red flags before an end user does!
+Agent behavior is semantic, so do not evaluate quality only by exact wording or whether the agent asks a follow-up question. Focus on correct routing, required action execution, grounded outputs, safe handling of missing record or file context, and completion of the employee's job.
 
 ---
 ## 2. Intelligent Context and Document AI
@@ -179,13 +337,13 @@ We'll download the most recent [2024 Annual Report](https://www.berkshirehathawa
 
 In Setup, search and select Agentforce Data Library. Click the New Library button on the right and name the new Data Library 'Annual Reports'. Click Save. 
 
-![](images/vector3.png)
+> **Screenshot placeholder:** Annual Reports Agentforce Data Library after creation.
 
 In our new data library, set the Data Type to be 'Files' and click the Upload Files button that shows up below. Upload all 3 annual report PDF files that we downloaded earlier. Click Save. Our data library is now ingesting the files into Data 360 and generating embeddings, chunks and a search retriever for our content. 
 
 **PAUSE**: _Creating a new data library can take time. Let's move on to another section and revisit Intelligent Context after its finished being created. Keep this browser tab open though._
 
-![](images/vector2.png)
+> **Screenshot placeholder:** Annual Reports library ingesting uploaded files.
 
 ### 2.2 Configure Document AI
 
@@ -193,13 +351,13 @@ While waiting for our data library to be created, we'll create a Document AI con
 
 Using the App Launcher, open the **Data Cloud** App. In the app, find and open the **Process Content** tab (you'll likely have to use the **More** dropdown to find this tab). 
 
-![](images/vector1.png)
+> **Screenshot placeholder:** Process Content tab in the Data Cloud app.
 
 Click **New**, select **Without a Source Object** and click **Next**. In the new tab, click **Upload Files** and upload the ```BMW_Quote.pdf``` file. This can take a minute or two, once uploaded successfully, click **Done**. The preview for our PDF should show up shortly. 
 
 In the top left, let's change our LLM in the dropdown from Gemini to OpenAI GPT-4o. In the right pane, select **Using Auto-Extraction**. Click **Next**. 
 
-![](images/vector4.png)
+> **Screenshot placeholder:** Document AI auto-extraction configuration for the insurance quote.
 
 Review the output structured data schema that was automatically generated based on our input PDF. The **Fields** tab has the main fields that are extracted from the document (eg. customer name). The **Tables** tab has child table(s) (eg. coverage details). 
 
@@ -211,10 +369,7 @@ We want to include an additional footnotes field. Click **+ Add Field** under th
 
 Click Save and then **Test** at the top right to try our configuration. You should see the fields with correctly mapped sample values. Go to the **Tables** tab and click **Preview** beside coverage_details to see the extracted table values as well. 
 
-<p float="left">
-  <img src="images/vector5.png" width="320" />
-  <img src="images/vector6.png" width="320" /> 
-</p>
+> **Screenshot placeholder:** Document AI test results showing extracted fields and coverage details.
 
 Click **Save** and name this configuration ```Quote Extraction```. Click **Save** again.  
 
@@ -226,7 +381,7 @@ In the **Process Content** tab of Data Cloud, click the **Intelligent Context** 
 
 In the new tab, click Upload Files and upload the annual report PDF for Berkshire Hathaway we downloaded earlier. Uploading and processing the PDFs can take a minute or two. After the PDFs are uploaded, click **Set up my configuration using smart defaults** in the Agentforce pane on the right. This will briefly analyze your documents and automatically configure Intelligent Context for you. This can take a few minutes. After completion, we can see a preview of the generated chunks from our files and the search configuration that was chosen. 
 
-![](images/vector7.png)
+> **Screenshot placeholder:** Intelligent Context configuration and generated chunks for Annual Reports.
 
 Open the **Edit Configuration** tab in the left pane and we can review the configurations chosen by Agentforce. Expand **Select an Embedding Model** and update this dropdown to **Salesforce Embedding V2 Small**. For **Set Chunking Rules**, move the sliders for **Max Tokens** to approximately 2500 and **Overlap Tokens** to approximately 250. Click **Apply Changes**. This will take a few minutes to update again. 
 

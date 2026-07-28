@@ -98,6 +98,7 @@
         </connector>
         <inputReference>Get_Insurance_Policy</inputReference>
     </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>

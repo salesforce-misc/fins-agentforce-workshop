@@ -4,12 +4,11 @@
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Return_Policy_Participants</name>
-        <elementSubtype>AddPromptInstructions</elementSubtype>
         <label>Return Policy Participants</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>$Output.Prompt</assignToReference>
+            <assignToReference>Prompt</assignToReference>
             <operator>Add</operator>
             <value>
                 <stringValue>Driver Name: {!Get_Account.Name}
@@ -54,7 +53,7 @@ Role: {!Loop_all_Active_Participants.Role}
             <stringValue>LightningFlowBuilder</stringValue>
         </value>
     </processMetadataValues>
-    <processType>PromptFlow</processType>
+    <processType>AutoLaunchedFlow</processType>
     <recordLookups>
         <name>Get_Account</name>
         <label>Get Account</label>
@@ -104,15 +103,23 @@ Role: {!Loop_all_Active_Participants.Role}
         <object>InsurancePolicyParticipant</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Policy_Participants</targetReference>
         </connector>
-        <triggerType>Capability</triggerType>
     </start>
     <status>Active</status>
+    <variables>
+        <description>Formatted list of active drivers on the policy</description>
+        <name>Prompt</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <description>Insurance Policy ID to use for looking up participants</description>
         <name>policyId</name>
