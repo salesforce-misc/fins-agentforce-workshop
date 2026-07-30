@@ -1,191 +1,127 @@
-## Markdown Static Resource Viewer (LWC)
+# FINS Agentforce Workshop
 
-This project contains a Lightning Web Component, `markdownStaticResourceViewer`, that renders workshop-style documentation from zipped static resources.  
-Each static resource represents a mini documentation site with a `doc.md` file and an `images/` folder, which are converted to safe HTML at runtime using the `markdownLib` static resource (Marked + DOMPurify).
+Hands-on Salesforce workshop assets for building Agentforce agents in Financial
+Services. The exercises use representative Banking, Wealth, Insurance, and
+relationship-management scenarios to show how agents can retrieve context,
+invoke actions, apply deterministic instructions, and work with prompts and
+flows.
 
-The repo also includes a small build pipeline for generating zip-based static resources from expanded folders under `src-static/`.
+These assets are intended for learning and demonstration. Sample data, prompts,
+and configuration should be reviewed and adapted before use in a production
+environment.
 
----
+## What you will build
 
-## Project Structure
+The workshop provides guided exercises for common financial-services agent
+experiences:
 
-- **LWC component**
-  - `force-app/main/default/lwc/markdownStaticResourceViewer/`
-    - `markdownStaticResourceViewer.js` – Loads markdown from static resources, rewrites image URLs, sanitizes HTML, and renders content.
-    - `markdownStaticResourceViewer.html` – UI layout with banner, document selector, and setup-toggle.
-    - `markdownStaticResourceViewer.css` – Styling for viewer, banner, and markdown body.
+| Area | Representative use cases |
+| --- | --- |
+| Banking and wealth | Answer financial-account questions, manage beneficiaries, and ground a nearest-branch response. |
+| Insurance | Answer policy questions, add drivers, update billing preferences, and guide an address change. |
+| Relationship management | Analyze income statements, use Document AI and intelligent context, and automate agent testing. |
+| Prompt Builder | Route inbound insurance cases and summarize recent policy-case activity. |
 
-- **Static resources**
-  - `force-app/main/default/staticresources/`
-    - `BWAM.resource`, `INS.resource`, `SETUP.resource` – Workshop docs (zipped `doc.md` + `images/`).
-    - `markdownLib.zip` / `markdownLib.resource-meta.xml` – Bundled `marked.min.js` and `dompurify.min.js`.
+Across the exercises, you will create agent actions and context variables,
+connect flows and Apex actions, add subagents and instructions, ground responses
+with CRM data, test agent behavior, and preview or activate an agent in
+Salesforce.
 
-- **Source for docs (unpacked)**
-  - `src-static/`
-    - `BWAM/`, `INS/`, `SETUP/` – Each contains `doc.md` and an `images/` folder.
+## Repository contents
 
-- **Utility scripts**
-  - `scripts/build-staticresources.sh` – Zips each directory under `src-static/` into a `<Name>.resource` file and generates default metadata if missing.
+| Location | Purpose |
+| --- | --- |
+| `src-static/` | Editable, step-by-step workshop guides and their images. |
+| `force-app/` | Salesforce metadata, including the FINS Agentforce app, Agentforce bundle, flows, prompt templates, Apex, permissions, and static resources. |
+| `data/` | Representative Financial Services Cloud data and sample documents used by the exercises. |
+| `scripts/orgInit.sh` | Scratch-org bootstrap script that can deploy the workshop metadata, load the standard data export, assign access, and upload the sample files. |
+| `scripts/build-staticresources.sh` | Builds deployable static-resource archives from the guides in `src-static/`. |
 
----
+## Workshop guides
 
-## Prerequisites
+Start with the setup guide, then select the track that fits your audience.
 
-- Node.js and npm (LTS recommended).
-- Salesforce CLI (`sf`) installed and authenticated.
-- A Salesforce org (scratch org, sandbox, or dev org) where you can deploy this project.
+| Guide | Path | Focus |
+| --- | --- | --- |
+| Environment setup | `src-static/SETUP/doc.md` | Enable the required capabilities and configure messaging. |
+| Banking and wealth | `src-static/BWAMAGENTSCRIPT/doc.md` | Agent actions, Apex actions, beneficiary management, prompt flows, and grounding. |
+| Insurance | `src-static/INSAGENTSCRIPT/doc.md` | Policy and quote analysis, driver and billing subagents, and RAG-backed address changes. |
+| Relationship assistant | `src-static/GENERALAGENTSCRIPT/doc.md` | Multimodal prompts, Document AI, intelligent context, and automated testing. |
+| Prompt Builder | `src-static/PROMPT/doc.md` | Case routing and policy-case summarization. |
 
----
+## Get started
 
-## Installation
+### Prerequisites
 
-From the project root:
+- Salesforce CLI (`sf`) and Node.js.
+- A Salesforce Dev Hub if you plan to create a scratch org.
+- Access to the Agentforce, Financial Services Cloud, and Data 360 capabilities
+  required for the exercises in your environment.
+
+### Create a workshop org
+
+The bootstrap script is the recommended starting point. It creates a scratch
+org, deploys the FINS Agentforce metadata, assigns workshop access, imports the
+standard Financial Services Cloud data export, and uploads the sample files.
+
+```bash
+scripts/orgInit.sh --devhub <your-devhub-alias> --alias fins-af-workshop
+```
+
+To inspect all options, including resuming an existing org or skipping a
+specific setup stage:
+
+```bash
+scripts/orgInit.sh --help
+```
+
+If your environment already exists, deploy the metadata to its authenticated
+alias:
+
+```bash
+sf project deploy start --source-dir force-app --target-org <your-org-alias>
+```
+
+Then use the workshop guides above to configure, test, and activate the
+exercises appropriate for your org.
+
+## Maintain the guides
+
+The guides in `src-static/` are the editable sources. When you change a guide
+or its images, rebuild its corresponding static resource before deploying:
 
 ```bash
 npm install
-```
-
----
-
-## Building Static Resources from `src-static/`
-
-When you update any markdown or images under `src-static/`, regenerate the zip-based static resources:
-
-```bash
 npm run build:staticresources
 ```
 
-This will:
+The generated resources are placed in
+`force-app/main/default/staticresources/`. Commit the generated resource and
+metadata changes along with the source-guide change.
 
-- Zip each folder under `src-static/` into `force-app/main/default/staticresources/<Name>.resource`.
-- Create a matching `<Name>.resource-meta.xml` if it does not already exist.
+## Validate changes
 
-Commit the updated `.resource` and `.resource-meta.xml` files if you intend to deploy them to another org.
+```bash
+npm run lint
+npm test
+npm run prettier:verify
+```
 
----
+For changes that affect agent configuration or metadata, also deploy to a
+workshop org and use the guide's test steps to validate the complete agent
+experience.
 
-## Deploying to a Salesforce Org (sf CLI)
+## Important notes
 
-1. **Authenticate to your target org (once per machine/user):**
+- Capability availability and setup vary by Salesforce edition, licenses, and
+  enabled features. Complete the environment setup before beginning the agent
+  exercises.
+- The metadata and documentation are workshop assets; they do not by themselves
+  deploy, activate, or expose an Agentforce agent.
+- Do not use the included representative data as production customer data.
 
-   ```bash
-   sf org login web --set-default --alias markdown-lwc
-   ```
+## Contributing
 
-2. **(Optional but recommended) Rebuild static resources after making doc changes:**
-
-   ```bash
-   npm run build:staticresources
-   ```
-
-3. **Deploy the metadata:**
-
-   ```bash
-   sf project deploy start --source-dir force-app --target-org markdown-lwc
-   ```
-
----
-
-## Using `markdownStaticResourceViewer` in the Org
-
-`markdownStaticResourceViewer` is designed to be used on Lightning App Builder pages (e.g., a Utility Bar item, a Home page, or a custom app page).
-
-### Key `@api` Properties
-
-- **`resourceNames`**  
-  Comma-separated list of static resource names that each contain:
-  - `doc.md` – Markdown content.
-  - `images/` – Any referenced images.
-  - Example: `"BWAM,INS,SETUP"`.
-
-- **`defaultResourceName`**  
-  Optional static resource name to load initially.  
-  If not provided or not found, the first entry in `resourceNames` is used.
-
-- **`showDocumentPicker`**  
-  Boolean flag that controls whether the document picker (radio group) is shown.  
-  When enabled and at least one resource is available, the component renders a radio-based selector with friendly labels for known resources (e.g., BWAM → “Banking & Wealth”, INS → “Insurance”).
-
-### Setup Document Toggle
-
-- The component can display an optional setup guide above the selected document by loading a static resource named `SETUP`.
-- The “Show Setup Steps” toggle lets the user show or hide this content at runtime.
-
-### Image and Markdown Handling
-
-- Markdown is fetched at runtime from `/resource/<StaticResourceName>/doc.md` with a cache-busting query parameter to avoid stale content.
-- Relative image references such as:
-
-  ```markdown
-  ![Screenshot](images/example.png)
-  ```
-
-  are automatically rewritten to:
-
-  ```text
-  /resource/<StaticResourceName>/images/example.png
-  ```
-
-- Markdown is converted to HTML using Marked and sanitized with DOMPurify before being injected into the DOM.
-
----
-
-## Adding or Updating Documentation Bundles
-
-To add a new documentation bundle:
-
-1. Create a new folder under `src-static/` named after the static resource you want, for example:
-
-   ```text
-   src-static/NEWGUIDE/
-     doc.md
-     images/
-       screenshot-1.png
-   ```
-
-2. Write your content in `doc.md`, using standard Markdown and relative image paths like `images/...`.
-
-3. Build the static resources:
-
-   ```bash
-   npm run build:staticresources
-   ```
-
-4. Deploy to your org:
-
-   ```bash
-   sf project deploy start --source-dir force-app --target-org markdown-lwc
-   ```
-
-5. Configure the component in Lightning App Builder and include `NEWGUIDE` in the `resourceNames` property.
-
----
-
-## Local Development, Linting, and Tests
-
-- **Run Jest unit tests for LWC:**
-
-  ```bash
-  npm test
-  ```
-
-- **Run linting:**
-
-  ```bash
-  npm run lint
-  ```
-
-- **Format code (Prettier):**
-
-  ```bash
-  npm run prettier
-  ```
-
-Husky and `lint-staged` are configured to help keep commits formatted and linted when using Git hooks.
-
----
-
-## Notes
-
-- The project uses API version `65.0` (see `sfdx-project.json`).
-- The `markdownLib` static resource must contain `marked.min.js` and `dompurify.min.js` at its root for the component to load the libraries correctly.
+Keep source guides and generated static resources in sync, and validate both
+metadata deployment and the relevant agent scenario before submitting changes.
+Please follow the repository's [Code of Conduct](CODE_OF_CONDUCT.md).
