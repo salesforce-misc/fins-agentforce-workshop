@@ -1,0 +1,42 @@
+{
+  "orgName": "Salesforce Technical Architects FINS Workshop",
+  "description": "Financial Services Cloud Insurance workshop org with Agentforce and Data Cloud",
+  "edition": "Enterprise",
+  "hasSampleData": false,
+  "features": [
+    "EnableSetPasswordInApi",
+    "PersonAccounts",
+    "ContactsToMultipleAccounts",
+    "FinancialServicesUser:2",
+    "FinancialServicesInsuranceUser",
+    "FSCAlertFramework",
+    "FSCServiceProcess",
+    "InsuranceCalculationUser",
+    "InsuranceClaimMgmt:1",
+    "InsurancePolicyAdmin:1",
+    "Einstein1AIPlatform",
+    "SalesCloudEinstein",
+    "CustomerDataPlatform"
+  ],
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true,
+      "enableLightningPreviewPref": true
+    },
+    "mobileSettings": {
+      "enableS1EncryptedStoragePref2": false
+    },
+    "agentPlatformSettings": {
+      "enableAgentPlatform": true
+    },
+    "einsteinGptSettings": {
+      "enableEinsteinGptPlatform": true
+    },
+    "customerDataPlatformSettings": {
+      "enableCustomerDataPlatform": true
+    },
+    "industriesSettings": {
+      "enableFinancialAccountMgmt": true
+    }
+  }
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Returns a structured JSON summary of an account holder including active insurance policies, premium information, and renewal flags. Designed for Agentforce producer call prep.</description>
+    <developerName>Get_Policyholder_Details</developerName>
+    <invocationTarget>GetPolicyholderDetails</invocationTarget>
+    <invocationTargetType>apex</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>Get_Policyholder_Details</localDeveloperName>
+    <masterLabel>Get Policyholder Details</masterLabel>
+</GenAiFunction>

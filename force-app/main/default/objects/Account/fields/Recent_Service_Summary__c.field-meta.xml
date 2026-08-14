@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recent_Service_Summary__c</fullName>
+    <description>AI-generated plain-English briefing of the account holder&apos;s active policies and recent claims. Written by the Account Briefing subagent via Field Generation prompt template.</description>
+    <label>Recent Service Summary</label>
+    <length>32768</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

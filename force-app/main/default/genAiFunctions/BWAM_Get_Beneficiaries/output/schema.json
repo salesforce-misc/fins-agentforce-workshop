@@ -1,0 +1,21 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "ListOfFinancialAccountRoles" : {
+      "title" : "ListOfFinancialAccountRoles",
+      "description" : "\nDisplay the list of Financial Account Roles associated to Financial Account and always include Role, Status, Related Account and FInancial Account in the output",
+      "maxItems" : 2000,
+      "items" : {
+        "lightning:type" : "lightning__recordInfoType",
+        "lightning:sObjectInfo" : {
+          "apiName" : "FinServ__FinancialAccountRole__c"
+        }
+      },
+      "lightning:type" : "lightning__listType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

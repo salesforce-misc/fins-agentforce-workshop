@@ -1,0 +1,14 @@
+{
+  "required" : [ "policyId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "policyId" : {
+      "title" : "policyId",
+      "description" : "Insurance Policy ID to use for looking up participants",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

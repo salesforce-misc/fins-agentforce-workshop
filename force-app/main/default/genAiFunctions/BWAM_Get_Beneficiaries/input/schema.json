@@ -1,0 +1,28 @@
+{
+  "required" : [ "AccountName", "FinancialAccountName" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "AccountName" : {
+      "title" : "AccountName",
+      "description" : "Retrieve the Account Id based on the Account Name. If the user already provided the Account Name use that to query the Account",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "Email" : {
+      "title" : "Email",
+      "description" : "Retrieve the Account Id based on the Email. If the user already provided the Account Name ignore this",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "FinancialAccountName" : {
+      "title" : "FinancialAccountName",
+      "description" : "Query the Financial Account based on the Account Id and Financial Account Name",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

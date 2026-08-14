@@ -1,0 +1,21 @@
+{
+  "required" : [ "billingFrequency", "policyId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "billingFrequency" : {
+      "title" : "billingFrequency",
+      "description" : "The new billing frequency for the insurance policy. Valid values include Semi-Monthly, Monthly, Quarterly, Semi-Annual and Annually",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "policyId" : {
+      "title" : "policyId",
+      "description" : "Id of the insurance policy to update the billing frequency for",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

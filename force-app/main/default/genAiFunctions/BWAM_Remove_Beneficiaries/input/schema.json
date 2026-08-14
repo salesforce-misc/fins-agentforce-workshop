@@ -1,0 +1,21 @@
+{
+  "required" : [ "FinancialAccountName", "RelationshipEmail" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "FinancialAccountName" : {
+      "title" : "FinancialAccountName",
+      "description" : "Retrieve the ID based on the financial account name or based on the user selected financial account record",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "RelationshipEmail" : {
+      "title" : "RelationshipEmail",
+      "description" : "User needs to reconfirm or re input the Email associated to the Relationship Record",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

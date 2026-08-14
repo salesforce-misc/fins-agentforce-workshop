@@ -1,0 +1,21 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "ListOfFinancialAccountRoles" : {
+      "title" : "ListOfFinancialAccountRoles",
+      "description" : "Retrieve the list of Relationship records associated to financial Account record once the Financial Account Role is created successfully. Please include Related Account Name, Role and Status in the output",
+      "maxItems" : 2000,
+      "items" : {
+        "lightning:type" : "lightning__recordInfoType",
+        "lightning:sObjectInfo" : {
+          "apiName" : "FinServ__FinancialAccountRole__c"
+        }
+      },
+      "lightning:type" : "lightning__listType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

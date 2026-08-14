@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>LxK6VhiWTpGuUdwr0NChSsQ0Wb/aiiFfDsWaSHEP/oc=_1</activeVersionIdentifier>
+    <developerName>Summarization_of_Interaction_Summaries</developerName>
+    <masterLabel>Summarization of Interaction Summaries</masterLabel>
+    <relatedEntity>Account</relatedEntity>
+    <relatedField>Account.Summarization_of_Interaction_Summaries__c</relatedField>
+    <templateVersions>
+        <content></content>
+        <inputs>
+            <apiName>RelatedEntity</apiName>
+            <definition>SOBJECT://Account</definition>
+            <referenceName>Input:Account</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT35Turbo</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>flow://Get_Interaction_Summaries</definition>
+            <parameters>
+                <definition>SOBJECT://Account</definition>
+                <isRequired>true</isRequired>
+                <parameterName>RelatedEntity</parameterName>
+                <valueExpression>{!$Input:Account}</valueExpression>
+            </parameters>
+            <referenceName>Flow:Get_Interaction_Summaries</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>LxK6VhiWTpGuUdwr0NChSsQ0Wb/aiiFfDsWaSHEP/oc=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__fieldCompletion</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

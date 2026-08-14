@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Step to add the financial account details to the Prompt Template</description>
+        <name>Add_Financial_Account_Details_to_Prompt_Template</name>
+        <elementSubtype>AddPromptInstructions</elementSubtype>
+        <label>Add Financial Account Details to Prompt Template</label>
+        <locationX>138</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>$Output.Prompt</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Financial Account ID: {!Loop_through_each_Financial_Account.FinancialAccountId}
+Relationship Role: {!Loop_through_each_Financial_Account.Role}
+Relationship Active: {!Loop_through_each_Financial_Account.IsRoleActive}
+Related Account ID: {!Loop_through_each_Financial_Account.AccountId}
+</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_through_each_Financial_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_Notes_about_no_Financial_Accounts</name>
+        <elementSubtype>AddPromptInstructions</elementSubtype>
+        <label>Add Notes about no Financial Accounts</label>
+        <locationX>314</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>$Output.Prompt</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>There are no financial accounts for this Client.
+</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Step to verify if the selected Account Record has any Financial Accounts</description>
+        <name>Has_Financial_Accounts</name>
+        <label>Has Financial Accounts?</label>
+        <locationX>182</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Add_Notes_about_no_Financial_Accounts</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FinancialAccountPartyRecords</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_through_each_Financial_Account</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>This flow retrieves the Financial Account Summary associated to the Account</description>
+    <environments>Default</environments>
+    <interviewLabel>BWAM - Get Financial Account Summary {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>BWAM - Financial Account Summary</label>
+    <loops>
+        <name>Loop_through_each_Financial_Account</name>
+        <label>Loop through each Financial AccountStep to loop through each financial account</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <collectionReference>FinancialAccountPartyRecords</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Add_Financial_Account_Details_to_Prompt_Template</targetReference>
+        </nextValueConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>PromptFlow</processType>
+    <recordLookups>
+        <description>Step to get Financial accounts on the selected accounted record.</description>
+        <name>Get_Financial_Account_Parties</name>
+        <label>Get Financial Accounts</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Has_Financial_Accounts</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Input.RelatedEntity.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>FinancialAccountParty</object>
+        <outputReference>FinancialAccountPartyRecords</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>FinancialAccountId</queriedFields>
+        <queriedFields>AccountId</queriedFields>
+        <queriedFields>Role</queriedFields>
+        <queriedFields>IsRoleActive</queriedFields>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <capabilityTypes>
+            <name>PromptTemplateType://einstein_gpt__fieldCompletion</name>
+            <capabilityName>PromptTemplateType://einstein_gpt__fieldCompletion</capabilityName>
+            <inputs>
+                <name>RelatedEntity</name>
+                <capabilityInputName>RelatedEntity</capabilityInputName>
+                <dataType>SOBJECT://Account</dataType>
+                <isCollection>false</isCollection>
+            </inputs>
+        </capabilityTypes>
+        <connector>
+            <targetReference>Get_Financial_Account_Parties</targetReference>
+        </connector>
+        <triggerType>Capability</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>FinancialAccountPartyRecords</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>FinancialAccountParty</objectType>
+    </variables>
+</Flow>

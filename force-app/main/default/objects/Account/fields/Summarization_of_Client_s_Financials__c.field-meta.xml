@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Summarization_of_Client_s_Financials__c</fullName>
+    <description>This field will be used by Prompt Builder to generate a summary of Client&apos;s Financial Accounts</description>
+    <label>Summarization of Client&apos;s Financials</label>
+    <length>131072</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

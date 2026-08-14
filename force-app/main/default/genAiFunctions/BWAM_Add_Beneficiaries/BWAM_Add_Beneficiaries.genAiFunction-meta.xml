@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Create the a new Relationship on the Financial Account Record</description>
+    <developerName>BWAM_Add_Beneficiaries</developerName>
+    <invocationTarget>BWAM_Add_Beneficiaries</invocationTarget>
+    <invocationTargetType>flow</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <masterLabel>BWAM - Add Beneficiaries</masterLabel>
+</GenAiFunction>

@@ -1,0 +1,42 @@
+{
+  "required" : [ "Input:ClaimsSummary", "Input:PolicySummary", "Input:CustomerName" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "Input:ClaimsSummary" : {
+      "title" : "Claims Summary",
+      "description" : "Full name of the account holder (e.g. \"Kiran Singh\"). Used to address the customer in the briefing.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "Input:PolicySummary" : {
+      "title" : "Policy Summary",
+      "description" : "Formatted list of the customer's recent and open service cases, including subject, status, and reported date. Passed from the Get Insurance Claims action.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "Input:CustomerName" : {
+      "title" : "Customer Name",
+      "description" : "Formatted list of the customer's active insurance policies, including policy type, premium amount, and expiration date. Passed from the Get Insurance Policies action.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "outputLanguage" : {
+      "title" : "Output language",
+      "description" : "Optional. Specify the response language using the appropriate two-character language code or five-character locale code (for example, en_US, en_GB, es, es_MX).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "isPreviewOnly" : {
+      "title" : "Preview Only",
+      "description" : "Resolves the prompt template without generating an LLM response.",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

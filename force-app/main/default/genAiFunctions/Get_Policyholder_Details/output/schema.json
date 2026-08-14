@@ -1,0 +1,60 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "accountId" : {
+      "title" : "accountId",
+      "description" : "Salesforce Account Id of the policyholder. Use to set the AccountId variable for downstream actions.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true,
+      "copilotAction:useHydratedPrompt" : false
+    },
+    "customerName" : {
+      "title" : "customerName",
+      "description" : "Echo of the customerName input. Use to set the AccountName variable.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true,
+      "copilotAction:useHydratedPrompt" : false
+    },
+    "errorMessage" : {
+      "title" : "errorMessage",
+      "description" : "Error details if the action failed.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true,
+      "copilotAction:useHydratedPrompt" : false
+    },
+    "errorType" : {
+      "title" : "errorType",
+      "description" : "Exception type name if the action failed.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true,
+      "copilotAction:useHydratedPrompt" : false
+    },
+    "isSuccess" : {
+      "title" : "isSuccess",
+      "description" : "Whether the action completed without errors.",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true,
+      "copilotAction:useHydratedPrompt" : false
+    },
+    "policyholderDetails" : {
+      "title" : "policyholderDetails",
+      "description" : "Structured JSON summary of the policyholder and their active insurance policies, ready for agent narration.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true,
+      "copilotAction:useHydratedPrompt" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

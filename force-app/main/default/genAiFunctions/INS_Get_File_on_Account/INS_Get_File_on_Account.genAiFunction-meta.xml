@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Retrieve the income statement file on the Account record</description>
+    <developerName>INS_Get_File_on_Account</developerName>
+    <invocationTarget>INS_Get_File_on_Account</invocationTarget>
+    <invocationTargetType>flow</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>INS_Get_File_on_Account</localDeveloperName>
+    <masterLabel>INS - Get File on Account</masterLabel>
+</GenAiFunction>

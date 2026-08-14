@@ -1,0 +1,21 @@
+{
+  "required" : [ "CancelDate", "InsurancePolicyId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "CancelDate" : {
+      "title" : "CancelDate",
+      "description" : "Date that the insurance policy should be canceled on",
+      "lightning:type" : "lightning__dateType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "InsurancePolicyId" : {
+      "title" : "InsurancePolicyId",
+      "description" : "Insurance Policy Id to be canceled",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

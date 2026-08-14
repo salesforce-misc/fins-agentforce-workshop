@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>With the unstructured address for a customer, transform it into a structured JSON format</description>
+    <developerName>FINS_Parse_Address</developerName>
+    <invocationTarget>FINS_Parse_Address</invocationTarget>
+    <invocationTargetType>generatePromptResponse</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>FINS_Parse_Address</localDeveloperName>
+    <masterLabel>FINS - Parse Address</masterLabel>
+</GenAiFunction>

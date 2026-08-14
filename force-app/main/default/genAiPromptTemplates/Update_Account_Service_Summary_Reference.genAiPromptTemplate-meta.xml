@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>oEmj/pb8CEnNOiuJmPpfeBeK7+YqUeUGCeaSlBY361U=_1</activeVersionIdentifier>
+    <description>Generates a plain-English account briefing and writes it to the Recent Service Summary field on the Account record. Call this when the producer asks for a full account briefing or to update the account summary.</description>
+    <developerName>Update_Account_Service_Summary_Reference</developerName>
+    <masterLabel>Update Account Service Summary Reference</masterLabel>
+    <templateVersions>
+        <content>You are a producer assistant at Comparion Insurance. Write a concise briefing about customer {!$Input:CustomerName} for their insurance producer.
+
+Active Policies:
+{!$Input:PolicySummary}
+  
+Recent Claims:
+{!$Input:ClaimsSummary}
+
+Format your response as two separate lines:
+Policies: 1-2 sentences summarizing what coverage they currently hold.
+Claims: 1-2 sentences on any open claims and their status, plus one thing the producer should be aware of before their next customer interaction.
+
+Use standard insurance terminology — the reader is a producer, not the customer. Be concise.
+</content>
+        <inputs>
+            <apiName>ClaimsSummary</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Claims Summary</masterLabel>
+            <referenceName>Input:ClaimsSummary</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>CustomerName</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Customer Name</masterLabel>
+            <referenceName>Input:CustomerName</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>PolicySummary</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Policy Summary</masterLabel>
+            <referenceName>Input:PolicySummary</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>oEmj/pb8CEnNOiuJmPpfeBeK7+YqUeUGCeaSlBY361U=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

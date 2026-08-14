@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Current__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If true then the account is currently payment up and not late. The account is considered in good standing and the next expected payment would be the ned due amount as defined by the payment frequency</description>
+    <label>Account Current</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

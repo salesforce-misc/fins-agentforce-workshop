@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Periodic_payment_amount__c</fullName>
+    <description>Calculated feild to show the regular payment premiums for an account in good standing</description>
+    <formula>((GrossWrittenPremium +  StandardFeeAmount +  StandardTaxAmount +  TaxesSurcharges) 
+/ (YEAR(DATEVALUE(ExpirationDate)) - YEAR(DATEVALUE(EffectiveDate)) + 
+IF(MONTH(DATEVALUE(ExpirationDate)) - MONTH(DATEVALUE(EffectiveDate)) &lt;&gt; 0, 
+(MONTH(DATEVALUE(ExpirationDate)) - MONTH(DATEVALUE(EffectiveDate)))/12, 0)) 
+/ CASE( Text(PremiumFrequency), &apos;Monthly&apos;, 12, &apos;Semi-Monthly(twice a month)&apos;, 24, &apos;Quarterly&apos;, 4, &apos;Semi Annual(twice a year)&apos;, 2, 1))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Periodic payment amount</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Update the account billing address on the Account with the new provided address from the user</description>
+    <developerName>FINS_Update_Account_Address</developerName>
+    <invocationTarget>AccountBillingAddressUpdate</invocationTarget>
+    <invocationTargetType>apex</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>FINS_Update_Account_Address</localDeveloperName>
+    <masterLabel>FINS - Update Account Address</masterLabel>
+</GenAiFunction>

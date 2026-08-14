@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Add_Prompt_Instructions_2</name>
+        <elementSubtype>AddPromptInstructions</elementSubtype>
+        <label>Add Prompt Instructions 2</label>
+        <locationX>264</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>$Output.Prompt</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>---
+Policy Name = {!Loop_1.PolicyName}
+Policy Number = {!Loop_1.Name}
+Policy Id = {!Loop_1.Id}
+---
+</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Final_instructions</name>
+        <elementSubtype>AddPromptInstructions</elementSubtype>
+        <label>Final instructions</label>
+        <locationX>176</locationX>
+        <locationY>542</locationY>
+        <assignmentItems>
+            <assignToReference>$Output.Prompt</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Provide a numbered list of insurance policies.  Do not display the Policy ID in the list.  Each item in the list must have the following format:
+**PolicyName** -  **PolicyNumber**
+</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <environments>Default</environments>
+    <interviewLabel>INS: Get Policies for Account {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>INS: Get Policies for Account</label>
+    <loops>
+        <name>Loop_1</name>
+        <label>Loop 1</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <collectionReference>Get_Insurance_Policies</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Add_Prompt_Instructions_2</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Final_instructions</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>PromptFlow</processType>
+    <recordLookups>
+        <name>Get_Insurance_Policies</name>
+        <label>Get Insurance Policies</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NameInsuredId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>policyHolderId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>InsurancePolicy</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Insurance_Policies</targetReference>
+        </connector>
+        <triggerType>Capability</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>The Id of the Policy Holder.  This will be an Account record</description>
+        <name>policyHolderId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

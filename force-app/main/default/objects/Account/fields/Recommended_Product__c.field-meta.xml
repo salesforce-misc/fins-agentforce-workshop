@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recommended_Product__c</fullName>
+    <label>Recommended Product</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Cumulus Personal Loan</fullName>
+                <default>false</default>
+                <label>Cumulus Personal Loan</label>
+            </value>
+            <value>
+                <fullName>Cumulus High Ratio</fullName>
+                <default>false</default>
+                <label>Cumulus High Ratio</label>
+            </value>
+            <value>
+                <fullName>Cumulus Prime Fixed</fullName>
+                <default>false</default>
+                <label>Cumulus Prime Fixed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

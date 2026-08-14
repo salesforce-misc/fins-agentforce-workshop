@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>LxK6VhiWTpGuUdwr0NChSsQ0Wb/aiiFfDsWaSHEP/oc=_2</activeVersionIdentifier>
+    <description>Analyze an Insurance Quote PDF</description>
+    <developerName>Analyze_Quote</developerName>
+    <masterLabel>Analyze Quote</masterLabel>
+    <templateVersions>
+        <content>Analyze the attached quote file and convert its data a JSON output format with Vehicle, TotalCost and a list of the coverages and their associated costs. 
+
+Use this example JSON format: 
+
+{ &quot;Vehicle&quot;: &quot;2024 BMW i5&quot;, &quot;TotalCost&quot;: 1500.00,&quot;Coverages&quot;: [{&quot;CoverageName&quot;: &quot;Bodily Injury Liability&quot;,&quot;LimitDescription&quot;: &quot;$100,000 / $300,000&quot;,&quot;Cost&quot;: 360.00},{&quot;CoverageName&quot;: &quot;Property Damage Liability&quot;,&quot;LimitDescription&quot;: &quot;$100,000&quot;,&quot;Cost&quot;: 220.00}]}
+
+Only respond with the Raw JSON output. Do not use Markdown format
+</content>
+        <inputs>
+            <apiName>File</apiName>
+            <definition>SOBJECT://ContentDocument</definition>
+            <masterLabel>File</masterLabel>
+            <referenceName>Input:File</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT5</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>LxK6VhiWTpGuUdwr0NChSsQ0Wb/aiiFfDsWaSHEP/oc=_1</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>Analyze the attached quote file and convert its data a JSON output format with Vehicle, TotalCost and a list of the coverages and their associated costs. 
+
+Use this example JSON format: 
+
+{ &quot;Vehicle&quot;: &quot;2024 BMW i5&quot;, &quot;TotalCost&quot;: 1500.00,&quot;Coverages&quot;: [{&quot;CoverageName&quot;: &quot;Bodily Injury Liability&quot;,&quot;LimitDescription&quot;: &quot;$100,000 / $300,000&quot;,&quot;Cost&quot;: 360.00},{&quot;CoverageName&quot;: &quot;Property Damage Liability&quot;,&quot;LimitDescription&quot;: &quot;$100,000&quot;,&quot;Cost&quot;: 220.00}]}
+
+Only respond with the Raw JSON output. Do not use Markdown format
+</content>
+        <inputs>
+            <apiName>File</apiName>
+            <definition>SOBJECT://ContentDocument</definition>
+            <masterLabel>File</masterLabel>
+            <referenceName>Input:File</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>LxK6VhiWTpGuUdwr0NChSsQ0Wb/aiiFfDsWaSHEP/oc=_2</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

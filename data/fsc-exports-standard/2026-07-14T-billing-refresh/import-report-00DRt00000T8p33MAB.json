@@ -1,0 +1,763 @@
+{
+  "importedAt": "2026-07-15T21:42:02.575Z",
+  "sourceOrgId": "00Dam00001UtH8mEAF",
+  "targetOrgId": "00DRt00000T8p33MAB",
+  "dryRun": false,
+  "objects": [
+    {
+      "name": "Account",
+      "source": 50,
+      "ready": 50,
+      "created": 50
+    },
+    {
+      "name": "AssetRelationship",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "Case",
+      "source": 37,
+      "ready": 37,
+      "created": 37
+    },
+    {
+      "name": "Claim",
+      "source": 8,
+      "ready": 8,
+      "created": 8
+    },
+    {
+      "name": "Contact",
+      "source": 46,
+      "ready": 3,
+      "created": 3
+    },
+    {
+      "name": "FinancialGoal",
+      "source": 1,
+      "ready": 1,
+      "created": 1
+    },
+    {
+      "name": "InsuranceContract",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "Insurance_Beneficary_Change_Request__c",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "Lead",
+      "source": 8,
+      "ready": 8,
+      "created": 8
+    },
+    {
+      "name": "LoanApplicationAsset",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "LoanApplicationLiability",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "Opportunity",
+      "source": 11,
+      "ready": 11,
+      "created": 11
+    },
+    {
+      "name": "PartyConsent",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "ResidentialLoanApplication",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "AccountContactRelation",
+      "source": 10,
+      "ready": 7,
+      "created": 7
+    },
+    {
+      "name": "BusinessMilestone",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "ClaimAttribute",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "ClaimCoverage",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "ClaimItem",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "ClaimParticipant",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "ClaimPaymentSummary",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "ClaimTeamMember",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "FinancialGoalFunding",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "FinancialGoalParty",
+      "source": 1,
+      "ready": 1,
+      "created": 1
+    },
+    {
+      "name": "FinancialPlan",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsurancePolicy",
+      "source": 23,
+      "ready": 23,
+      "created": 23
+    },
+    {
+      "name": "InsuranceProfile",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "LoanApplicant",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "LoanApplicationFinancial",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "LoanApplicationProperty",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "LoanApplicationTitleHolder",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "PartyExpense",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "ClaimItemAttribute",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "ClaimItemRelatedObject",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsPolicyBillingInfo",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsPolicyRelatedObject",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsurancePolicyAsset",
+      "source": 3,
+      "ready": 3,
+      "created": 3
+    },
+    {
+      "name": "InsurancePolicyAttribute",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsurancePolicyCoverage",
+      "source": 7,
+      "ready": 7,
+      "created": 7
+    },
+    {
+      "name": "InsurancePolicyParticipant",
+      "source": 6,
+      "ready": 6,
+      "created": 6
+    },
+    {
+      "name": "InsurancePolicyProductClause",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsurancePolicySurcharge",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsurancePolicyTransaction",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "Insurance_Policy_Payment__c",
+      "source": 72,
+      "ready": 72,
+      "created": 72
+    },
+    {
+      "name": "LoanApplicantAddress",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "LoanApplicantAsset",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "LoanApplicantDeclaration",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "LoanApplicantEmployment",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "LoanApplicantIncome",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "LoanApplicantLiability",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "PartyIncome",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsPolicyAssetAttribute",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsPolicyAssetRelatedObj",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsPolicyCoverageAttribute",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsPolicyCvrRelatedObj",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsPolicyParticipantAttr",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsPolicyPtcpRelatedObj",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    },
+    {
+      "name": "InsPolicyTransactionDetail",
+      "source": 0,
+      "ready": 0,
+      "created": 0
+    }
+  ],
+  "skippedObjects": [
+    "Billing__c",
+    "ClaimCoveragePaymentDetail",
+    "ClaimCoverageReserveDetail",
+    "ClaimCovPaymentAdjustment",
+    "ClaimCovReserveAdjustment",
+    "ClaimFinancialSettings",
+    "ClaimPayoutPlan",
+    "ClaimRecovery",
+    "FinancialCustodian",
+    "FinancialCustodianAdvisor",
+    "InsuranceAsyncBulkRecordDetail",
+    "InsuranceAsyncBulkRequest",
+    "InsuranceAsyncBulkRequestItem",
+    "InsurancePolicyMemberAsset",
+    "InsuranceRatingRequest",
+    "Interaction",
+    "InteractionAttendee",
+    "InteractionRelatedAccount",
+    "InteractionSumDiscussedAccount",
+    "InteractionSummary",
+    "PartyCertifiedCapacity",
+    "Referral"
+  ],
+  "schemaWarnings": [
+    {
+      "object": "Account",
+      "droppedFields": [
+        "BillingStateCode",
+        "BillingCountryCode",
+        "ShippingStateCode",
+        "ShippingCountryCode",
+        "PersonMailingStateCode",
+        "PersonMailingCountryCode",
+        "PersonOtherStateCode",
+        "PersonOtherCountryCode",
+        "PersonHasOptedOutOfEmail",
+        "PersonHasOptedOutOfFax",
+        "PersonDoNotCall",
+        "Assets_Under_Management__c",
+        "Summarization_of_Open_Cases__c",
+        "Summarization_of_Client_s_Financials__c",
+        "Summarization_of_Interaction_Summaries__c",
+        "Client_Profile_Summary__c",
+        "Credit_Score__c",
+        "Recommended_Product__c",
+        "Drivers_License_Class__pc",
+        "Gender__pc",
+        "Marital_Status__pc",
+        "Drivers_License_Number__pc"
+      ]
+    },
+    {
+      "object": "Case",
+      "droppedFields": [
+        "RecordTypeId",
+        "Routing_Reason__c"
+      ]
+    },
+    {
+      "object": "Claim",
+      "droppedFields": [
+        "IncidentSiteStateCode",
+        "IncidentSiteCountryCode",
+        "IncidentId"
+      ]
+    },
+    {
+      "object": "ClaimItem",
+      "droppedFields": [
+        "CurrentStateCode",
+        "CurrentCountryCode"
+      ]
+    },
+    {
+      "object": "Contact",
+      "droppedFields": [
+        "RecordTypeId",
+        "OtherStateCode",
+        "OtherCountryCode",
+        "MailingStateCode",
+        "MailingCountryCode",
+        "HasOptedOutOfEmail",
+        "HasOptedOutOfFax",
+        "DoNotCall",
+        "TitleType",
+        "DepartmentGroup",
+        "BuyerAttributes",
+        "Drivers_License_Class__c",
+        "Gender__c",
+        "Marital_Status__c",
+        "Drivers_License_Number__c"
+      ]
+    },
+    {
+      "object": "Insurance_Policy_Payment__c",
+      "droppedFields": [
+        "Payment_Status__c",
+        "Institution__c",
+        "Payment_Date__c",
+        "Payor__c",
+        "Total_Payment__c"
+      ]
+    },
+    {
+      "object": "InsurancePolicy",
+      "droppedFields": [
+        "ServicingOfficeStateCode",
+        "ServicingOfficeCountryCode",
+        "SourceQuoteId",
+        "Account_Current__c",
+        "Last_PMT_Date__c",
+        "Policy_Accepted_Payment_options__c",
+        "Total_paid_on_policy__c",
+        "Recent_Case_Summary__c"
+      ]
+    },
+    {
+      "object": "Lead",
+      "droppedFields": [
+        "RecordTypeId",
+        "StateCode",
+        "CountryCode",
+        "LeadType__c"
+      ]
+    },
+    {
+      "object": "LoanApplicantAddress",
+      "droppedFields": [
+        "ResidenceStateCode",
+        "ResidenceCountryCode"
+      ]
+    },
+    {
+      "object": "LoanApplicantEmployment",
+      "droppedFields": [
+        "EmployerStateCode",
+        "EmployerCountryCode"
+      ]
+    },
+    {
+      "object": "LoanApplicationAsset",
+      "droppedFields": [
+        "RealEstateStateCode",
+        "RealEstateCountryCode"
+      ]
+    },
+    {
+      "object": "LoanApplicationProperty",
+      "droppedFields": [
+        "PropertyStateCode",
+        "PropertyCountryCode"
+      ]
+    },
+    {
+      "object": "Opportunity",
+      "droppedFields": [
+        "RecordTypeId",
+        "SyncedQuoteId"
+      ]
+    },
+    {
+      "object": "PartyIncome",
+      "droppedFields": [
+        "EmployerId",
+        "EmployerName",
+        "EmployerAddress",
+        "EmployerPhone",
+        "JobTitle",
+        "CalendarYear",
+        "ClaimId"
+      ]
+    }
+  ],
+  "automaticSkips": [
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkLAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkMAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkNAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkOAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkPAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkQAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkRAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkSAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkTAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkUAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkVAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkWAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkXAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkYAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkZAAT",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkaAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkbAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkcAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkdAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkeAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkfAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkgAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkhAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkiAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkjAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkkAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgklAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkmAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgknAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkoAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkpAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkqAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkrAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgksAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgktAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkuAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkvAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkwAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkxAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkyAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgkzAAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgl0AAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "Contact",
+      "sourceId": "003am00000SOgl4AAD",
+      "reason": "already created by parent record"
+    },
+    {
+      "object": "AccountContactRelation",
+      "sourceId": "07kam00000QbspfAAB",
+      "reason": "direct relation is system generated"
+    },
+    {
+      "object": "AccountContactRelation",
+      "sourceId": "07kam00000QbspgAAB",
+      "reason": "direct relation is system generated"
+    },
+    {
+      "object": "AccountContactRelation",
+      "sourceId": "07kam00000QbsphAAB",
+      "reason": "direct relation is system generated"
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Cancel the provided insurance policy on the provided date in the future</description>
+    <developerName>INS_Cancel_Insurance_Policy</developerName>
+    <invocationTarget>INS_Cancel_Insurance_Policy</invocationTarget>
+    <invocationTargetType>flow</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>INS_Cancel_Insurance_Policy</localDeveloperName>
+    <masterLabel>INS - Cancel Insurance Policy</masterLabel>
+</GenAiFunction>

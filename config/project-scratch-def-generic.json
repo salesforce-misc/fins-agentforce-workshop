@@ -1,0 +1,11 @@
+{
+  "orgName": "Generic Development Scratch Org",
+  "description": "Generic Salesforce scratch org for development and testing",
+  "edition": "Developer",
+  "hasSampleData": false,
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    }
+  }
+}

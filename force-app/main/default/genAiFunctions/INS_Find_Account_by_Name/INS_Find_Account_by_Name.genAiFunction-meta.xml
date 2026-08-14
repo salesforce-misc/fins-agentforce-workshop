@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Use this action to retrieve account details by account name</description>
+    <developerName>INS_Find_Account_by_Name</developerName>
+    <invocationTarget>FINS_FindAccountByName</invocationTarget>
+    <invocationTargetType>apex</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>INS_Find_Account_by_Name</localDeveloperName>
+    <masterLabel>INS - Find Account by Name</masterLabel>
+</GenAiFunction>

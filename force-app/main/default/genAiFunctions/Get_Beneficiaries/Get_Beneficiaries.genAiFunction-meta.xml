@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Use this action to retrieve a list of beneficiaries for an insurance policy</description>
+    <developerName>Get_Beneficiaries</developerName>
+    <invocationTarget>INS_GetBeneficiariesByPolicy</invocationTarget>
+    <invocationTargetType>apex</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>Get_Beneficiaries</localDeveloperName>
+    <masterLabel>INS - Get Beneficiaries</masterLabel>
+</GenAiFunction>

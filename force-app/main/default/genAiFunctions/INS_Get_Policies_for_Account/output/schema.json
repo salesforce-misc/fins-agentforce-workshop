@@ -1,0 +1,14 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "Prompt" : {
+      "title" : "Prompt",
+      "description" : "A list of insurance policies owned by the given policy holder",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
