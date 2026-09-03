@@ -49,6 +49,7 @@ $RECYCLE.BIN/
 
 .playwright-mcp/
 
+.codex/
 .cursor/
 .husky/
 
