@@ -3,7 +3,7 @@ set -euo pipefail
 
 usage() {
   cat >&2 <<'USAGE'
-Usage: scripts/orgInit.sh [options]
+Usage: ./orgInit.sh [options]
 
 Creates a scratch org, deploys the FINS Agentforce metadata, provisions the
 primary admin and Service Agent user, imports the standard FSC data export,
@@ -30,10 +30,10 @@ Options:
   -h, --help               Show this help.
 
 Examples:
-  scripts/orgInit.sh
-  scripts/orgInit.sh --alias rt-test-afdc --username rt@test.afdc
-  scripts/orgInit.sh --alias fins-af-demo --duration 7
-  scripts/orgInit.sh --devhub my-devhub --account-name "Kiran Singh"
+  ./orgInit.sh
+  ./orgInit.sh --alias rt-test-afdc --username rt@test.afdc
+  ./orgInit.sh --alias fins-af-demo --duration 7
+  ./orgInit.sh --devhub my-devhub --account-name "Kiran Singh"
 USAGE
 }
 
@@ -130,7 +130,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-project_dir="$(cd "${script_dir}/.." && pwd)"
+project_dir="${script_dir}"
 cd "${project_dir}"
 
 require_command() {
