@@ -6,5 +6,6 @@
     <invocationTargetType>apex</invocationTargetType>
     <isConfirmationRequired>false</isConfirmationRequired>
     <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>FINS_Update_Account_Address</localDeveloperName>
     <masterLabel>FINS - Update Account Address</masterLabel>
 </GenAiFunction>

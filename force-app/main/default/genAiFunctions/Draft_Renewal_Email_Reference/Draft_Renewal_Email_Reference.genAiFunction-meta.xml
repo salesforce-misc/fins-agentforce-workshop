@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Drafts a personalized renewal outreach email for producer review.</description>
+    <developerName>Draft_Renewal_Email_Reference</developerName>
+    <invocationTarget>Draft_Renewal_Email_Reference</invocationTarget>
+    <invocationTargetType>generatePromptResponse</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>Draft_Renewal_Email_Reference</localDeveloperName>
+    <masterLabel>Draft Renewal Email Reference</masterLabel>
+</GenAiFunction>

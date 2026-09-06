@@ -34,7 +34,7 @@ Salesforce.
 | `src-static/` | Editable, step-by-step workshop guides and their images. |
 | `force-app/` | Salesforce metadata, including the FINS Agentforce app, Agentforce bundle, flows, prompt templates, Apex, permissions, and static resources. |
 | `data/` | Representative Financial Services Cloud data and sample documents used by the exercises. |
-| `scripts/orgInit.sh` | Scratch-org bootstrap script that can deploy the workshop metadata, load the standard data export, assign access, and upload the sample files. |
+| `orgInit.sh` | Scratch-org bootstrap script that can deploy the workshop metadata, load the standard data export, assign access, and upload the sample files. |
 | `scripts/build-staticresources.sh` | Builds deployable static-resource archives from the guides in `src-static/`. |
 
 ## Workshop guides
@@ -65,14 +65,18 @@ org, deploys the FINS Agentforce metadata, assigns workshop access, imports the
 standard Financial Services Cloud data export, and uploads the sample files.
 
 ```bash
-scripts/orgInit.sh --devhub <your-devhub-alias> --alias fins-af-workshop
+./orgInit.sh --devhub <your-devhub-alias> --alias fins-af-workshop
 ```
+
+Pass `--username <username>` to set the scratch-org admin username and email to
+the same value. Use `--admin-email <email>` when the admin email should differ
+from the username.
 
 To inspect all options, including resuming an existing org or skipping a
 specific setup stage:
 
 ```bash
-scripts/orgInit.sh --help
+./orgInit.sh --help
 ```
 
 If your environment already exists, deploy the metadata to its authenticated

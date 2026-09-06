@@ -6,5 +6,6 @@
     <invocationTargetType>flow</invocationTargetType>
     <isConfirmationRequired>false</isConfirmationRequired>
     <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>INS_Get_Account_Details</localDeveloperName>
     <masterLabel>INS - Get Account Details</masterLabel>
 </GenAiFunction>

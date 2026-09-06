@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Generates a plain-English account briefing and writes it to the Recent Service Summary field on the Account record. Call this when the producer asks for a full account briefing or to update the account summary.</description>
+    <developerName>Update_Account_Service_Summary_Reference</developerName>
+    <invocationTarget>Update_Account_Service_Summary_Reference</invocationTarget>
+    <invocationTargetType>generatePromptResponse</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>Update_Account_Service_Summary_Reference</localDeveloperName>
+    <masterLabel>Update Account Service Summary Reference</masterLabel>
+</GenAiFunction>

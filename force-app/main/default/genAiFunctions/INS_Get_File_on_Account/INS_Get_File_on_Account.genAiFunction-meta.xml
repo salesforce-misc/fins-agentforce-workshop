@@ -6,5 +6,6 @@
     <invocationTargetType>flow</invocationTargetType>
     <isConfirmationRequired>false</isConfirmationRequired>
     <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>INS_Get_File_on_Account</localDeveloperName>
     <masterLabel>INS - Get File on Account</masterLabel>
 </GenAiFunction>

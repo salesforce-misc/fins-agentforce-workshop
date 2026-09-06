@@ -1,7 +1,7 @@
 {
   "orgName": "Salesforce Technical Architects FINS Workshop",
   "description": "Financial Services Cloud Insurance workshop org with Agentforce and Data Cloud",
-  "edition": "Developer",
+  "edition": "Enterprise",
   "hasSampleData": false,
   "features": [
     "EnableSetPasswordInApi",
@@ -15,6 +15,7 @@
     "InsuranceClaimMgmt:1",
     "InsurancePolicyAdmin:1",
     "Einstein1AIPlatform",
+    "SalesCloudEinstein",
     "CustomerDataPlatform"
   ],
   "settings": {

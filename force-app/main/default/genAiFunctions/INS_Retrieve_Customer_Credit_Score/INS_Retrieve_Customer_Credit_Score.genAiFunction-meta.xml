@@ -6,5 +6,6 @@
     <invocationTargetType>flow</invocationTargetType>
     <isConfirmationRequired>false</isConfirmationRequired>
     <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>INS_Retrieve_Customer_Credit_Score</localDeveloperName>
     <masterLabel>INS - Retrieve Customer Credit Score</masterLabel>
 </GenAiFunction>

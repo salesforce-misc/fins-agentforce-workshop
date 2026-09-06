@@ -1,0 +1,14 @@
+{
+  "required" : [ "customerName" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "customerName" : {
+      "title" : "customerName",
+      "description" : "Full name of the policyholder (e.g. \"Kiran Singh\"). Used to look up the account.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

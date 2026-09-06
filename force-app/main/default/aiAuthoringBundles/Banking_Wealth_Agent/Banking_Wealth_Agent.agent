@@ -10,8 +10,9 @@ config:
     agent_label: "Banking Wealth Agent"
     developer_name: "Banking_Wealth_Agent"
     description: "Deliver personalized customer interactions with an autonomous AI agent. Agentforce Service Agent intelligently supports your customers with common inquiries and escalates complex issues."
-    default_agent_user: "agentforce_service_agent.plnt2hqf7bqf.kqsvzxhtx2rv.qbbcftzhe7xh@agent.force"
 
+access:
+    default_agent_user: "agent.user.e50f8a2a9eca@1.test"
 language:
     default_locale: "en_US"
     additional_locales: "en_GB"
@@ -186,6 +187,7 @@ topic Update_Address:
         with accountRecordId = @variables.EndUserAccountId
         with addressString = @variables.addressJson
 
+
   actions:
     Find_Account_by_Name:
         description: |
@@ -195,7 +197,7 @@ topic Update_Address:
         include_in_progress_indicator: False
         source: "Find_Account_by_Name"
         target: "apex://FINS_FindAccountByName"
-                                                                    
+                                                                        
         inputs:
             "name": string
                 description: |
@@ -203,7 +205,7 @@ topic Update_Address:
                 label: "Name"
                 is_required: True
                 is_user_input: False
-                                                                    
+                                                                        
         outputs:
             "output": list[object]
                 description: |
@@ -212,6 +214,7 @@ topic Update_Address:
                 is_displayable: True
                 filter_from_agent: False
                 complex_data_type_name: "lightning__recordInfoType"
+
     FINS_Parse_Address:
         description: |
             With the unstructured address for a customer, transform it into a structured JSON format
@@ -220,7 +223,7 @@ topic Update_Address:
         include_in_progress_indicator: False
         source: "FINS_Parse_Address"
         target: "generatePromptResponse://FINS_Parse_Address"
-                                                                    
+                                                                        
         inputs:
             "Input:Raw_Address": string
                 description: |
@@ -228,7 +231,7 @@ topic Update_Address:
                 label: "Raw Address"
                 is_required: True
                 is_user_input: False
-                                                                    
+                                                                        
         outputs:
             "promptResponse": string
                 description: |
@@ -236,6 +239,7 @@ topic Update_Address:
                 label: "Prompt Response"
                 is_displayable: True
                 filter_from_agent: False
+
     FINS_Update_Account_Address:
         description: |
             Update the account billing address on the Account with the new provided address from the user
@@ -244,7 +248,7 @@ topic Update_Address:
         include_in_progress_indicator: False
         source: "FINS_Update_Account_Address"
         target: "apex://AccountBillingAddressUpdate"
-                                                                    
+                                                                        
         inputs:
             "accountRecordId": string
                 description: |
@@ -258,7 +262,7 @@ topic Update_Address:
                 label: "Address JSON"
                 is_required: True
                 is_user_input: False
-                                                                    
+                                                                        
         outputs:
             "output": string
                 description: |

@@ -6,5 +6,6 @@
     <invocationTargetType>flow</invocationTargetType>
     <isConfirmationRequired>false</isConfirmationRequired>
     <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>INS_Cancel_Insurance_Policy</localDeveloperName>
     <masterLabel>INS - Cancel Insurance Policy</masterLabel>
 </GenAiFunction>

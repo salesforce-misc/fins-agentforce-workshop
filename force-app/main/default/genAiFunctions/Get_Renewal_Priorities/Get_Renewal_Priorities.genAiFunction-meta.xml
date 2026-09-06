@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Returns a prioritized list of insurance policies expiring within the look-ahead window, sorted by premium change percentage. Designed for Agentforce renewal triage.</description>
+    <developerName>Get_Renewal_Priorities</developerName>
+    <invocationTarget>GetRenewalPriorities</invocationTarget>
+    <invocationTargetType>apex</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>Get_Renewal_Priorities</localDeveloperName>
+    <masterLabel>Get Renewal Priorities</masterLabel>
+</GenAiFunction>

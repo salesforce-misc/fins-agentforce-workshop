@@ -6,5 +6,6 @@
     <invocationTargetType>generatePromptResponse</invocationTargetType>
     <isConfirmationRequired>false</isConfirmationRequired>
     <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>FINS_Parse_Address</localDeveloperName>
     <masterLabel>FINS - Parse Address</masterLabel>
 </GenAiFunction>

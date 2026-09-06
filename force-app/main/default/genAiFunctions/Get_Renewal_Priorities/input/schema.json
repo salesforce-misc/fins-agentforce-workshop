@@ -1,0 +1,13 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "lookAheadDays" : {
+      "title" : "Look Ahead Days",
+      "description" : "Number of days from today to look ahead for expiring policies. Defaults to 90 if not provided.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

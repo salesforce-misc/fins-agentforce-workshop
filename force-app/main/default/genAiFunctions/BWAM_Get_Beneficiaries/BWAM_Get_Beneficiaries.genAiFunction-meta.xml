@@ -6,5 +6,6 @@
     <invocationTargetType>flow</invocationTargetType>
     <isConfirmationRequired>false</isConfirmationRequired>
     <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>BWAM_Get_Beneficiaries</localDeveloperName>
     <masterLabel>BWAM - Get Beneficiaries</masterLabel>
 </GenAiFunction>

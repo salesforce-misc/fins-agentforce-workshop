@@ -6,5 +6,6 @@
     <invocationTargetType>flow</invocationTargetType>
     <isConfirmationRequired>false</isConfirmationRequired>
     <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>INS_Update_Payment_Method</localDeveloperName>
     <masterLabel>INS - Update Payment Method</masterLabel>
 </GenAiFunction>

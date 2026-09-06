@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>oEmj/pb8CEnNOiuJmPpfeBeK7+YqUeUGCeaSlBY361U=_1</activeVersionIdentifier>
+    <description>Drafts a personalized renewal outreach email for producer review.</description>
+    <developerName>Draft_Renewal_Email_Reference</developerName>
+    <masterLabel>Draft Renewal Email Reference</masterLabel>
+    <templateVersions>
+        <content> You are a helpful assistant for a Comparion insurance producer. Write a professional, friendly renewal outreach email
+ to {!$Input:CustomerName}.
+
+ Here is a summary of their renewal situation:
+{!$Input:PremiumChange_Summary}
+
+ The email should:
+ - Acknowledge the upcoming renewal timing
+ - State the amount or percentage of any premium change in plain, non-technical language (not the reason for it)
+ - Invite the customer to have a conversation before the renewal date
+ - Close with a warm, forward-looking sign-off
+
+Do not quote specific new prices or promise any coverage changes. Keep it under 150 words.
+
+Do not state, imply, or speculate about the reason for any premium change (e.g., market trends, claims history, repair costs, inflation) unless a specific reason is explicitly included in {!$Input:PremiumChange_Summary}. If no reason is provided, simply acknowledge the premium change amount without explaining its cause. Never make any claim, comparison, or contrast involving the customer&apos;s driving record, claims history, or any other detail that is not explicitly present in the provided input.
+</content>
+        <inputs>
+            <apiName>CustomerName</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Customer Name</masterLabel>
+            <referenceName>Input:CustomerName</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>PremiumChange_Summary</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Premium Change Summary</masterLabel>
+            <referenceName>Input:PremiumChange_Summary</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>oEmj/pb8CEnNOiuJmPpfeBeK7+YqUeUGCeaSlBY361U=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

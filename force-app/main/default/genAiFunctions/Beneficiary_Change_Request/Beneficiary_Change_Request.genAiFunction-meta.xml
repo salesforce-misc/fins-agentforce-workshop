@@ -6,5 +6,6 @@
     <invocationTargetType>apex</invocationTargetType>
     <isConfirmationRequired>false</isConfirmationRequired>
     <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>Beneficiary_Change_Request</localDeveloperName>
     <masterLabel>INS - Beneficiary Change Request</masterLabel>
 </GenAiFunction>
