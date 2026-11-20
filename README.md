@@ -89,6 +89,30 @@ sf project deploy start --source-dir force-app --target-org <your-org-alias>
 Then use the workshop guides above to configure, test, and activate the
 exercises appropriate for your org.
 
+### Marketing Cloud Next capabilities
+
+The default `config/project-scratch-def.json` includes:
+
+| Feature | Purpose |
+| --- | --- |
+| `MarketingCloud` | Marketing Cloud Advanced licenses for campaigns, flows, email, forms, landing pages, and consent management. |
+| `MarketingUser` | Campaign editing access. |
+| `CustomerDataPlatform` and `CustomerDataPlatformLite` | Data 360 dependencies for segmentation, personalization, engagement events, flow decisions, and analytics. |
+
+The existing Agentforce, Einstein generative AI, and Data Cloud settings remain
+enabled. The generic development definition is unchanged.
+
+The Dev Hub must support Data Cloud scratch org creation; Salesforce documents
+Partner Support enablement for Partner Business Orgs. Scratch org email sending
+is limited to 20 emails per day. See the official
+[Scratch Org Features reference](https://developer.salesforce.com/docs/platform/sfdx-dev/guide/sfdx-dev-scratch-orgs-def-file-config-values.html).
+
+After creation, assign Marketing Cloud Admin or Marketing Cloud Manager access,
+and have a Data Cloud Architect deploy marketing data kits and data streams and
+configure identity resolution. These steps are not completed by the definition
+file. See
+[Configure Your Marketing Cloud Next Org](https://developer.salesforce.com/docs/marketing/marketing-cloud-growth/guide/mc-administration.html).
+
 ## Maintain the guides
 
 The guides in `src-static/` are the editable sources. When you change a guide

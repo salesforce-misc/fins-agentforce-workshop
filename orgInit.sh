@@ -12,7 +12,7 @@ and uploads the Kiran Singh files.
 Options:
   --alias <alias>          Scratch org alias. Default: fins-af-init-<UTC timestamp>
   --username <username>    Scratch org admin username. Default: auto-generated
-  --admin-email <email>    Scratch org admin email. Default: supplied --username
+  --admin-email <email>    Optional scratch org admin email. Omitted by default.
   --existing-org <alias>   Resume initialization of an existing scratch org.
   --devhub <alias>         Dev Hub alias or username. Default: devhub
   --duration <days>        Scratch org duration. Default: 30
@@ -209,7 +209,7 @@ sf_rest() {
   local body="${4:-}"
   local org_json access_token instance_url
 
-  org_json="$(sf org display --target-org "${org}" --verbose --json)"
+  org_json="$(node "${project_dir}/scripts/org-auth.cjs" "${org}")"
   access_token="$(jq -r '.result.accessToken // empty' <<< "${org_json}")"
   instance_url="$(jq -r '.result.instanceUrl // empty' <<< "${org_json}")"
 
@@ -524,9 +524,6 @@ else
   )
   if [[ -n "${scratch_username_override}" ]]; then
     create_args+=(--username "${scratch_username_override}")
-  fi
-  if [[ -z "${scratch_admin_email_override}" && -n "${scratch_username_override}" ]]; then
-    scratch_admin_email_override="${scratch_username_override}"
   fi
   if [[ -n "${scratch_admin_email_override}" ]]; then
     create_args+=(--admin-email "${scratch_admin_email_override}")

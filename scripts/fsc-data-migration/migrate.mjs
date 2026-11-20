@@ -5,6 +5,7 @@ import { createReadStream } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createInterface } from 'node:readline';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const CORE_OBJECTS = new Set(['Account', 'Contact', 'Case', 'Opportunity', 'Lead', 'Billing__c']);
 const DEFAULT_NAMESPACES = [];
@@ -78,8 +79,8 @@ function parseArgs(argv) {
 
 function sfAuth(org) {
   const stdout = execFileSync(
-    'sf',
-    ['org', 'display', '--target-org', org, '--json'],
+    process.execPath,
+    [fileURLToPath(new URL('../org-auth.cjs', import.meta.url)), org],
     { encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'] },
   );
   const parsed = JSON.parse(stdout);

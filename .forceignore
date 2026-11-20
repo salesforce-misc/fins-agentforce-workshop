@@ -96,3 +96,6 @@ force-app/main/default/standardValueSets/DataModelSupplierType.standardValueSet-
 # Org-generated internal Agentforce service permission sets aren't portable.
 force-app/main/default/permissionsets/sfdcInternalInt__sfdc_chatbot.permissionset-meta.xml
 force-app/main/default/permissionsets/sfdc_aiplanner_service_permset.permissionset-meta.xml
+
+# Salesforce-managed Agentforce group is generated in each target org.
+force-app/main/default/permissionsetgroups/force__AgentforceServiceAgentUserPsg.permissionsetgroup-meta.xml

@@ -1,6 +1,6 @@
 {
   "orgName": "Salesforce Technical Architects FINS Workshop",
-  "description": "Financial Services Cloud Insurance workshop org with Agentforce and Data Cloud",
+  "description": "Financial Services Cloud Insurance workshop org with Agentforce, Data Cloud, and Marketing Cloud Next",
   "edition": "Enterprise",
   "hasSampleData": false,
   "features": [
@@ -16,7 +16,10 @@
     "InsurancePolicyAdmin:1",
     "Einstein1AIPlatform",
     "SalesCloudEinstein",
-    "CustomerDataPlatform"
+    "CustomerDataPlatform",
+    "CustomerDataPlatformLite",
+    "MarketingCloud",
+    "MarketingUser"
   ],
   "settings": {
     "lightningExperienceSettings": {

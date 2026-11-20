@@ -38,7 +38,7 @@ if [[ ${#files[@]} -eq 0 ]]; then
   exit 1
 fi
 
-ORG_JSON="$(sf org display --target-org "${TARGET_ORG}" --verbose --json)"
+ORG_JSON="$(node "${SCRIPT_DIR}/org-auth.cjs" "${TARGET_ORG}")"
 ACCESS_TOKEN="$(jq -r '.result.accessToken // empty' <<< "${ORG_JSON}")"
 INSTANCE_URL="$(jq -r '.result.instanceUrl // empty' <<< "${ORG_JSON}")"
 
