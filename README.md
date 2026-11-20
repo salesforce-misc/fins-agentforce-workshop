@@ -34,7 +34,7 @@ Salesforce.
 | `src-static/` | Editable, step-by-step workshop guides and their images. |
 | `force-app/` | Salesforce metadata, including the FINS Agentforce app, Agentforce bundle, flows, prompt templates, Apex, permissions, and static resources. |
 | `data/` | Representative Financial Services Cloud data and sample documents used by the exercises. |
-| `orgInit.sh` | Scratch-org bootstrap script that can deploy the workshop metadata, load the standard data export, assign access, and upload the sample files. |
+| `orgInit.sh` | Argument-free Hosted Scratch recipe for creating and deploying a workshop org. |
 | `scripts/build-staticresources.sh` | Builds deployable static-resource archives from the guides in `src-static/`. |
 
 ## Workshop guides
@@ -60,24 +60,19 @@ Start with the setup guide, then select the track that fits your audience.
 
 ### Create a workshop org
 
-The bootstrap script is the recommended starting point. It creates a scratch
-org, deploys the FINS Agentforce metadata, assigns workshop access, imports the
-standard Financial Services Cloud data export, and uploads the sample files.
+Hosted Scratch runs `orgInit.sh` without arguments. The recipe creates a
+30-day scratch org, deploys the workshop metadata, assigns admin and Service
+Agent permissions, imports the sample data, uploads the sample files, sets the
+demo password, and returns a login URL.
 
 ```bash
-./orgInit.sh --devhub <your-devhub-alias> --alias fins-af-workshop
+./orgInit.sh
 ```
 
-Pass `--username <username>` to set the scratch-org admin username and email to
-the same value. Use `--admin-email <email>` when the admin email should differ
-from the username.
-
-To inspect all options, including resuming an existing org or skipping a
-specific setup stage:
-
-```bash
-./orgInit.sh --help
-```
+Hosted Scratch must allowlist this repository to run the inline setup commands.
+For local execution, configure a default Dev Hub and install the Salesforce
+CLI plugin that provides `sf demoutil`. The recipe also uses Node.js, `jq`, and
+`curl`. Data Cloud provisioning runs when `sf data cloud provision` is available.
 
 If your environment already exists, deploy the metadata to its authenticated
 alias:
